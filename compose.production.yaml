@@ -1,0 +1,28 @@
+# Use with compose.yaml. Put production settings in backend/.env before starting.
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a strong PostgreSQL password}
+  api:
+    environment: &production
+      APP_ENV: production
+      AUTH_DEMO_ENABLED: "false"
+      AI_DEFAULT_PROFILE: ${AI_DEFAULT_PROFILE:-gemini}
+      SESSION_SECRET: ${SESSION_SECRET:?Set a random SESSION_SECRET in the root .env}
+      FRONTEND_ORIGIN: ${PUBLIC_URL:?Set PUBLIC_URL to your HTTPS origin}
+  worker:
+    environment: *production
+  edge:
+    image: caddy:2-alpine
+    ports: ["80:80", "443:443"]
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:?Set PUBLIC_HOST to your domain}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+    depends_on: [web]
+volumes:
+  caddy_data:
+  caddy_config:

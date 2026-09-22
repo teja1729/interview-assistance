@@ -1,0 +1,101 @@
+@import "tailwindcss";
+:root {
+  --background: #f6f8fa;
+  --surface: #ffffff;
+  --foreground: #172b34;
+  --muted: #697c86;
+  --border: #e3e9ec;
+  --accent: #0e8074;
+  --accent-ink: #ffffff;
+  --accent-soft: #e9f5f1;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: "Inter", "Avenir Next", "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, monospace;
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+button:not(:disabled),
+select {
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+::selection {
+  background: #c5e8dc;
+}
+.card {
+  @apply rounded-2xl border border-border bg-surface;
+}
+.input {
+  @apply w-full rounded-xl border border-border bg-surface px-3.5 py-2.5 text-[14px] outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/10 placeholder:text-muted;
+}
+.label {
+  @apply mb-1.5 block text-sm font-medium;
+}
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-medium text-accent-ink transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50;
+}
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-medium transition hover:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-50;
+}
+.chip {
+  @apply rounded-full border border-border bg-surface px-3 py-1 text-xs hover:border-accent hover:text-accent;
+}
+.badge {
+  @apply inline-flex items-center rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-medium text-muted;
+}
+.eyebrow {
+  @apply text-[11px] font-semibold uppercase tracking-[.18em] text-accent;
+}
+.error-banner {
+  @apply rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700;
+}
+.page-title {
+  @apply text-3xl font-semibold tracking-tight;
+}
+.page-subtitle {
+  @apply mt-2 text-sm leading-relaxed text-muted;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.enter {
+  animation: rise 0.45s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

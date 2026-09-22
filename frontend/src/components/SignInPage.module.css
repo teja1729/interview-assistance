@@ -1,0 +1,41 @@
+/* Suri styling is intentionally limited to candidate/recruiter sign-in.
+   Do not move these tokens into globals.css: the signed-in app keeps its original theme. */
+.auth {
+  --background: #f6f3eb;
+  --surface: #faf8f2;
+  --foreground: #151515;
+  --muted: #67625b;
+  --border: #d6d1c7;
+  --accent: #151515;
+  --accent-ink: #ffffff;
+  --accent-soft: #eee9df;
+  background: var(--background);
+  color: var(--foreground);
+}
+.auth :global(.btn-primary),
+.auth :global(.btn-ghost),
+.auth :global(.error-banner) {
+  border-radius: 4px;
+}
+.heading {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+.wordmark i {
+  width: 5px;
+  height: 5px;
+  background: #b5541a;
+  border-radius: 50%;
+  align-self: flex-start;
+  margin-top: 7px;
+}

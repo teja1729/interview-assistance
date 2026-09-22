@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 424 424" width="424" height="424">
+<defs><clipPath id="c"><circle cx="212" cy="212" r="212"/></clipPath>
+<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b4a5a"/><stop offset="1" stop-color="#1f2328"/></linearGradient></defs>
+<g clip-path="url(#c)">
+<rect width="424" height="424" fill="url(#g)"/>
+<circle cx="212" cy="150" r="150" fill="#7f8fa4" opacity=".12"/>
+<!-- shoulders / shirt -->
+<path d="M60 424c0-90 60-150 152-150s152 60 152 150z" fill="#e8e6df"/>
+<path d="M186 274l26 40 26-40" fill="none" stroke="#000" stroke-opacity=".15" stroke-width="6"/>
+<!-- neck -->
+<rect x="188" y="210" width="48" height="70" rx="20" fill="#c98f6b"/>
+<!-- head -->
+<ellipse cx="212" cy="150" rx="66" ry="78" fill="#c98f6b"/>
+<!-- ears -->
+<circle cx="146" cy="156" r="12" fill="#c98f6b"/><circle cx="278" cy="156" r="12" fill="#c98f6b"/>
+<path d="M150 118c0-40 30-64 62-64s62 24 62 64v10c-10-22-30-32-62-32s-52 10-62 32z" fill="#2b2119"/>
+<!-- eyes / brows / mouth -->
+<g fill="#1c1c1c"><circle cx="186" cy="152" r="5"/><circle cx="238" cy="152" r="5"/></g>
+<path d="M172 134q14-8 28 0M224 134q14-8 28 0" fill="none" stroke="#1c1c1c" stroke-opacity=".7" stroke-width="4" stroke-linecap="round"/>
+<path d="M196 190q16 10 32 0" fill="none" stroke="#7a3b2e" stroke-width="4" stroke-linecap="round"/>
+<g fill="none" stroke="#1c1c1c" stroke-width="4"><circle cx="186" cy="150" r="18"/><circle cx="238" cy="150" r="18"/><path d="M204 150h16M168 146l-14-6M256 146l14-6"/></g>
+</g></svg>

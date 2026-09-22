@@ -1,0 +1,54 @@
+# Local production-like stack: PostgreSQL + migration gate + API + durable worker + web.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: interview_studio
+      POSTGRES_USER: studio
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-development-password}
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U studio -d interview_studio"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  migrate:
+    build: ./backend
+    env_file: ./backend/.env
+    environment: &api_environment
+      DATABASE_URL: postgresql+psycopg://studio:${POSTGRES_PASSWORD:-local-development-password}@db:5432/interview_studio
+      FRONTEND_ORIGIN: ${PUBLIC_URL:-http://localhost:3000}
+      INLINE_WORKER: "false"
+    command: [alembic, upgrade, head]
+    depends_on:
+      db: {condition: service_healthy}
+  api:
+    build: ./backend
+    env_file: ./backend/.env
+    environment: *api_environment
+    restart: unless-stopped
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/ready')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+  worker:
+    build: ./backend
+    env_file: ./backend/.env
+    environment: *api_environment
+    command: [python, -m, app.worker]
+    restart: unless-stopped
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  web:
+    build:
+      context: ./frontend
+      args: {BACKEND_URL: "http://api:8000"}
+    ports: ["127.0.0.1:3000:3000"]
+    restart: unless-stopped
+    depends_on:
+      api: {condition: service_healthy}
+volumes:
+  postgres_data:

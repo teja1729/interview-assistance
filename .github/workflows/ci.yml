@@ -1,0 +1,61 @@
+name: Verify SaaS contracts
+on: [push, pull_request]
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: {POSTGRES_USER: test, POSTGRES_PASSWORD: test, POSTGRES_DB: studio_test}
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U test -d studio_test" --health-interval 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql+psycopg://test:test@localhost:5432/studio_test
+      DATABASE_URL: postgresql+psycopg://test:test@localhost:5432/studio_test
+      AI_DEFAULT_PROFILE: demo
+      AUTH_DEMO_ENABLED: "true"
+    defaults:
+      run: {working-directory: backend}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with: {version: "0.8.22", python-version: "3.12"}
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run alembic upgrade head
+      - run: uv run alembic check
+      - run: uv run pytest -q
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: "22", cache: npm, cache-dependency-path: frontend/package-lock.json}
+      - uses: astral-sh/setup-uv@v6
+        with: {version: "0.8.22", python-version: "3.12"}
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run lint && npm run typecheck && npm run format:check && npm run build
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: uv sync --locked && uv run alembic upgrade head
+        working-directory: backend
+      - name: Start isolated demo API, worker, and web
+        run: |
+          (cd backend && AI_DEFAULT_PROFILE=demo AUTH_DEMO_ENABLED=true AUDIO_PROVIDER=browser INLINE_WORKER=true uv run uvicorn app.main:app --port 8000 > /tmp/api.log 2>&1) &
+          (cd frontend && npm run start > /tmp/web.log 2>&1) &
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://localhost:3000/api/ready; then break; fi
+            sleep 2
+          done
+      - run: npm run test:e2e
+        working-directory: frontend
+      - run: npm run test:login
+        working-directory: frontend
+      - run: npm run test:voice
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with: {name: browser-artifacts, path: frontend/e2e/shots}

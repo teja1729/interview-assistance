@@ -1,0 +1,6 @@
+.env*
+node_modules
+.next
+.next-e2e
+e2e/shots
+test-results

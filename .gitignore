@@ -1,0 +1,32 @@
+# env / secrets
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# python
+backend/.venv/
+__pycache__/
+*.pyc
+backend/data/
+
+# Nested prototype with its own GitHub remote (do not vendor as a submodule).
+B2B-app/
+
+# node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+*.tsbuildinfo
+
+.DS_Store
+
+# checks and browser artifacts
+.pytest_cache/
+.ruff_cache/
+frontend/e2e/shots/
+frontend/test-results/
+frontend/playwright-report/
+.coverage
+frontend/.next-*/

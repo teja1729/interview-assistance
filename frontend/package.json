@@ -1,0 +1,35 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "eslint",
+    "test:e2e": "node e2e/saas.e2e.mjs",
+    "test:login": "node e2e/login.e2e.mjs",
+    "test:voice": "node e2e/voice.e2e.mjs",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write src next.config.ts 'e2e/*.mjs'",
+    "format:check": "prettier --check src next.config.ts 'e2e/*.mjs'",
+    "test:recruiter": "node e2e/recruiter.e2e.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "playwright": "^1.63.0",
+    "prettier": "^3.9.8",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

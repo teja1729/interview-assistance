@@ -1,0 +1,40 @@
+[project]
+name = "interview-backend"
+version = "0.1.0"
+description = "Interview Studio: workspace SaaS with bounded AI interviews and durable coaching workflows"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.14",
+    "authlib>=1.6",
+    "fastapi>=0.141.1",
+    "google-genai>=2.24.0",
+    "httpx>=0.28",
+    "itsdangerous>=2.2",
+    "openai>=1.68",
+    "psycopg[binary]>=3.2",
+    "pypdf>=5",
+    "python-dotenv>=1.2.3",
+    "python-multipart>=0.0.32",
+    "sqlmodel>=0.0.42",
+    "stripe>=12",
+    "uvicorn[standard]>=0.53.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+extend-select = ["B", "UP", "FURB"]
+# B008: FastAPI's Depends()/File()/Form() in defaults is the framework's idiom.
+ignore = ["B008"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.11",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

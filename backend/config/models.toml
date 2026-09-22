@@ -1,0 +1,78 @@
+# Operator-owned routing. Credentials stay in environment variables; model choices live here.
+# Credentials stay in backend/.env. New interviews snapshot resolved models, prompts and policies;
+# editing these profiles affects new sessions. Legacy sessions retain their historical IDs.
+[agents]
+planner = "sarvam"
+interviewer = "sarvam"
+evaluator = "sarvam"
+coach = "sarvam"
+resume = "sarvam"
+assistant = "sarvam"
+company_research = "gemini_search"
+
+[execution]
+report_concurrency = 2
+
+[profiles.demo]
+label = "Demo · deterministic fixtures"
+provider = "demo"
+model = "demo-v1"
+context_tokens = 128000
+
+[profiles.gemini]
+label = "Google Gemini"
+provider = "gemini"
+model = "gemini-3.5-flash"
+api_key_env = "GEMINI_API_KEY"
+context_tokens = 1048576
+capabilities = ["structured_output", "search"]
+
+[profiles.gemini_pro]
+label = "Google Gemini Pro"
+provider = "gemini"
+model = "gemini-3.1-pro-preview"
+api_key_env = "GEMINI_API_KEY"
+fallback = "gemini"
+context_tokens = 1048576
+capabilities = ["structured_output", "search"]
+
+[profiles.openai]
+label = "OpenAI"
+provider = "openai"
+model = "gpt-4.1-mini"
+api_key_env = "OPENAI_API_KEY"
+context_tokens = 1047576
+
+[profiles.compatible]
+label = "OpenAI-compatible endpoint"
+provider = "compatible"
+model_env = "COMPATIBLE_MODEL"
+api_key_env = "COMPATIBLE_API_KEY"
+base_url_env = "COMPATIBLE_BASE_URL"
+# Declare the deployed model's actual limit; zero fails closed until configured.
+context_tokens = 0
+context_tokens_env = "COMPATIBLE_CONTEXT_TOKENS"
+
+[profiles.sarvam]
+label = "Sarvam 105B"
+provider = "sarvam"
+model = "sarvam-105b"
+model_env = "SARVAM_MODEL"
+api_key_env = "SARVAM_API_KEY"
+context_tokens = 128000
+
+[profiles.sarvam_conversations]
+label = "Sarvam 105B Conversations"
+provider = "sarvam"
+model = "sarvam-105b-conversations"
+api_key_env = "SARVAM_API_KEY"
+fallback = "sarvam"
+context_tokens = 32000
+
+[profiles.gemini_search]
+label = "Google Search research"
+provider = "gemini"
+model = "gemini-2.5-flash"
+api_key_env = "GEMINI_API_KEY"
+context_tokens = 1048576
+capabilities = ["structured_output", "search"]
