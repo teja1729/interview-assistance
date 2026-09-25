@@ -20,6 +20,8 @@ class Settings:
     session_secret: str = os.getenv("SESSION_SECRET", "development-only-change-before-deploying")
     google_client_id: str = os.getenv("GOOGLE_CLIENT_ID", "")
     google_client_secret: str = os.getenv("GOOGLE_CLIENT_SECRET", "")
+    linkedin_client_id: str = os.getenv("LINKEDIN_CLIENT_ID", "")
+    linkedin_client_secret: str = os.getenv("LINKEDIN_CLIENT_SECRET", "")
     demo_login: bool = os.getenv("AUTH_DEMO_ENABLED", "false").lower() == "true"
     default_profile: str = os.getenv("AI_DEFAULT_PROFILE", "sarvam")
     models_file: Path = Path(os.getenv("AI_MODELS_FILE", str(ROOT / "config" / "models.toml")))
@@ -50,6 +52,10 @@ class Settings:
     @property
     def google_enabled(self) -> bool:
         return bool(self.google_client_id and self.google_client_secret)
+
+    @property
+    def linkedin_enabled(self) -> bool:
+        return bool(self.linkedin_client_id and self.linkedin_client_secret)
 
     def validate(self) -> None:
         if not self.production:

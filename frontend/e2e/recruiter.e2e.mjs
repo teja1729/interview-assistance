@@ -77,6 +77,25 @@ try {
   console.log(
     "✓ Separate recruiter login preserves its Google return destination",
   );
+  await anonymous.page.goto(`${BASE}/recruiter/login`);
+  await anonymous.page.route("**/api/auth/linkedin?**", (route) => {
+    returnTo = new URL(route.request().url()).searchParams.get("next");
+    return route.fulfill({
+      status: 200,
+      body: "OAuth redirect intercepted for browser test",
+    });
+  });
+  const linkedin = anonymous.page.getByRole("link", {
+    name: "Continue with LinkedIn",
+  });
+  if (await linkedin.count()) {
+    await linkedin.click();
+    await anonymous.page.waitForURL("**/api/auth/linkedin?**");
+    assert.equal(returnTo, "/recruiter");
+    console.log(
+      "✓ Recruiter login preserves its LinkedIn return destination",
+    );
+  }
 
   const candidate = await open(identities.candidate);
   const recruiter = await open(identities.recruiter);

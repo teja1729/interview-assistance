@@ -265,6 +265,37 @@ def test_google_subject_not_email_is_identity(engine):
         assert repeated.id == first.id
 
 
+def test_linkedin_subject_does_not_merge_with_google_or_email(engine):
+    with Session(engine) as session:
+        google, _ = provision(session, "shared-subject", "same@example.test", "Google", provider="google")
+        linkedin, _ = provision(session, "shared-subject", "same@example.test", "LinkedIn", provider="linkedin")
+        assert google.id != linkedin.id
+        repeated, _ = provision(session, "shared-subject", "other@example.test", "LinkedIn", provider="linkedin")
+        assert repeated.id == linkedin.id
+        assert repeated.email == "other@example.test"
+
+
+def test_linkedin_sends_client_secret_in_token_body():
+    from app.api.auth import oauth
+
+    assert oauth.linkedin.client_kwargs["token_endpoint_auth_method"] == "client_secret_post"
+
+
+def test_auth_config_and_unconfigured_linkedin(monkeypatch):
+    from app.api import auth as auth_api
+
+    client = TestClient(app)
+    body = client.get("/api/auth/config").json()
+    assert body["google_enabled"] is settings.google_enabled
+    assert body["linkedin_enabled"] is settings.linkedin_enabled
+    monkeypatch.setattr(
+        auth_api,
+        "settings",
+        replace(auth_api.settings, linkedin_client_id="", linkedin_client_secret=""),
+    )
+    assert client.get("/api/auth/linkedin", follow_redirects=False).status_code == 503
+
+
 def test_production_refuses_demo_and_weak_configuration():
     import pytest
 

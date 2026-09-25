@@ -1,4 +1,4 @@
-# Interview Studio: coding-agent entry point
+# okkra: coding-agent entry point
 
 Read `docs/ARCHITECTURE.md` before changing boundaries. Read the nearest module README before
 editing its internals. `docs/DEVELOPMENT.md` has exact setup and verification commands.

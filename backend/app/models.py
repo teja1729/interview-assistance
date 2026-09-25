@@ -8,7 +8,7 @@ import time
 import uuid
 from typing import Any
 
-from sqlalchemy import JSON, Column, Integer, UniqueConstraint
+from sqlalchemy import JSON, Column, Index, Integer, String, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 
@@ -17,9 +17,19 @@ def uid() -> str:
 
 
 class User(SQLModel, table=True):
+    """A person. google_sub stores that provider's subject, not only a Google ID.
+
+    auth_provider distinguishes Google from LinkedIn. The same email never merges them.
+    """
+
     __tablename__ = "users"
+    __table_args__ = (Index("uq_users_provider_subject", "auth_provider", "google_sub", unique=True),)
     id: str = Field(default_factory=uid, primary_key=True)
-    google_sub: str = Field(unique=True, index=True)
+    auth_provider: str = Field(
+        default="google",
+        sa_column=Column(String, nullable=False, server_default="google", index=True),
+    )
+    google_sub: str = Field(index=True)
     email: str = Field(index=True)
     name: str
     avatar_url: str = ""

@@ -45,12 +45,25 @@ from `config/models.toml`; the old GEMINI_INTERVIEW_MODEL / REPORT_MODEL variabl
 4. Set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and FRONTEND_ORIGIN. Restart the API.
 5. Test with an allowed consent-screen user, then publish/verify the OAuth app as required by Google.
 
-Authlib performs OIDC state/nonce/token validation. The Google `sub` is the identity key;
-email alone never links accounts. Only verified email identities are provisioned. First login
-creates a user and personal Starter account. OAuth tokens are discarded after sign-in.
+Authlib performs OIDC state/nonce/token validation. The provider subject is the identity key;
+email alone never links accounts. A Google login and a LinkedIn login with the same address stay
+separate. Only verified email identities are provisioned. First login creates a user and personal
+Starter account. OAuth tokens are discarded after sign-in.
 
 Reference: https://developers.google.com/identity/openid-connect/openid-connect
 Library: https://docs.authlib.org/en/latest/oauth2/client/web/starlette.html
+
+## LinkedIn sign-up/sign-in
+
+1. Create a LinkedIn app and add the product **Sign In with LinkedIn using OpenID Connect**.
+2. Register `http://localhost:3000/api/auth/linkedin/callback` for local development.
+3. Register `https://YOUR_DOMAIN/api/auth/linkedin/callback` for production.
+4. Set LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET and FRONTEND_ORIGIN. Restart the API.
+5. Confirm `/api/auth/config` returns `linkedin_enabled: true`, then use **Continue with LinkedIn**.
+
+The same verified-email and separate-subject rules apply. Production still requires Google credentials.
+
+Reference: https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin-v2
 
 ## Model selection
 

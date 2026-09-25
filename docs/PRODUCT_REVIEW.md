@@ -2,7 +2,7 @@
 
 ## Product thesis
 
-Interview Studio helps a candidate turn their actual experience into clearer interview answers.
+okkra helps a candidate turn their actual experience into clearer interview answers.
 The core loop is resume + target role → practice → evidence-based feedback → focused exercises
 → another practice session. That loop is the product hypothesis to validate with real candidates.
 

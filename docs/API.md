@@ -7,7 +7,7 @@ All private endpoints require `interview_session` (HTTP-only). POST/PUT/PATCH/DE
 
 | Group | Routes |
 | --- | --- |
-| Public | GET /health, /ready, /auth/config; GET /auth/google, /auth/google/callback |
+| Public | GET /health, /ready, /auth/config; GET /auth/google, /auth/google/callback, /auth/linkedin, /auth/linkedin/callback |
 | Sessions | GET /auth/me; POST /auth/demo (development only), /auth/logout, /auth/logout-all |
 | Resumes | GET/POST /resumes; GET/DELETE /resumes/{id} |
 | Interviews | GET/POST /interviews; GET /interviews/{id}; POST /interviews/{id}/join, /turn-text, /turn, /finish, /abandon |

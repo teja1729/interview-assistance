@@ -11,6 +11,7 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
   const destination = recruiter ? "/recruiter" : "/dashboard";
   const [config, setConfig] = useState<{
     google_enabled: boolean;
+    linkedin_enabled: boolean;
     demo_enabled: boolean;
   } | null>(null);
   const [configFailed, setConfigFailed] = useState(false);
@@ -26,10 +27,15 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
       .then((options) => {
         if (!active) return;
         setConfig(options);
-        if (
-          new URLSearchParams(window.location.search).get("error") === "google"
-        )
+        const authError = new URLSearchParams(window.location.search).get(
+          "error",
+        );
+        if (authError === "google")
           setError("Google sign-in could not be completed. Please try again.");
+        if (authError === "linkedin")
+          setError(
+            "LinkedIn sign-in could not be completed. Please try again.",
+          );
       })
       .catch(() => {
         if (active) setConfigFailed(true);
@@ -64,8 +70,8 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
   return (
     <div className={`${styles.auth} grid min-h-screen lg:grid-cols-2`}>
       <div className="flex flex-col bg-background px-8 py-8 lg:px-16">
-        <Link href="/" className={styles.wordmark} aria-label="Suri home">
-          suri
+        <Link href="/" className={styles.wordmark} aria-label="okkra home">
+          okkra
           <i aria-hidden="true" />
         </Link>
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-20">
@@ -129,7 +135,28 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
               Continue with Google
             </a>
           )}
-          {config && !config.google_enabled && (
+          {config?.linkedin_enabled && (
+            <a
+              href="/api/auth/linkedin"
+              onClick={(event) => {
+                event.preventDefault();
+                const next =
+                  new URLSearchParams(window.location.search).get("next") ??
+                  destination;
+                window.location.assign(
+                  new URL(
+                    `/api/auth/linkedin?next=${encodeURIComponent(next)}`,
+                    window.location.origin,
+                  ).href,
+                );
+              }}
+              className={`btn-ghost !py-3.5 ${config.google_enabled ? "mt-3" : "mt-8"}`}
+            >
+              <span className="text-lg font-bold text-[#0a66c2]">in</span>
+              Continue with LinkedIn
+            </a>
+          )}
+          {config && !config.google_enabled && !config.linkedin_enabled && (
             <div className="mt-8 rounded-xl border border-border bg-background p-4 text-xs leading-5 text-muted">
               Google sign-in is awaiting configuration by the application owner.
               {config?.demo_enabled
@@ -165,8 +192,8 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
           </Link>
         </div>
       </div>
-      <div className="hidden flex-col justify-center bg-[#151515] p-16 text-white lg:flex">
-        <p className="text-xs uppercase tracking-[.2em] text-white/60">
+      <div className="hidden flex-col justify-center bg-[#173d36] p-16 text-white lg:flex">
+        <p className="text-xs uppercase tracking-[.2em] text-[#9bcabb]">
           {recruiter
             ? "Make a thoughtful introduction"
             : "Prepare with intention"}
@@ -190,7 +217,7 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
               ]
           ).map((s, i) => (
             <div key={s} className="flex items-center gap-4">
-              <span className="grid h-8 w-8 place-items-center rounded-full border border-white/20 font-mono text-xs text-white/60">
+              <span className="grid h-8 w-8 place-items-center rounded-full border border-[#9bcabb]/40 font-mono text-xs text-[#9bcabb]">
                 0{i + 1}
               </span>
               <span className="text-sm text-white/80">{s}</span>

@@ -20,7 +20,7 @@ router = APIRouter(prefix="/api", tags=["meta"])
 
 @router.get("/health")
 def health():
-    return {"ok": True, "service": "interview-studio", "version": "1.0.0"}
+    return {"ok": True, "service": "okkra", "version": "1.0.0"}
 
 
 @router.get("/ready")

@@ -1,7 +1,7 @@
 # Architecture
 
 Read this before moving responsibilities across modules. The product serves individual candidates.
-Each Google identity has a personal account, private interviews and account-level usage/billing.
+Each verified Google or LinkedIn identity has a personal account, private interviews and account-level usage/billing.
 The operator assigns models to all seven agent roles in `backend/config/models.toml`.
 
 The database retains its historical `workspaces`/`memberships` names as internal account containers
@@ -25,7 +25,7 @@ flowchart LR
   Worker --> Runtime
 ```
 
-The frontend never holds provider credentials. Google signs the identity assertion; a random
+The frontend never holds provider credentials. Google or LinkedIn signs the identity assertion; a random
 opaque cookie references a server-side session and its internal account container. Every private
 request rechecks membership, and all candidate resources additionally require matching user ownership.
 
@@ -93,8 +93,8 @@ web text can authorize a write or alter the scoring contract.
 
 ## Consented recruiter access
 
-Candidates may now explicitly publish a discovery profile. Recruiters use the same Google identity
-system with a separate onboarding profile and UI. `services/discovery.py` is the only boundary for
+Candidates may now explicitly publish a discovery profile. Recruiters use the same sign-in
+identity with a separate onboarding profile and UI. `services/discovery.py` is the only boundary for
 cross-account resume access: candidate-approved, pinned to a selected resume and checked on every
 read. This is not workspace/team access; private interviews, agent traces and reports remain
 creator-only. See [SURI_INTEGRATION.md](SURI_INTEGRATION.md) for the state machine and feature map.

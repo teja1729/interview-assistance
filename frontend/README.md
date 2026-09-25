@@ -1,4 +1,4 @@
-# Interview Studio frontend
+# okkra frontend
 
 Read the repository AGENTS.md, then docs/ARCHITECTURE.md and docs/DEVELOPMENT.md.
 
@@ -22,9 +22,9 @@ Build uses Webpack and system fonts, so no font service/network download is need
 
 ## Login design and recruiter workflow
 
-Suri styling is limited to candidate/recruiter sign-in in `SignInPage.module.css`. Keep those
-tokens scoped to the login wrapper: do not change globals.css or the signed-in UI to match them.
-The application retains its original Interview Studio sidebar, teal theme, cards and dark voice
+Candidate and recruiter login use the homepage palette. Keep login-only layout in `SignInPage.module.css`
+and shared colors in `globals.css`.
+The application retains its original sidebar, teal theme, cards and dark voice
 screen. `../B2B-app` remains a separate prototype; do not import its localStorage stores, simulated
 speech or feedback engine. Device orchestration stays in `features/interview/useInterviewSession.ts`.
 

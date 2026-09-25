@@ -41,7 +41,7 @@ async def lifespan(app):
 
 
 app = FastAPI(
-    title="Interview Studio API",
+    title="okkra API",
     version="1.0.0",
     lifespan=lifespan,
     docs_url=None if settings.production else "/api/docs",

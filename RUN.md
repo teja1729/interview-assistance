@@ -64,6 +64,7 @@ Set these **names** in `backend/.env`; use your actual credentials only in that 
 | Setting | Purpose |
 | --- | --- |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google web OAuth credentials |
+| `LINKEDIN_CLIENT_ID`, `LINKEDIN_CLIENT_SECRET` | LinkedIn OpenID Connect sign-in |
 | `FRONTEND_ORIGIN=http://localhost:3000` | Browser origin and OAuth callback base |
 | `SARVAM_API_KEY` | Enables Sarvam profiles |
 | `GEMINI_API_KEY` | Enables Gemini profiles and optional cloud speech |
@@ -74,14 +75,16 @@ Set these **names** in `backend/.env`; use your actual credentials only in that 
 | `SARVAM_STT_MODEL`, `SARVAM_TTS_MODEL` | `saaras:v3` transcription and `bulbul:v3` speech |
 | `SARVAM_TTS_VOICE`, `SPEECH_LANGUAGE` | `ritu` and `en-IN` by default; edit here to change the interviewer voice |
 
-Register this exact Google **authorized redirect URI**:
+Register these exact **authorized redirect URIs**:
 
 ```text
 http://localhost:3000/api/auth/google/callback
+http://localhost:3000/api/auth/linkedin/callback
 ```
 
-For port 3100, register `http://localhost:3100/api/auth/google/callback` too. For a deployment,
-register `https://YOUR_DOMAIN/api/auth/google/callback`. The origin must match `FRONTEND_ORIGIN`.
+For port 3100, register the same paths on `http://localhost:3100` too. For a deployment,
+register `https://YOUR_DOMAIN/api/auth/google/callback` and
+`https://YOUR_DOMAIN/api/auth/linkedin/callback`. The origin must match `FRONTEND_ORIGIN`.
 The Google consent screen must allow your account. Completing consent requires a browser login.
 
 Model routing is in code only: edit `[agents]` in `backend/config/models.toml`. For example,
@@ -543,14 +546,14 @@ See docs/ARCHITECTURE_REVIEW.md for the individual review findings and implement
 ## Candidate/recruiter login and recruiter access
 
 The application runs from `frontend/` on port **3000**. Only candidate/recruiter login uses the
-Suri design; the rest of the app retains its original Interview Studio interface. The original `B2B-app/` on
+okkra sign-in design; the rest of the app retains its original interface. The original `B2B-app/` on
 port **3100** is a standalone prototype, not the real account or recruiting application.
 
 ```bash
 # From the repository root: apply all migrations, including recruiter profiles and resume consent.
 (cd backend && uv run alembic upgrade head)
 
-# Start the real API, durable report worker and Interview Studio frontend.
+# Start the real API, durable report worker and okkra frontend.
 ./dev.sh
 
 # Confirm the integrated app's backend is ready (no sign-in required).

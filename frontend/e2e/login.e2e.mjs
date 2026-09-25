@@ -33,7 +33,21 @@ try {
     console.log(
       "✓ Live Google option and authorization redirect are available",
     );
-  } else {
+    if (actual.linkedin_enabled) {
+      await page.getByRole("link", { name: "Continue with LinkedIn" }).waitFor();
+      const linkedin = await page.request.get(`${base}/api/auth/linkedin`, {
+        maxRedirects: 0,
+      });
+      assert.equal(linkedin.status(), 302);
+      const linkedinDestination = new URL(linkedin.headers().location);
+      assert.equal(linkedinDestination.hostname, "www.linkedin.com");
+      assert.equal(
+        linkedinDestination.searchParams.get("redirect_uri"),
+        `${base}/api/auth/linkedin/callback`,
+      );
+      console.log("✓ Live LinkedIn option and authorization redirect are available");
+    }
+  } else if (!actual.linkedin_enabled) {
     await page.getByText(/Google sign-in is awaiting configuration/).waitFor();
   }
   fs.mkdirSync("e2e/shots", { recursive: true });

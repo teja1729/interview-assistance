@@ -1,7 +1,7 @@
 [project]
 name = "interview-backend"
 version = "0.1.0"
-description = "Interview Studio: workspace SaaS with bounded AI interviews and durable coaching workflows"
+description = "okkra: interview practice with bounded AI interviews and durable coaching workflows"
 requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.14",

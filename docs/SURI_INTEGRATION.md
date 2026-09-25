@@ -1,11 +1,11 @@
-# Suri login pages and recruiter discovery
+# okkra login pages and recruiter discovery
 
 The production UI lives in `frontend/`. `B2B-app/` is the original design reference and
 standalone prototype, not a second API client. Its localStorage identities, simulated speech,
 seeded sessions, random feedback, testimonials and business statistics are not used by this app.
-Only candidate and recruiter login use Suri's cream/black design. `SignInPage.module.css` scopes
-its tokens to the login wrapper so they cannot affect other routes, including after client-side
-navigation. The signed-in UI and public landing retain the original Interview Studio design:
+Candidate and recruiter login use the same teal palette as the public homepage. `SignInPage.module.css`
+scopes login layout to the sign-in wrapper so it cannot affect other routes, including after client-side
+navigation. The signed-in UI and public landing share that application design:
 sidebar navigation, teal accents, rounded cards and the dark voice-interview screen. Recruiter
 features and server-computed progress remain available in that established application shell.
 
@@ -81,7 +81,7 @@ shortlists, ATS integrations and employer vetting are not implemented.
 ## Coding-agent entry points
 
 - `frontend/src/components/SignInPage.tsx` and its CSS module: shared candidate/recruiter Google
-  sign-in and recovery; all Suri styling stays here.
+  sign-in and recovery; all okkra sign-in styling stays here.
 - `frontend/src/components/AppShell.tsx`: public route list, protected navigation and role switch.
 - `frontend/src/app/{opportunities,recruiter,progress}/`: feature screens, no mock stores.
 - `frontend/src/lib/api.ts`: typed requests and CSRF; extend this before adding direct fetch calls.

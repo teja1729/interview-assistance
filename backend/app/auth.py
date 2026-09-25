@@ -47,7 +47,7 @@ def current_context(request: Request, session: Session = Depends(get_session)) -
     if not user or not workspace or not membership:
         raise HTTPException(401, "This account is no longer available. Sign in again.")
     if user.google_sub == "development-demo" and (not settings.demo_login or settings.production):
-        raise HTTPException(401, "Sign in with your Google account to continue")
+        raise HTTPException(401, "Sign in to continue")
     if request.method not in {"GET", "HEAD", "OPTIONS"} and not secrets.compare_digest(
         request.headers.get("x-csrf-token", ""), login.csrf_token
     ):

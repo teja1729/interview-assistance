@@ -377,12 +377,13 @@ export const api = {
     request<SharedResume>(`/recruiter/requests/${id}/resume`),
   session: getSession,
   authConfig: () =>
-    request<{ google_enabled: boolean; demo_enabled: boolean }>(
-      "/auth/config",
-      {
-        signal: AbortSignal.timeout(10_000),
-      },
-    ),
+    request<{
+      google_enabled: boolean;
+      linkedin_enabled: boolean;
+      demo_enabled: boolean;
+    }>("/auth/config", {
+      signal: AbortSignal.timeout(10_000),
+    }),
   demoLogin: () => request<{ ok: true }>("/auth/demo", { method: "POST" }),
   logout: () =>
     request("/auth/logout", { method: "POST" }).then(() => {

@@ -2,8 +2,8 @@
 
 ## Implemented controls
 
-- Google OIDC authorization-code sign-in using Authlib, state/nonce and verified email claims.
-- Identity keyed by Google subject. No automatic account linking by email.
+- Google and LinkedIn OIDC authorization-code sign-in using Authlib, state/nonce and verified email claims.
+- Identity keyed by provider plus subject. No automatic account linking by email.
 - Opaque session cookies: HTTP-only, SameSite=Lax, Secure in production. Token hashes are stored
   in the database. Every authenticated mutation checks a per-session CSRF token.
 - Exact-origin checks on browser writes; explicit header for non-browser clients. CORS is scoped
@@ -47,7 +47,7 @@ Logs and backups need restricted access. Set model/vendor spend limits independe
 - No claim that scores predict employment outcomes. Live-model quality and fairness need separate evaluation.
 - Recruiter company/title and candidate skills/experience are self-reported. Employer verification,
   automated matching and email notifications are not implemented. Revocation blocks future access;
-  it cannot recall content already read or copied. See [Suri integration](SURI_INTEGRATION.md).
+  it cannot recall content already read or copied. See [okkra sign-in and discovery](SURI_INTEGRATION.md).
 - Session lifetime is 30 days with explicit revocation; there is no device-management UI beyond sign-out-all.
 
 Report problems privately to the operator; do not paste access tokens or candidate documents into
