@@ -345,6 +345,12 @@ Complete [deployment prerequisites](docs/DEPLOYMENT.md): domain, HTTPS, Google c
 live model credentials, PostgreSQL backups and operating policies. Docker images still need a
 smoke test in your deployment environment.
 
+For a managed Railway setup with separate API, worker, PostgreSQL and web services, follow
+[docs/RAILWAY.md](docs/RAILWAY.md).
+
+For the Vercel Services configuration (FastAPI + Next.js, with the report worker hosted separately),
+see [docs/VERCEL.md](docs/VERCEL.md).
+
 ```bash
 # Create root Compose settings without overwriting an existing file.
 test -f .env || cp .env.production.example .env
