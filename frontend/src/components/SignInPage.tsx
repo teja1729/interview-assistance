@@ -70,8 +70,8 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
   return (
     <div className={`${styles.auth} grid min-h-screen lg:grid-cols-2`}>
       <div className="flex flex-col bg-background px-8 py-8 lg:px-16">
-        <Link href="/" className={styles.wordmark} aria-label="okkra home">
-          okkra
+        <Link href="/" className={styles.wordmark} aria-label="suri.one home">
+          suri.one
           <i aria-hidden="true" />
         </Link>
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-20">

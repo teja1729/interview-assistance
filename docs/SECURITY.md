@@ -47,7 +47,7 @@ Logs and backups need restricted access. Set model/vendor spend limits independe
 - No claim that scores predict employment outcomes. Live-model quality and fairness need separate evaluation.
 - Recruiter company/title and candidate skills/experience are self-reported. Employer verification,
   automated matching and email notifications are not implemented. Revocation blocks future access;
-  it cannot recall content already read or copied. See [okkra sign-in and discovery](SURI_INTEGRATION.md).
+  it cannot recall content already read or copied. See [suri.one sign-in and discovery](SURI_INTEGRATION.md).
 - Session lifetime is 30 days with explicit revocation; there is no device-management UI beyond sign-out-all.
 
 Report problems privately to the operator; do not paste access tokens or candidate documents into

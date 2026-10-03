@@ -1,4 +1,4 @@
-# okkra login pages and recruiter discovery
+# suri.one login pages and recruiter discovery
 
 The production UI lives in `frontend/`. `B2B-app/` is the original design reference and
 standalone prototype, not a second API client. Its localStorage identities, simulated speech,
@@ -81,7 +81,7 @@ shortlists, ATS integrations and employer vetting are not implemented.
 ## Coding-agent entry points
 
 - `frontend/src/components/SignInPage.tsx` and its CSS module: shared candidate/recruiter Google
-  sign-in and recovery; all okkra sign-in styling stays here.
+  sign-in and recovery; all suri.one sign-in styling stays here.
 - `frontend/src/components/AppShell.tsx`: public route list, protected navigation and role switch.
 - `frontend/src/app/{opportunities,recruiter,progress}/`: feature screens, no mock stores.
 - `frontend/src/lib/api.ts`: typed requests and CSRF; extend this before adding direct fetch calls.

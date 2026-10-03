@@ -546,14 +546,14 @@ See docs/ARCHITECTURE_REVIEW.md for the individual review findings and implement
 ## Candidate/recruiter login and recruiter access
 
 The application runs from `frontend/` on port **3000**. Only candidate/recruiter login uses the
-okkra sign-in design; the rest of the app retains its original interface. The original `B2B-app/` on
+suri.one sign-in design; the rest of the app retains its original interface. The original `B2B-app/` on
 port **3100** is a standalone prototype, not the real account or recruiting application.
 
 ```bash
 # From the repository root: apply all migrations, including recruiter profiles and resume consent.
 (cd backend && uv run alembic upgrade head)
 
-# Start the real API, durable report worker and okkra frontend.
+# Start the real API, durable report worker and suri.one frontend.
 ./dev.sh
 
 # Confirm the integrated app's backend is ready (no sign-in required).

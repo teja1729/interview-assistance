@@ -4,7 +4,7 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
-  title: "okkra — Practice with purpose",
+  title: "suri.one — Practice with purpose",
   description:
     "Personalized mock interviews, grounded feedback, and a practice plan built around your next role.",
 };

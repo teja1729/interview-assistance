@@ -1,10 +1,10 @@
-# okkra
+# suri.one
 
 A multi-user interview-preparation SaaS: Google sign-in, personal accounts, personalized voice-to-voice
 interviews, evidence-based reports, practice plans, usage limits, and optional Stripe billing.
 Next.js + FastAPI + PostgreSQL, with explicit agent workflows and interchangeable AI providers.
 
-The okkra sign-in design is used only for candidate and recruiter login. The signed-in application retains
+The suri.one sign-in design is used only for candidate and recruiter login. The signed-in application retains
 its original sidebar and teal theme. Recruiters sign in at `/recruiter/login` to browse
 candidate-published profiles and request resume access. Candidates manage publication and consent at
 `/opportunities`. See [the integration and feature map](docs/SURI_INTEGRATION.md).
@@ -58,7 +58,7 @@ To use real Google accounts or AI, follow [configuration](docs/CONFIGURATION.md)
 | --- | --- |
 | Product idea, code assessment and validation priorities | [Product review](docs/PRODUCT_REVIEW.md) |
 | Understand boundaries and data flow | [Architecture](docs/ARCHITECTURE.md) |
-| okkra sign-in, recruiter consent and remaining prototype features | [Sign-in and discovery](docs/SURI_INTEGRATION.md) |
+| suri.one sign-in, recruiter consent and remaining prototype features | [Sign-in and discovery](docs/SURI_INTEGRATION.md) |
 | Set up, test and debug | [Development](docs/DEVELOPMENT.md) |
 | Google, models, audio and Stripe | [Configuration](docs/CONFIGURATION.md) |
 | Natural voice, automatic microphone turns and speech troubleshooting | [Voice interviews](docs/VOICE.md) |

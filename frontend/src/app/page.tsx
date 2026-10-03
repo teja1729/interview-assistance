@@ -185,7 +185,7 @@ export default function LandingPage() {
       </main>
       <footer className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4 border-t border-border px-6 py-7 text-xs text-muted">
         <span>
-          okkra · Deliberate practice for your next chapter.
+          suri.one · Deliberate practice for your next chapter.
         </span>
         <span>Practice feedback, never a hiring prediction.</span>
       </footer>
