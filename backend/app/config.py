@@ -12,10 +12,21 @@ ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
 
 
+def _database_url() -> str:
+    url = os.getenv("DATABASE_URL", f"sqlite:///{ROOT / 'data' / 'saas.db'}")
+    # Hosted Postgres providers commonly supply postgres:// or postgresql:// URLs.
+    # This project installs psycopg 3, so select that SQLAlchemy driver explicitly.
+    if url.startswith("postgres://"):
+        return "postgresql+psycopg://" + url.removeprefix("postgres://")
+    if url.startswith("postgresql://"):
+        return "postgresql+psycopg://" + url.removeprefix("postgresql://")
+    return url
+
+
 @dataclass(frozen=True)
 class Settings:
     environment: str = os.getenv("APP_ENV", "development")
-    database_url: str = os.getenv("DATABASE_URL", f"sqlite:///{ROOT / 'data' / 'saas.db'}")
+    database_url: str = _database_url()
     frontend_origin: str = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000").rstrip("/")
     session_secret: str = os.getenv("SESSION_SECRET", "development-only-change-before-deploying")
     google_client_id: str = os.getenv("GOOGLE_CLIENT_ID", "")

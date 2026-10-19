@@ -11,7 +11,8 @@ Vercel account before importing this project.
 The FastAPI service needs PostgreSQL and application credentials through environment variables.
 Set `DATABASE_URL`, `APP_ENV=production`, `AUTH_DEMO_ENABLED=false`, a random `SESSION_SECRET`,
 `FRONTEND_ORIGIN`, Google OAuth credentials, and provider keys required by
-`backend/config/models.toml`. Apply Alembic migrations to the target database before deploying
+`backend/config/models.toml`. `DATABASE_URL` may use a provider's `postgres://` or
+`postgresql://` scheme; the backend selects its installed psycopg 3 driver automatically. Apply Alembic migrations to the target database before deploying
 backend code that expects the new schema. Keep preview and production databases separate.
 
 The durable report worker in `backend/app/worker.py` is a persistent polling process. It claims
