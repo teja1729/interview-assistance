@@ -105,16 +105,19 @@ def checkpoint(session, job, lease, artifacts):
     session.commit()
 
 
-def process_one(engine=None):
+def process_one(engine=None, job_id=None):
     engine = engine or db.engine
     with Session(engine, expire_on_commit=False) as session:
         now = time.time()
+        claimable = [
+            AgentJob.available_at <= now,
+            or_(AgentJob.status == "pending", (AgentJob.status == "running") & (AgentJob.lease_until < now)),
+        ]
+        if job_id is not None:
+            claimable.append(AgentJob.id == job_id)
         candidates = session.exec(
             select(AgentJob)
-            .where(
-                AgentJob.available_at <= now,
-                or_(AgentJob.status == "pending", (AgentJob.status == "running") & (AgentJob.lease_until < now)),
-            )
+            .where(*claimable)
             .order_by(AgentJob.created_at)
             .limit(10)
         ).all()

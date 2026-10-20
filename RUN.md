@@ -348,7 +348,7 @@ smoke test in your deployment environment.
 For a managed Railway setup with separate API, worker, PostgreSQL and web services, follow
 [docs/RAILWAY.md](docs/RAILWAY.md).
 
-For the Vercel Services configuration (FastAPI + Next.js, with the report worker hosted separately),
+For the Vercel Services configuration (FastAPI + Next.js) and Vercel Queues report processing,
 see [docs/VERCEL.md](docs/VERCEL.md).
 
 ```bash
@@ -428,7 +428,8 @@ git status --short
 | Login has no sign-in options / auth config returns 404 | An older backend may still occupy port 8000. Stop it, then restart the current stack with `./dev.sh`; consent settings cannot fix a missing API route |
 | 403 on a mutation | Use the same browser origin; reload to refresh the session/CSRF token |
 | 409 after answering | Retry the pending request or reload; do not manually duplicate saved turns |
-| Report stays pending | Start/restart `uv run python -m app.worker`; inspect its terminal output |
+| Local report stays pending | Start/restart `uv run python -m app.worker`; inspect its terminal output |
+| Vercel report stays pending | Confirm Vercel Queues is enabled, inspect the backend finish request and queue subscriber logs, then reopen the report page to re-dispatch its saved job |
 | Report failed | Check provider credentials/quota in backend and worker logs, then use the report Retry button |
 | 429 quota reached | Check Plans & usage; use a fresh disposable DB for repeated test runs |
 | Sarvam/Gemini/OpenAI unavailable | Set its server key and restart API + worker; assign a configured profile in TOML [agents] |

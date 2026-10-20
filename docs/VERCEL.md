@@ -15,14 +15,17 @@ Set `DATABASE_URL`, `APP_ENV=production`, `AUTH_DEMO_ENABLED=false`, a random `S
 `postgresql://` scheme; the backend selects its installed psycopg 3 driver automatically. Apply Alembic migrations to the target database before deploying
 backend code that expects the new schema. Keep preview and production databases separate.
 
-The durable report worker in `backend/app/worker.py` is a persistent polling process. It claims
-database jobs and loops until it receives a shutdown signal; it cannot be deployed as a normal
-Vercel request service without redesigning job dispatch. Reports remain in `finishing` until this
-worker is running. Run it as a separate long-lived service
-(for example on Railway) with the same `DATABASE_URL`, `APP_ENV`, `SESSION_SECRET`, OAuth settings,
-and provider configuration as the backend. Keep `INLINE_WORKER=false` on Vercel. The worker and
-backend communicate through the PostgreSQL job table, not HTTP, so there is no Vercel service
-binding between them.
+Report jobs are stored durably in PostgreSQL, then dispatched to Vercel Queues from the interview
+finish endpoint. The Python subscriber in `backend/app/queue_subscribers.py` claims the same
+fenced database lease used by the existing worker, writes checkpoints, and publishes the report
+and practice tasks atomically. No separate worker service or extra queue secret is needed in a
+Vercel deployment; the Vercel Queue SDK uses the deployment's OIDC identity. Keep
+`INLINE_WORKER=false` on Vercel. Enable Vercel Queues for the project if the dashboard requests it.
+
+The report page re-dispatches an interview that is already `finishing` once when opened. This
+recovers jobs created before queue dispatch was deployed. Queue delivery is at least once, so the
+database lease and job status remain the source of truth. Locally, the existing
+`backend/app/worker.py` polling command remains available for development.
 
 ## Routing and bindings
 
@@ -41,4 +44,6 @@ Google OAuth must include `https://YOUR_DOMAIN/api/auth/google/callback` as an a
 URI. Add Stripe webhook URLs and any other external callback URLs using the same public domain.
 
 See [Vercel Services documentation](https://vercel.com/docs/services) and the
-[configuration reference](https://vercel.com/docs/services/config-reference).
+[configuration reference](https://vercel.com/docs/services/config-reference), plus
+[Vercel Queues](https://vercel.com/docs/queues) and the
+[Python SDK deployment instructions](https://vercel.com/docs/queues/python-sdk).

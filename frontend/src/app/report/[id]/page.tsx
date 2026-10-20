@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { CompanyContext } from "@/components/CompanyContext";
@@ -20,6 +20,7 @@ export default function ReportPage() {
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState<number | null>(0);
   const [refreshKey, setRefreshKey] = useState(0);
+  const dispatchedFor = useRef<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -29,6 +30,13 @@ export default function ReportPage() {
         const data = await api.interview(id);
         if (!active) return;
         setIv(data);
+        if (data.status === "finishing" && dispatchedFor.current !== id) {
+          dispatchedFor.current = id;
+          // Re-enqueue jobs created before Vercel Queue dispatch was deployed.
+          void api.finish(id).catch((e) => {
+            if (active) setError((e as Error).message);
+          });
+        }
         if (data.status === "finishing") timer = setTimeout(load, 2000);
       } catch (e) {
         if (active) setError((e as Error).message);
@@ -70,7 +78,7 @@ export default function ReportPage() {
         </h1>
         <p className="mt-4 text-sm leading-6 text-muted">
           {iv.status === "finishing"
-            ? "Your evaluator is reviewing the evidence, then your coach will build a focused practice plan. You can leave this page; your report will keep processing while the report worker is running."
+            ? "Your evaluator is reviewing the evidence, then your coach will build a focused practice plan. You can leave this page; your report will keep processing."
             : "Your saved answers are safe. Continue your session or retry the report below."}
         </p>
         {iv.report_progress && (

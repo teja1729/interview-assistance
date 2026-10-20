@@ -18,6 +18,7 @@ dependencies = [
     "sqlmodel>=0.0.42",
     "stripe>=12",
     "uvicorn[standard]>=0.53.0",
+    "vercel-queue>=0.9.2",
 ]
 
 [tool.ruff]
@@ -28,6 +29,9 @@ target-version = "py312"
 extend-select = ["B", "UP", "FURB"]
 # B008: FastAPI's Depends()/File()/Form() in defaults is the framework's idiom.
 ignore = ["B008"]
+
+[[tool.vercel.subscribers]]
+entrypoint = "app.queue_entrypoint"
 
 [dependency-groups]
 dev = [
