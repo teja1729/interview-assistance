@@ -15,7 +15,6 @@ const candidateLinks = [
   ["/practice", "Practice plan", "spark"],
   ["/progress", "Progress", "activity"],
   ["/opportunities", "Get discovered", "people"],
-  ["/activity", "Agent activity", "activity"],
   ["/settings", "Account", "settings"],
   ["/billing", "Plans & usage", "billing"],
 ];

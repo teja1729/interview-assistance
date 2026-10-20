@@ -303,18 +303,12 @@ try {
   );
   await page.getByRole("button", { name: "Sign out on all devices" }).waitFor();
   await shot("08-settings");
-  await page.goto(`${BASE}/activity`);
-  await page
-    .getByRole("cell", { name: /evaluator/ })
-    .first()
-    .waitFor();
-  await shot("09-activity");
   await page.goto(`${BASE}/billing`);
   await page.getByRole("heading", { name: "Plans & usage" }).waitFor();
   await page.getByText("Current plan", { exact: true }).first().waitFor();
-  await shot("10-billing");
+  await shot("09-billing");
   step(
-    "Personal account settings, server-only routing, trace metadata and billing screens",
+    "Personal account settings, server-only routing and billing screens",
   );
 
   // Device lifecycle regression, using a fixture API to advance time without modifying real sessions.

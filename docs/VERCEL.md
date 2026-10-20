@@ -17,7 +17,8 @@ backend code that expects the new schema. Keep preview and production databases 
 
 The durable report worker in `backend/app/worker.py` is a persistent polling process. It claims
 database jobs and loops until it receives a shutdown signal; it cannot be deployed as a normal
-Vercel request service without redesigning job dispatch. Run it as a separate long-lived service
+Vercel request service without redesigning job dispatch. Reports remain in `finishing` until this
+worker is running. Run it as a separate long-lived service
 (for example on Railway) with the same `DATABASE_URL`, `APP_ENV`, `SESSION_SECRET`, OAuth settings,
 and provider configuration as the backend. Keep `INLINE_WORKER=false` on Vercel. The worker and
 backend communicate through the PostgreSQL job table, not HTTP, so there is no Vercel service

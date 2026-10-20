@@ -70,7 +70,7 @@ export default function ReportPage() {
         </h1>
         <p className="mt-4 text-sm leading-6 text-muted">
           {iv.status === "finishing"
-            ? "Your evaluator is reviewing the evidence, then your coach will build a focused practice plan. You can leave this page; your report will keep processing."
+            ? "Your evaluator is reviewing the evidence, then your coach will build a focused practice plan. You can leave this page; your report will keep processing while the report worker is running."
             : "Your saved answers are safe. Continue your session or retry the report below."}
         </p>
         {iv.report_progress && (

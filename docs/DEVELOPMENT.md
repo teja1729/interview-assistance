@@ -51,7 +51,7 @@ authentication errors, timeouts and bounded runtime retries without using live c
 fixture drops/recreates application tables. CI does this automatically.
 
 The browser suite uses the running demo API and worker, creates its own session/resume, and checks
-setup → interview → report → practice plan → settings/activity/billing → logout. It requires no
+setup → interview → report → practice plan → settings/billing → logout. It requires no
 paid provider or existing resume. Browser artifacts are ignored by Git.
 `npm run test:login` checks the running login page, auth-discovery failure/retry, callback errors
 and the Google authorization redirect when credentials are configured. It does not complete Google

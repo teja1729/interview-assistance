@@ -10,7 +10,7 @@ Read the repository AGENTS.md, then docs/ARCHITECTURE.md and docs/DEVELOPMENT.md
   browser session/device phases; the backend owns the authoritative interview lifecycle. Read
   `src/features/interview/README.md` before changing recording, timers or request retries.
 - `/report/[id]`: polls durable report status and supports retry after terminal failure.
-- `/practice`, `/activity`, `/settings`, `/billing`: personal account features.
+- `/practice`, `/settings`, `/billing`: personal account features.
 - `lib/recorder.ts`, `lib/speech.ts`: browser device lifecycle; keep vendor reasoning code out.
 
 Use the API client for all mutations. Do not put tokens in localStorage. Voice routing comes from

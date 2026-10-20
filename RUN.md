@@ -429,7 +429,7 @@ git status --short
 | 403 on a mutation | Use the same browser origin; reload to refresh the session/CSRF token |
 | 409 after answering | Retry the pending request or reload; do not manually duplicate saved turns |
 | Report stays pending | Start/restart `uv run python -m app.worker`; inspect its terminal output |
-| Report failed | Check provider credentials/quota in Agent activity, then use the report Retry button |
+| Report failed | Check provider credentials/quota in backend and worker logs, then use the report Retry button |
 | 429 quota reached | Check Plans & usage; use a fresh disposable DB for repeated test runs |
 | Sarvam/Gemini/OpenAI unavailable | Set its server key and restart API + worker; assign a configured profile in TOML [agents] |
 | Microphone answer unavailable | Set AUDIO_PROVIDER=sarvam and SARVAM_API_KEY; restart API and reload. Allow microphone access in browser site settings, then Retry microphone |
