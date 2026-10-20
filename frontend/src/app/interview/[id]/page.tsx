@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { CompanyContext } from "@/components/CompanyContext";
@@ -20,6 +21,7 @@ import {
 } from "@/features/interview/CallControls";
 export default function InterviewCallPage() {
   const { id } = useParams<{ id: string }>();
+  const conversationEnd = useRef<HTMLLIElement | null>(null);
   const {
     iv,
     phase,
@@ -59,6 +61,9 @@ export default function InterviewCallPage() {
     setCaptions,
     setPanel,
   } = useInterviewSession(id);
+  useEffect(() => {
+    conversationEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [turns]);
   if (!iv)
     return (
       <div className="card p-8 text-center">
@@ -250,39 +255,54 @@ export default function InterviewCallPage() {
                 </div>
               )}
             </div>
-            {panel && (
-              <aside className="m-3 mb-0 flex w-72 shrink-0 flex-col rounded-2xl bg-white text-foreground max-sm:absolute max-sm:inset-3 max-sm:z-20 max-sm:w-auto">
+            <aside
+              className={`m-3 mb-0 w-80 shrink-0 flex-col rounded-2xl bg-white text-foreground max-sm:fixed max-sm:inset-x-3 max-sm:bottom-24 max-sm:top-16 max-sm:z-20 max-sm:w-auto ${panel ? "flex" : "hidden lg:flex"}`}
+              aria-label="Interview conversation"
+            >
                 <div className="flex items-center justify-between border-b border-border px-4 py-4">
-                  <h2 className="text-sm font-semibold">Transcript</h2>
+                  <div>
+                    <h2 className="text-sm font-semibold">Conversation</h2>
+                    <p className="mt-1 text-xs text-muted">Your interview chat</p>
+                  </div>
                   <button
                     aria-label="Close transcript"
                     onClick={() => setPanel(false)}
+                    className="lg:hidden"
                   >
                     <CloseIcon />
                   </button>
                 </div>
-                <ol className="flex-1 space-y-5 overflow-y-auto px-4 py-4 text-sm">
+                <ol
+                  aria-live="polite"
+                  className="flex-1 space-y-4 overflow-y-auto px-4 py-4 text-sm"
+                >
                   {turns.map((t, i) => (
-                    <li key={i}>
-                      <p className="text-xs font-medium text-accent">
-                        Interviewer
-                      </p>
-                      <p className="mt-1 leading-6">{t.question}</p>
+                    <li key={t.id ?? `${t.at}-${i}`} className="space-y-3">
+                      <div className="flex justify-start">
+                        <div className="max-w-[90%] rounded-2xl rounded-tl-sm bg-background px-3 py-2.5">
+                          <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-accent">
+                            Interviewer
+                          </p>
+                          <p className="leading-6">{t.question}</p>
+                        </div>
+                      </div>
                       {t.answer && (
-                        <>
-                          <p className="mt-3 text-xs font-medium text-muted">
-                            You
-                          </p>
-                          <p className="mt-1 rounded-xl bg-background p-3 text-xs leading-6">
-                            {t.answer}
-                          </p>
-                        </>
+                        <div className="flex justify-end">
+                          <div className="max-w-[90%] rounded-2xl rounded-tr-sm bg-[#dff3ea] px-3 py-2.5 text-foreground">
+                            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#36765f]">
+                              You
+                            </p>
+                            <p className="whitespace-pre-wrap leading-6">
+                              {t.answer}
+                            </p>
+                          </div>
+                        </div>
                       )}
                     </li>
                   ))}
+                  <li ref={conversationEnd} aria-hidden="true" />
                 </ol>
               </aside>
-            )}
           </div>
           <div
             data-testid="status"
@@ -294,7 +314,7 @@ export default function InterviewCallPage() {
             ) : phase === "finishing" ? (
               "Saving your session…"
             ) : phase === "recording" ? (
-              `Listening · ${recSeconds.toFixed(0)}s${autoListen && cloudVoice ? " · Pause for 3 seconds when you’re finished" : " · Select Send answer when you’re finished"}`
+              `Listening · ${recSeconds.toFixed(0)}s${autoListen && cloudVoice ? " · Mute the mic to send your answer, or pause for 3 seconds for hands-free sending" : " · Select the mic button to send your answer when finished"}`
             ) : remaining <= 0 ? (
               "Your time is up. Finish to get your report."
             ) : phase === "ready" ? (
@@ -377,12 +397,14 @@ export default function InterviewCallPage() {
             >
               {phase === "done" ? "Get report" : <EndIcon />}
             </button>
-            <RoundBtn
-              on={panel}
-              onClick={() => setPanel((v) => !v)}
-              label="Transcript"
-              icon={<ChatIcon />}
-            />
+            <div className="lg:hidden">
+              <RoundBtn
+                on={panel}
+                onClick={() => setPanel((v) => !v)}
+                label="Conversation"
+                icon={<ChatIcon />}
+              />
+            </div>
           </div>
         </>
       )}

@@ -22,6 +22,9 @@ Preserve these contracts when extending the feature:
   Company facts and their citations render through `components/CompanyContext.tsx`. Search Suggestions
   use a script-free sandboxed frame; never grant it same-origin access or inject its HTML into the page.
 - Typed answers reach the API verbatim. Voice answers use a WAV recording and server transcription.
+- The live call shows the turn history as a chat sidebar on desktop and a toggleable conversation
+  panel on small screens. While recording, clearly tell candidates they can mute the mic to submit
+  their answer; preserve the hands-free pause-to-submit behavior.
 - Deadline and hang-up submit an active recording before ending the session. Recording, playback
   and camera resources must be released on cancellation, permission races and unmount.
 - Async work uses generation checks so a disposed session cannot update the replacement screen.
