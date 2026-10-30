@@ -40,7 +40,7 @@ export function Brand() {
       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-background">
         <Icon name="mic" className="h-4 w-4" />
       </span>
-      suri.one
+      okkra
     </Link>
   );
 }

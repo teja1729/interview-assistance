@@ -1,4 +1,4 @@
-# suri.one frontend
+# okkra frontend
 
 Read the repository AGENTS.md, then docs/ARCHITECTURE.md and docs/DEVELOPMENT.md.
 
