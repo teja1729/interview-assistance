@@ -1,13 +1,13 @@
 @import "tailwindcss";
 :root {
-  --background: #f6f8fa;
+  --background: #f7f9f7;
   --surface: #ffffff;
-  --foreground: #172b34;
-  --muted: #697c86;
-  --border: #e3e9ec;
-  --accent: #0e8074;
+  --foreground: #26342f;
+  --muted: #687770;
+  --border: #dce5df;
+  --accent: #54786d;
   --accent-ink: #ffffff;
-  --accent-soft: #e9f5f1;
+  --accent-soft: #e9f0ec;
 }
 @theme inline {
   --color-background: var(--background);
@@ -43,7 +43,7 @@ select {
   outline-offset: 3px;
 }
 ::selection {
-  background: #c5e8dc;
+  background: #dce9e2;
 }
 .card {
   @apply rounded-2xl border border-border bg-surface;

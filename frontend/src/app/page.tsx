@@ -1,192 +1,142 @@
 import Link from "next/link";
 import { Brand } from "@/components/AppShell";
 import { Icon } from "@/components/Icon";
+import { InteractivePracticeScene } from "./InteractivePracticeScene";
+import styles from "./page.module.css";
+
+const steps = [
+  {
+    number: "01",
+    icon: "file",
+    title: "Bring your real story",
+    body: "Add your resume and the role you want. Okkra builds the practice around your actual experience.",
+    note: "YOUR EXPERIENCE, IN CONTEXT",
+  },
+  {
+    number: "02",
+    icon: "mic",
+    title: "Find your words out loud",
+    body: "Meet a voice interviewer that listens, follows up, and gives you room to think.",
+    note: "VOICE OR TEXT, YOUR CALL",
+  },
+  {
+    number: "03",
+    icon: "spark",
+    title: "Make the next answer stronger",
+    body: "Get feedback tied to what you said, then practice the exact skill you want to improve.",
+    note: "FEEDBACK YOU CAN USE",
+  },
+];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#fbfcfa]">
-      <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
+    <div className="min-h-screen overflow-hidden bg-background">
+      <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
         <Brand />
-        <nav className="flex flex-wrap items-center gap-6 text-sm">
-          <Link
-            href="/pricing"
-            className="hidden text-muted hover:text-foreground sm:block"
-          >
+        <nav aria-label="Main" className="flex items-center gap-3 sm:gap-6">
+          <Link href="/pricing" className="hidden text-sm text-muted transition hover:text-foreground sm:block">
             Plans
           </Link>
-          <Link
-            href="/recruiter/login"
-            className="text-muted hover:text-foreground"
-          >
+          <Link href="/recruiter/login" className="hidden text-sm text-muted transition hover:text-foreground md:block">
             Recruiter login
           </Link>
-          <Link href="/login" className="text-muted hover:text-foreground">
+          <Link href="/login" className="text-sm text-muted transition hover:text-foreground">
             Sign in
           </Link>
-          <Link href="/login" className="btn-primary hidden sm:inline-flex">
-            Start practicing <Icon name="arrow" className="h-4 w-4" />
+          <Link href="/login" className="btn-primary !rounded-full !px-5 !py-2.5">
+            Get started <Icon name="arrow" className="h-4 w-4" />
           </Link>
         </nav>
       </header>
+
       <main>
-        <section className="mx-auto grid max-w-6xl items-center gap-16 px-6 pb-24 pt-14 lg:grid-cols-[1.05fr_1fr] lg:pt-24">
-          <div className="enter">
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#d6e7df] bg-accent-soft px-3 py-1.5 text-xs font-medium text-accent">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />A better
-              way to prepare
+        <section className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-8 sm:px-8 md:pb-24 lg:grid-cols-[.95fr_1.05fr] lg:gap-4 lg:px-12 lg:pt-12">
+          <div className="relative z-[1] py-6 lg:py-12">
+            <div className={`${styles.eyebrow} enter`}>
+              <span className={styles.eyebrowDot} />
+              INTERVIEW PRACTICE THAT GETS PERSONAL
             </div>
-            <h1 className="max-w-xl text-5xl font-semibold leading-[1.1] tracking-[-.045em] sm:text-6xl">
-              Your experience.
+            <h1 className={`${styles.heroTitle} enter mt-7`} style={{ animationDelay: ".08s" }}>
+              Your story is
               <br />
-              Your next role.
-              <br />
-              <span className="text-accent">A stronger story.</span>
+              <span className={styles.heroAccent}>the answer.</span>
             </h1>
-            <p className="mt-7 max-w-md text-base leading-7 text-muted">
-              Turn what you know into answers that land. Practice with an AI
-              interviewer that knows your resume, challenges your thinking, and
-              helps you improve.
+            <p className="enter mt-7 max-w-lg text-base leading-7 text-muted sm:text-lg sm:leading-8" style={{ animationDelay: ".16s" }}>
+              Practice saying it with confidence. Okkra turns your resume and target role into a real voice interview, then helps you sharpen the answers that matter.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link href="/login" className="btn-primary !px-6 !py-3.5">
-                Build your interview confidence{" "}
-                <Icon name="arrow" className="h-4 w-4" />
+            <div className="enter mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: ".24s" }}>
+              <Link href="/login" className="btn-primary !rounded-full !px-6 !py-3.5">
+                Practice your first answer <Icon name="arrow" className="h-4 w-4" />
               </Link>
-              <Link href="#how-it-works" className="btn-ghost !py-3.5">
+              <Link href="#how-it-works" className="rounded-full border border-border bg-surface px-5 py-3.5 text-sm font-medium transition hover:bg-accent-soft">
                 See how it works
               </Link>
             </div>
-            <p className="mt-4 text-xs text-muted">
-              Start with 3 interviews a month. No card required.
-            </p>
-          </div>
-          <div className="enter relative" style={{ animationDelay: ".1s" }}>
-            <div className="absolute -inset-7 rounded-full bg-[#d9eee3]/50 blur-3xl" />
-            <div className="relative overflow-hidden rounded-3xl border border-border bg-white shadow-[0_24px_70px_-30px_#174e4240]">
-              <div className="flex items-center justify-between border-b border-border px-6 py-4">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-accent" />
-                  <span className="text-xs font-medium">
-                    Your next role, in focus
-                  </span>
-                </div>
-                <span className="text-[10px] text-muted">EXAMPLE SESSION</span>
-              </div>
-              <div className="p-6 sm:p-8">
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-accent-soft text-accent">
-                    <Icon name="mic" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold">
-                      Senior Software Engineer
-                    </p>
-                    <p className="mt-1 text-xs text-muted">
-                      Project depth · Architecture · Leadership
-                    </p>
-                  </div>
-                </div>
-                <div className="rounded-2xl bg-[#f3f6f4] p-5">
-                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-accent">
-                    Your interviewer
-                  </p>
-                  <p className="text-[15px] leading-6">
-                    “You mentioned reducing API latency on your resume. What did
-                    you change, and which trade-off was hardest?”
-                  </p>
-                  <div className="mt-5 flex h-7 items-center gap-1">
-                    {[
-                      12, 22, 15, 28, 18, 24, 10, 20, 26, 15, 22, 12, 7, 18, 24,
-                      10,
-                    ].map((h, i) => (
-                      <span
-                        key={i}
-                        className="w-1 rounded-full bg-accent/60"
-                        style={{ height: h }}
-                      />
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-4 rounded-2xl border border-border p-5">
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="text-xs font-medium">
-                      Feedback you can act on
-                    </span>
-                    <Icon name="spark" className="h-4 w-4 text-accent" />
-                  </div>
-                  <p className="text-sm leading-6 text-muted">
-                    Make your individual contribution clear. Explain the
-                    alternative you ruled out, then connect your decision to the
-                    result.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 border-t border-border bg-[#fcfdfb] px-6 py-4 text-xs text-muted">
-                <Icon name="check" className="h-4 w-4 text-accent" />
-                From a practice session to a clear next step.
-              </div>
+            <div className={`${styles.promise} enter mt-6`} style={{ animationDelay: ".32s" }}>
+              <span><Icon name="check" className="h-3.5 w-3.5" /> Resume-grounded</span>
+              <span><Icon name="check" className="h-3.5 w-3.5" /> Voice-to-voice</span>
+              <span><Icon name="check" className="h-3.5 w-3.5" /> Built for practice</span>
             </div>
           </div>
+
+          <InteractivePracticeScene />
         </section>
-        <section id="how-it-works" className="border-y border-border bg-white">
-          <div className="mx-auto max-w-6xl px-6 py-20">
-            <p className="eyebrow">Practice with purpose</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-              A feedback loop built around you.
-            </h2>
-            <div className="mt-12 grid gap-10 md:grid-cols-3">
-              {[
-                [
-                  "01",
-                  "Bring your context",
-                  "Upload your resume and paste the role you want. Your interviewer prepares around the experience and skills that matter.",
-                ],
-                [
-                  "02",
-                  "Think out loud",
-                  "Answer by voice or text. Get thoughtful follow-ups that test ownership, reasoning, and the evidence behind your claims.",
-                ],
-                [
-                  "03",
-                  "Know what to practice",
-                  "Review feedback grounded in your answers. Work through focused drills and bring stronger examples to your next session.",
-                ],
-              ].map(([n, title, body]) => (
-                <div key={n}>
-                  <span className="font-mono text-xs text-accent">{n} /</span>
-                  <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
-                </div>
-              ))}
-            </div>
+
+        <div className={styles.ticker} aria-label="Resume-grounded practice, voice interviews, and useful feedback">
+          <div className={styles.tickerTrack} aria-hidden="true">
+            {[0, 1].map((copy) => (
+              <div className={styles.tickerGroup} key={copy}>
+                <span>YOUR EXPERIENCE</span><i />
+                <span>REAL VOICE PRACTICE</span><i />
+                <span>FEEDBACK THAT FITS</span><i />
+                <span>YOUR NEXT CHAPTER</span><i />
+              </div>
+            ))}
           </div>
-        </section>
-        <section className="mx-auto max-w-6xl px-6 py-20">
-          <div className="flex flex-col justify-between gap-6 rounded-3xl bg-[#173d36] px-8 py-12 text-white md:flex-row md:items-center md:px-12">
+        </div>
+
+        <section id="how-it-works" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28 lg:px-12">
+          <div className="mb-12 grid gap-5 md:grid-cols-[1fr_.7fr] md:items-end">
             <div>
-              <p className="text-xs uppercase tracking-widest text-[#9bcabb]">
-                Make the next conversation count
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-                You have the experience.
-                <br />
-                Practice how you share it.
+              <p className="eyebrow">A BETTER WAY TO GET READY</p>
+              <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+                Practice the interview.<br /><span className="text-muted">Keep what makes you, you.</span>
               </h2>
             </div>
-            <Link
-              href="/login"
-              className="btn-primary !bg-white !px-6 !py-3.5 !text-[#173d36]"
-            >
-              Start your first interview{" "}
-              <Icon name="arrow" className="h-4 w-4" />
-            </Link>
+            <p className="max-w-md text-sm leading-6 text-muted md:justify-self-end">
+              No generic scripts. No mystery scores. Just thoughtful reps, grounded in your experience, with useful next steps after every session.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {steps.map((step, index) => (
+              <article className={`${styles.stepCard} enter`} key={step.number} style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className={styles.stepTop}><span>{step.number}</span><Icon name={step.icon} className="h-5 w-5" /></div>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+                <div className={styles.stepNote}><span />{step.note}</div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="px-5 pb-20 sm:px-8 md:pb-28 lg:px-12">
+          <div className={styles.finalCta}>
+            <div className={styles.ctaOrbit} aria-hidden="true"><span /><span /><span /></div>
+            <div className="relative z-[1] max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[.2em] text-white/65">Your next interview starts here</p>
+              <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">You already have the experience.<br />Let’s make it land.</h2>
+              <p className="mt-5 max-w-lg text-sm leading-6 text-white/70">One practice session can turn “I think I did okay” into “I know what I want to say next time.”</p>
+              <Link href="/login" className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:shadow-lg">
+                Start practicing <Icon name="arrow" className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className={styles.ctaStamp} aria-hidden="true"><Icon name="spark" className="h-8 w-8" /><span>MAKE IT<br />YOUR STORY</span></div>
           </div>
         </section>
       </main>
-      <footer className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4 border-t border-border px-6 py-7 text-xs text-muted">
-        <span>
-          okkra · Deliberate practice for your next chapter.
-        </span>
+
+      <footer className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 border-t border-border px-5 py-6 text-xs text-muted sm:px-8 lg:px-12">
+        <span>Okkra · Deliberate practice for your next chapter.</span>
         <span>Practice feedback, never a hiring prediction.</span>
       </footer>
     </div>

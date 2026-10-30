@@ -39,7 +39,7 @@ export function CompanyContext({
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`ml-1 underline ${dark ? "text-[#a5d9c6]" : "text-accent"}`}
+                    className={`ml-1 underline ${dark ? "text-[#dce9e2]" : "text-accent"}`}
                   >
                     {source.title}
                   </a>

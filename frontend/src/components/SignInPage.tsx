@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
@@ -71,8 +72,14 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
     <div className={`${styles.auth} grid min-h-screen lg:grid-cols-2`}>
       <div className="flex flex-col bg-background px-8 py-8 lg:px-16">
         <Link href="/" className={styles.wordmark} aria-label="okkra home">
-          okkra
-          <i aria-hidden="true" />
+          <Image
+            src="/okkra-logo.svg"
+            alt="Okkra"
+            width={145}
+            height={54}
+            className="h-[54px] w-[145px] object-contain"
+            priority
+          />
         </Link>
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-20">
           <p className="eyebrow">
@@ -192,8 +199,8 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
           </Link>
         </div>
       </div>
-      <div className="hidden flex-col justify-center bg-[#173d36] p-16 text-white lg:flex">
-        <p className="text-xs uppercase tracking-[.2em] text-[#9bcabb]">
+      <div className="hidden flex-col justify-center bg-[#e9f0ec] p-16 text-[#26342f] lg:flex">
+        <p className="text-xs uppercase tracking-[.2em] text-accent">
           {recruiter
             ? "Make a thoughtful introduction"
             : "Prepare with intention"}
@@ -217,10 +224,10 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
               ]
           ).map((s, i) => (
             <div key={s} className="flex items-center gap-4">
-              <span className="grid h-8 w-8 place-items-center rounded-full border border-[#9bcabb]/40 font-mono text-xs text-[#9bcabb]">
+              <span className="grid h-8 w-8 place-items-center rounded-full border border-accent/30 font-mono text-xs text-accent">
                 0{i + 1}
               </span>
-              <span className="text-sm text-white/80">{s}</span>
+              <span className="text-sm text-foreground/75">{s}</span>
             </div>
           ))}
         </div>

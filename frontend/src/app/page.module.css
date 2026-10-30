@@ -1,0 +1,850 @@
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.eyebrowDot,
+.liveDot,
+.questionPulse {
+  position: relative;
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.eyebrowDot::after,
+.liveDot::after,
+.questionPulse::after {
+  position: absolute;
+  inset: -4px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--accent);
+  content: "";
+  animation: ping 2s ease-out infinite;
+}
+
+.heroTitle {
+  max-width: 11ch;
+  font-size: clamp(3.5rem, 7vw, 6.8rem);
+  font-weight: 650;
+  line-height: 0.96;
+  letter-spacing: -0.075em;
+}
+
+.heroAccent {
+  position: relative;
+  display: inline-block;
+  color: var(--accent);
+}
+
+.heroAccent::after {
+  position: absolute;
+  right: 0.04em;
+  bottom: -0.1em;
+  left: 0.05em;
+  height: 0.11em;
+  border-radius: 99px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: draw 0.65s 0.7s ease-out forwards;
+}
+
+.promise {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.15rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.promise span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.promise svg {
+  color: var(--accent);
+}
+
+.stageWrap {
+  position: relative;
+  min-width: 0;
+  padding: 1rem 0.25rem 1.5rem;
+}
+
+.stageGlow {
+  position: absolute;
+  inset: 7% -6% 1%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 15%, transparent), transparent 68%);
+  filter: blur(25px);
+  animation: glow 5s ease-in-out infinite alternate;
+}
+
+.stage {
+  position: relative;
+  min-height: 590px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 13%);
+  border-radius: 2rem;
+  background: #1f302b;
+  box-shadow: 0 34px 90px -46px rgb(41 37 36 / 58%);
+  color: #fff;
+  isolation: isolate;
+  perspective: 1000px;
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 180ms ease-out;
+}
+
+.stageGrid {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: linear-gradient(rgb(255 255 255 / 3%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 3%) 1px, transparent 1px);
+  background-position: center;
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 86%);
+  animation: gridPan 24s linear infinite;
+}
+
+.stageHeader {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.4rem;
+  border-bottom: 1px solid rgb(255 255 255 / 9%);
+  color: rgb(255 255 255 / 75%);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.liveLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.liveDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  box-shadow: 0 0 18px var(--accent);
+}
+
+.sessionTime {
+  color: white;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.sessionTime span {
+  color: rgb(255 255 255 / 35%);
+}
+
+.stageTabs {
+  position: absolute;
+  z-index: 6;
+  top: 4.2rem;
+  left: 50%;
+  display: flex;
+  max-width: calc(100% - 1rem);
+  gap: 0.25rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 999px;
+  background: rgb(31 48 43 / 88%);
+  padding: 0.25rem;
+  backdrop-filter: blur(12px);
+  transform: translateX(-50%);
+}
+
+.stageTab,
+.stageTabActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  padding: 0.55rem 0.75rem;
+  color: rgb(255 255 255 / 65%);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.59rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.stageTab:hover,
+.stageTabActive:hover {
+  transform: translateY(-1px);
+}
+
+.stageTab span,
+.stageTabActive span {
+  color: rgb(255 255 255 / 42%);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+}
+
+.stageTabActive {
+  background: var(--accent);
+  color: white;
+}
+
+.stageTabActive span {
+  color: rgb(255 255 255 / 75%);
+}
+
+.stageTab:focus-visible,
+.stageTabActive:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.orbitScene {
+  position: absolute;
+  top: 4.7rem;
+  right: 0;
+  left: 0;
+  display: grid;
+  height: 330px;
+  place-items: center;
+  transform-style: preserve-3d;
+  animation: cameraPan 8s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.orbit {
+  position: absolute;
+  width: 224px;
+  height: 224px;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 50%;
+}
+
+.orbitA {
+  animation: rotate 16s linear infinite;
+}
+
+.orbitA::before,
+.orbitB::after {
+  position: absolute;
+  top: 18%;
+  left: 12%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 85%, transparent);
+  content: "";
+}
+
+.orbitB {
+  width: 286px;
+  height: 286px;
+  border-color: rgb(255 255 255 / 7%);
+  transform: rotate(-25deg) scaleY(0.57);
+  animation: orbitTilt 9s ease-in-out infinite alternate;
+}
+
+.orbitB::after {
+  top: auto;
+  right: 9%;
+  bottom: 16%;
+  left: auto;
+  width: 0.4rem;
+  height: 0.4rem;
+  background: #dce9e2;
+  box-shadow: 0 0 15px rgb(220 233 226 / 80%);
+}
+
+.orbitDot {
+  position: absolute;
+  z-index: 1;
+  top: 26%;
+  right: 24%;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: #dce9e2;
+  animation: bob 3s ease-in-out infinite;
+}
+
+.coreGlow {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+  filter: blur(34px);
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+.core {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 92px;
+  height: 92px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 30px;
+  background: linear-gradient(145deg, var(--accent), #3e6055);
+  box-shadow: 0 15px 50px rgb(84 120 109 / 37%), inset 0 1px rgb(255 255 255 / 30%);
+  animation: float 4s ease-in-out infinite;
+}
+
+.soundWave {
+  position: absolute;
+  z-index: 2;
+  bottom: 4px;
+  display: flex;
+  height: 44px;
+  align-items: center;
+  gap: 4px;
+}
+
+.soundWave span {
+  width: 3px;
+  height: var(--bar-height);
+  max-height: 38px;
+  border-radius: 8px;
+  background: linear-gradient(to top, var(--accent), #b5cbc2);
+  animation: wave 0.8s var(--bar-delay) ease-in-out infinite alternate;
+}
+
+.floatTag {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 0.9rem;
+  background: rgb(41 37 36 / 92%);
+  padding: 0.7rem 0.8rem;
+  box-shadow: 0 12px 36px rgb(0 0 0 / 25%);
+  backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  animation: tagPan 7s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.floatTag strong,
+.floatTag small {
+  display: block;
+  white-space: nowrap;
+}
+
+.floatTag strong {
+  font-size: 0.55rem;
+  letter-spacing: 0.11em;
+}
+
+.floatTag small {
+  margin-top: 0.25rem;
+  color: rgb(255 255 255 / 53%);
+  font-size: 0.62rem;
+}
+
+.tagTop {
+  top: 8.8rem;
+  left: 5%;
+}
+
+.tagBottom {
+  right: 4%;
+  bottom: 9.3rem;
+  animation-name: tagPanReverse;
+  animation-duration: 8s;
+}
+
+.tagIcon {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 0.6rem;
+  background: rgb(255 255 255 / 9%);
+  color: #dce9e2;
+}
+
+.tagCheck {
+  width: 1rem;
+  color: #dce9e2;
+}
+
+.scoreRing {
+  display: grid;
+  width: 2.3rem;
+  height: 2.3rem;
+  align-content: center;
+  justify-items: center;
+  border: 1px solid rgb(243 239 230 / 70%);
+  border-radius: 50%;
+  color: #dce9e2;
+  font-size: 0.5rem;
+  line-height: 0.75rem;
+}
+
+.scoreRing b {
+  font-size: 0.8rem;
+}
+
+.questionCard {
+  position: absolute;
+  z-index: 4;
+  right: 7%;
+  bottom: 2.6rem;
+  left: 7%;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 1.1rem;
+  background: rgb(41 37 36 / 93%);
+  padding: 1rem 1.1rem;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 28%);
+  backdrop-filter: blur(14px);
+  animation: questionPan 9s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+.panelIn {
+  animation: panelEnter 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.questionMeta,
+.questionFoot {
+  display: flex;
+  align-items: center;
+}
+
+.questionMeta {
+  gap: 0.55rem;
+  color: rgb(255 255 255 / 65%);
+  font-size: 0.53rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.avatar {
+  display: grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.68rem;
+  letter-spacing: 0;
+}
+
+.questionPulse {
+  width: 0.36rem;
+  height: 0.36rem;
+  margin-left: auto;
+}
+
+.questionCard p {
+  margin: 0.65rem 0 0.8rem;
+  font-size: clamp(0.88rem, 2vw, 1.05rem);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.questionFoot {
+  justify-content: space-between;
+  color: rgb(255 255 255 / 38%);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.stageCaption {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.7rem;
+  left: 1rem;
+  color: rgb(255 255 255 / 38%);
+  font-size: 0.58rem;
+  text-align: center;
+}
+
+.ticker {
+  overflow: hidden;
+  border-block: 1px solid var(--border);
+  background: var(--surface);
+  padding-block: 1rem;
+}
+
+.tickerTrack,
+.tickerGroup {
+  display: flex;
+  width: max-content;
+  align-items: center;
+}
+
+.tickerTrack {
+  animation: marquee 32s linear infinite;
+}
+
+.tickerGroup {
+  gap: 2rem;
+  padding-right: 2rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+
+.tickerGroup i {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.stepCard {
+  position: relative;
+  display: flex;
+  min-height: 270px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.35rem;
+  background: var(--surface);
+  padding: 1.4rem;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.stepCard:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  box-shadow: 0 20px 44px -30px rgb(41 37 36 / 45%);
+}
+
+.stepTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--accent);
+}
+
+.stepTop span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.stepCard h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.stepCard p {
+  margin-top: 0.65rem;
+  max-width: 30rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.stepNote {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--muted);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.stepNote span {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.finalCta {
+  position: relative;
+  display: flex;
+  min-height: 360px;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 2rem;
+  background: #1f302b;
+  padding: clamp(2rem, 6vw, 5rem);
+  isolation: isolate;
+}
+
+.finalCta::before {
+  position: absolute;
+  z-index: -1;
+  top: -35%;
+  right: -7%;
+  width: 65%;
+  height: 170%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 36%, transparent), transparent 67%);
+  content: "";
+  animation: glow 6s ease-in-out infinite alternate;
+}
+
+.ctaOrbit {
+  position: absolute;
+  top: 50%;
+  right: 9%;
+  width: 220px;
+  height: 220px;
+  transform: translateY(-50%);
+}
+
+.ctaOrbit span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 50%;
+  animation: rotate 18s linear infinite;
+}
+
+.ctaOrbit span:nth-child(2) {
+  inset: 22px -22px;
+  transform: rotate(60deg);
+  animation-duration: 23s;
+  animation-direction: reverse;
+}
+
+.ctaOrbit span:nth-child(3) {
+  inset: 48px -48px;
+  transform: rotate(-40deg);
+  animation-duration: 28s;
+}
+
+.ctaStamp {
+  position: absolute;
+  top: 50%;
+  right: calc(9% + 80px);
+  display: grid;
+  width: 92px;
+  height: 92px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 23%);
+  border-radius: 28px;
+  background: var(--accent);
+  color: white;
+  transform: translateY(-50%) rotate(8deg);
+  animation: stamp 5s ease-in-out infinite;
+}
+
+.ctaStamp span {
+  font-size: 0.49rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@keyframes ping {
+  0% { opacity: 0.55; transform: scale(0.65); }
+  100% { opacity: 0; transform: scale(1.75); }
+}
+
+@keyframes draw {
+  to { transform: scaleX(1); }
+}
+
+@keyframes glow {
+  from { opacity: 0.6; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbitTilt {
+  from { transform: rotate(-25deg) scaleY(0.57); }
+  to { transform: rotate(335deg) scaleY(0.57); }
+}
+
+@keyframes bob {
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes breathe {
+  50% { opacity: 0.52; transform: scale(1.22); }
+}
+
+@keyframes float {
+  50% { translate: 0 -8px; }
+}
+
+@keyframes gridPan {
+  to { background-position: 42px 42px; }
+}
+
+@keyframes panelEnter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cameraPan {
+  from { transform: translate3d(-1.5%, 7px, 0) scale(0.92); }
+  to { transform: translate3d(1.5%, -6px, 0) scale(1.08); }
+}
+
+@keyframes tagPan {
+  from { transform: translate3d(-8px, 3px, 26px) rotateY(8deg) rotateZ(-1deg) scale(0.96); }
+  to { transform: translate3d(8px, -9px, 0) rotateY(-4deg) rotateZ(1deg) scale(1.03); }
+}
+
+@keyframes tagPanReverse {
+  from { transform: translate3d(8px, -4px, 0) rotateY(-7deg) rotateZ(1deg) scale(1.03); }
+  to { transform: translate3d(-8px, 8px, 24px) rotateY(5deg) rotateZ(-1deg) scale(0.96); }
+}
+
+@keyframes questionPan {
+  from { transform: translate3d(0, 5px, 0) rotateX(1deg) scale(0.985); }
+  to { transform: translate3d(0, -5px, 20px) rotateX(-1deg) scale(1.015); }
+}
+
+@keyframes wave {
+  to { transform: scaleY(0.28); }
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes stamp {
+  50% { transform: translateY(calc(-50% - 8px)) rotate(-4deg); }
+}
+
+@media (max-width: 640px) {
+  .stage {
+    min-height: 520px;
+    border-radius: 1.4rem;
+  }
+
+  .orbitScene {
+    top: 5rem;
+    height: 290px;
+    transform: scale(0.86);
+  }
+
+  .stageTabs {
+    top: 4.15rem;
+  }
+
+  .stageTab,
+  .stageTabActive {
+    gap: 0.25rem;
+    padding: 0.5rem 0.55rem;
+    font-size: 0.52rem;
+  }
+
+  .tagTop {
+    top: 7.6rem;
+    left: 3%;
+  }
+
+  .tagBottom {
+    right: 2%;
+    bottom: 8.8rem;
+  }
+
+  .floatTag {
+    gap: 0.45rem;
+    padding: 0.55rem;
+  }
+
+  .floatTag strong {
+    font-size: 0.46rem;
+  }
+
+  .floatTag small {
+    font-size: 0.53rem;
+  }
+
+  .questionCard {
+    right: 4%;
+    bottom: 2.4rem;
+    left: 4%;
+  }
+
+  .questionFoot {
+    font-size: 0.4rem;
+  }
+
+  .ctaOrbit {
+    right: -100px;
+    opacity: 0.38;
+  }
+
+  .ctaStamp {
+    right: 9%;
+    opacity: 0.18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrowDot::after,
+  .liveDot::after,
+  .questionPulse::after,
+  .heroAccent::after,
+  .stage,
+  .stageGlow,
+  .stageGrid,
+  .orbitScene,
+  .orbitA,
+  .orbitB,
+  .orbitDot,
+  .coreGlow,
+  .core,
+  .soundWave span,
+  .floatTag,
+  .questionCard,
+  .panelIn,
+  .tickerTrack,
+  .finalCta::before,
+  .ctaOrbit span,
+  .ctaStamp {
+    animation: none;
+  }
+
+  .heroAccent::after {
+    transform: scaleX(1);
+  }
+
+  .stepCard {
+    transition: none;
+  }
+
+  .stageTab,
+  .stageTabActive {
+    transition: none;
+  }
+
+  .stage {
+    transform: none;
+    transition: none;
+  }
+}

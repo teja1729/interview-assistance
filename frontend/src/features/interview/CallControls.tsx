@@ -22,7 +22,7 @@ export function TopBar({
       </div>
       {remaining !== null && (
         <div
-          className={`rounded-full px-3 py-1 font-mono text-sm tabular-nums ${remaining <= 120 ? "bg-[#ea4335]/20 text-[#f28b82]" : "bg-white/10 text-white/80"}`}
+          className={`rounded-full px-3 py-1 font-mono text-sm tabular-nums ${remaining <= 120 ? "bg-red-500/20 text-red-200" : "bg-white/10 text-white/80"}`}
         >
           {fmtClock(remaining)} left
         </div>
@@ -46,12 +46,12 @@ export function RoundBtn({
   label: string;
   icon: React.ReactNode;
 }) {
-  // active: blue (doing something now). on: neutral gray. off: red, like a muted control in Meet.
+  // Active controls use the primary indigo; idle controls stay slate.
   const tone = active
-    ? "bg-[#8ab4f8] text-[#202124]"
+    ? "bg-accent text-white"
     : on
-      ? "bg-[#3c4043] text-white hover:bg-[#4a4d51]"
-      : "bg-[#ea4335]/90 text-white hover:bg-[#ea4335]";
+      ? "bg-[#354b43] text-white hover:bg-[#415d52]"
+      : "bg-[#415d52] text-white hover:bg-[#54786d]";
   return (
     <button
       onClick={onClick}
@@ -68,11 +68,11 @@ export function RoundBtn({
 
 export function SpeakingBars() {
   return (
-    <div className="absolute -bottom-11 left-1/2 flex -translate-x-1/2 items-end gap-1 rounded-full bg-[#a5d9c6] px-2 py-1">
+    <div className="absolute -bottom-11 left-1/2 flex -translate-x-1/2 items-end gap-1 rounded-full bg-[#b5cbc2] px-2 py-1">
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className="block w-1 animate-bounce rounded-full bg-[#202124]"
+          className="block w-1 animate-bounce rounded-full bg-[#26342f]"
           style={{
             height: 10,
             animationDelay: `${i * 120}ms`,

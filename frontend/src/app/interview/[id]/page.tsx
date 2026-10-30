@@ -103,7 +103,7 @@ export default function InterviewCallPage() {
         ? "Considering your answer…"
         : current);
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-[#17292b] text-white">
+    <div className="fixed inset-0 z-50 flex flex-col bg-[#1f302b] text-white">
       <TopBar
         clock={clock}
         title={iv.job_title}
@@ -112,7 +112,7 @@ export default function InterviewCallPage() {
       />
       {phase === "lobby" ? (
         <div className="flex min-h-0 flex-1 flex-col items-center gap-8 overflow-y-auto px-6 py-8 lg:justify-center lg:flex-row lg:gap-14">
-          <div className="relative aspect-video w-full max-w-xl overflow-hidden rounded-2xl bg-[#243c3e]">
+          <div className="relative aspect-video w-full max-w-xl overflow-hidden rounded-2xl bg-[#2d413a]">
             {camOn ? (
               <video
                 ref={bindVideo}
@@ -138,7 +138,7 @@ export default function InterviewCallPage() {
           <div className="max-w-sm text-center">
             <InterviewerAvatar icon={iv.persona_profile?.icon} compact />
             <h1 className="mt-5 text-2xl font-medium">Ready to join?</h1>
-            <p className="mt-2 text-sm font-medium text-[#a5d9c6]">
+            <p className="mt-2 text-sm font-medium text-[#dce9e2]">
               {personaName} · AI practice
             </p>
             <p className="mt-3 text-sm leading-6 text-white/60">
@@ -154,7 +154,7 @@ export default function InterviewCallPage() {
               <CompanyContext brief={iv.company_context} dark />
             </div>
             <button
-              className="mt-6 rounded-full bg-[#a5d9c6] px-8 py-3 font-medium text-[#173d36]"
+              className="mt-6 rounded-full bg-accent px-8 py-3 font-medium text-white"
               onClick={join}
             >
               Join now
@@ -172,7 +172,7 @@ export default function InterviewCallPage() {
           <div className="flex min-h-0 flex-1">
             <div className="relative m-3 mb-0 flex min-w-0 flex-1 flex-col">
               <div
-                className={`relative flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-[#2c4647] to-[#1e3335] ring-2 ${phase === "speaking" ? "ring-[#a5d9c6]" : "ring-transparent"}`}
+                className={`relative flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-[#2d413a] to-[#1f302b] ring-2 ${phase === "speaking" ? "ring-accent" : "ring-transparent"}`}
               >
                 <div className="relative">
                   <InterviewerAvatar icon={iv.persona_profile?.icon} />
@@ -228,7 +228,7 @@ export default function InterviewCallPage() {
                 <div className="mt-3 flex gap-2">
                   <textarea
                     aria-label="Your answer"
-                    className="min-h-20 flex-1 resize-none rounded-xl border border-white/10 bg-[#243c3e] px-4 py-3 text-sm outline-none focus:border-[#a5d9c6]"
+                    className="min-h-20 flex-1 resize-none rounded-xl border border-white/10 bg-[#2d413a] px-4 py-3 text-sm outline-none focus:border-accent"
                     placeholder="Think it through, then share your answer…"
                     value={typed}
                     onChange={(e) => setTyped(e.target.value)}
@@ -241,7 +241,7 @@ export default function InterviewCallPage() {
                     }}
                   />
                   <button
-                    className="rounded-xl bg-[#a5d9c6] px-5 text-sm font-medium text-[#173d36] disabled:opacity-40"
+              className="rounded-xl bg-accent px-5 text-sm font-medium text-white disabled:opacity-40"
                     onClick={submitTyped}
                     disabled={
                       phase !== "ready" ||
@@ -288,8 +288,8 @@ export default function InterviewCallPage() {
                       </div>
                       {t.answer && (
                         <div className="flex justify-end">
-                          <div className="max-w-[90%] rounded-2xl rounded-tr-sm bg-[#dff3ea] px-3 py-2.5 text-foreground">
-                            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#36765f]">
+            <div className="max-w-[90%] rounded-2xl rounded-tr-sm bg-[#e9f0ec] px-3 py-2.5 text-foreground">
+                            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-accent">
                               You
                             </p>
                             <p className="whitespace-pre-wrap leading-6">
@@ -310,7 +310,7 @@ export default function InterviewCallPage() {
             className="min-h-8 px-5 pt-2 text-center text-xs text-white/60"
           >
             {error ? (
-              <span className="text-[#ffd1bc]">{error}</span>
+              <span className="text-red-200">{error}</span>
             ) : phase === "finishing" ? (
               "Saving your session…"
             ) : phase === "recording" ? (
@@ -365,7 +365,7 @@ export default function InterviewCallPage() {
               />
               {phase === "recording" && (
                 <span
-                  className="pointer-events-none absolute inset-0 rounded-full border border-[#a5d9c6]"
+              className="pointer-events-none absolute inset-0 rounded-full border border-accent"
                   style={{ transform: `scale(${1.1 + level * 0.4})` }}
                 />
               )}
@@ -393,7 +393,7 @@ export default function InterviewCallPage() {
               onClick={endCall}
               disabled={busy}
               aria-label={phase === "done" ? "Get report" : "End interview"}
-              className="ml-1 flex h-12 items-center rounded-full bg-[#cc6353] px-5 text-xs font-medium disabled:opacity-40"
+              className="ml-1 flex h-12 items-center rounded-full bg-accent px-5 text-xs font-medium disabled:opacity-40"
             >
               {phase === "done" ? "Get report" : <EndIcon />}
             </button>
@@ -411,7 +411,7 @@ export default function InterviewCallPage() {
       {phase === "lobby" && error && (
         <p
           role="alert"
-          className="px-5 pb-5 text-center text-sm text-[#ffd1bc]"
+          className="px-5 pb-5 text-center text-sm text-red-200"
         >
           {error}
         </p>

@@ -123,8 +123,8 @@ export default function Dashboard() {
             />
           </div>
         </section>
-        <section className="rounded-2xl bg-[#173d36] p-6 text-white">
-          <div className="flex items-center gap-2 text-xs text-[#a7d5c4]">
+        <section className="rounded-2xl bg-[#2d413a] p-6 text-white">
+          <div className="flex items-center gap-2 text-xs text-[#dce9e2]">
             <Icon name="spark" className="h-4 w-4" />
             Practice with intention
           </div>

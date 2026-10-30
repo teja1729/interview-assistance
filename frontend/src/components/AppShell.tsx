@@ -4,9 +4,9 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { api } from "@/lib/api";
 import { useAuth } from "./AuthProvider";
-import { Icon } from "./Icon";
 
 const candidateLinks = [
   ["/dashboard", "Overview", "dashboard"],
@@ -35,12 +35,17 @@ export function Brand() {
   return (
     <Link
       href="/"
-      className="flex items-center gap-2.5 font-semibold tracking-tight"
+      className="flex items-center"
+      aria-label="Okkra home"
     >
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-background">
-        <Icon name="mic" className="h-4 w-4" />
-      </span>
-      okkra
+      <Image
+        src="/okkra-logo.svg"
+        alt="Okkra"
+        width={145}
+        height={54}
+        className="h-[46px] w-[122px] object-contain"
+        priority
+      />
     </Link>
   );
 }
