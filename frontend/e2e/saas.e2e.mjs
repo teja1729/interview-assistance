@@ -307,9 +307,7 @@ try {
   await page.getByRole("heading", { name: "Plans & usage" }).waitFor();
   await page.getByText("Current plan", { exact: true }).first().waitFor();
   await shot("09-billing");
-  step(
-    "Personal account settings, server-only routing and billing screens",
-  );
+  step("Personal account settings, server-only routing and billing screens");
 
   // Device lifecycle regression, using a fixture API to advance time without modifying real sessions.
   const devicePage = await context.newPage();

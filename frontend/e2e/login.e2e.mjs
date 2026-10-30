@@ -34,7 +34,9 @@ try {
       "✓ Live Google option and authorization redirect are available",
     );
     if (actual.linkedin_enabled) {
-      await page.getByRole("link", { name: "Continue with LinkedIn" }).waitFor();
+      await page
+        .getByRole("link", { name: "Continue with LinkedIn" })
+        .waitFor();
       const linkedin = await page.request.get(`${base}/api/auth/linkedin`, {
         maxRedirects: 0,
       });
@@ -45,7 +47,9 @@ try {
         linkedinDestination.searchParams.get("redirect_uri"),
         `${base}/api/auth/linkedin/callback`,
       );
-      console.log("✓ Live LinkedIn option and authorization redirect are available");
+      console.log(
+        "✓ Live LinkedIn option and authorization redirect are available",
+      );
     }
   } else if (!actual.linkedin_enabled) {
     await page.getByText(/Google sign-in is awaiting configuration/).waitFor();

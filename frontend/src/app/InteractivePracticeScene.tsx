@@ -63,7 +63,10 @@ export function InteractivePracticeScene() {
   }
 
   return (
-    <div className={`${styles.stageWrap} enter`} style={{ animationDelay: ".12s" }}>
+    <div
+      className={`${styles.stageWrap} enter`}
+      style={{ animationDelay: ".12s" }}
+    >
       <div className={styles.stageGlow} />
       <div
         ref={stageRef}
@@ -75,20 +78,31 @@ export function InteractivePracticeScene() {
       >
         <div className={styles.stageGrid} />
         <div className={styles.stageHeader}>
-          <div className={styles.liveLabel}><span className={styles.liveDot} /> {view.status}</div>
-          <div className={styles.sessionTime}>0{active + 1} <span> / 03</span></div>
+          <div className={styles.liveLabel}>
+            <span className={styles.liveDot} /> {view.status}
+          </div>
+          <div className={styles.sessionTime}>
+            0{active + 1} <span> / 03</span>
+          </div>
         </div>
 
-        <div className={styles.stageTabs} role="group" aria-label="Explore the practice flow">
+        <div
+          className={styles.stageTabs}
+          role="group"
+          aria-label="Explore the practice flow"
+        >
           {views.map((item, index) => (
             <button
               key={item.id}
               type="button"
               aria-pressed={active === index}
-              className={active === index ? styles.stageTabActive : styles.stageTab}
+              className={
+                active === index ? styles.stageTabActive : styles.stageTab
+              }
               onClick={() => setActive(index)}
             >
-              <span>0{index + 1}</span>{item.tab}
+              <span>0{index + 1}</span>
+              {item.tab}
             </button>
           ))}
         </div>
@@ -98,30 +112,69 @@ export function InteractivePracticeScene() {
           <div className={`${styles.orbit} ${styles.orbitB}`} />
           <div className={styles.orbitDot} />
           <div className={styles.coreGlow} />
-          <div className={styles.core}><Icon name="mic" className="h-8 w-8" /></div>
+          <div className={styles.core}>
+            <Icon name="mic" className="h-8 w-8" />
+          </div>
           <div className={styles.soundWave}>
-            {[12, 20, 30, 18, 25, 36, 22, 31, 16, 27, 38, 20, 29, 15, 24, 34, 19, 28, 13, 23, 32, 18, 27, 14, 21, 30, 17, 26].map((height, index) => (
-              <span key={index} style={{ "--bar-height": `${height}px`, "--bar-delay": `${index * -0.045}s` } as React.CSSProperties} />
+            {[
+              12, 20, 30, 18, 25, 36, 22, 31, 16, 27, 38, 20, 29, 15, 24, 34,
+              19, 28, 13, 23, 32, 18, 27, 14, 21, 30, 17, 26,
+            ].map((height, index) => (
+              <span
+                key={index}
+                style={
+                  {
+                    "--bar-height": `${height}px`,
+                    "--bar-delay": `${index * -0.045}s`,
+                  } as React.CSSProperties
+                }
+              />
             ))}
           </div>
         </div>
 
-        <div key={`tag-${view.id}`} className={`${styles.floatTag} ${styles.tagTop} ${styles.panelIn}`}>
-          <span className={styles.tagIcon}><Icon name={view.icon} className="h-4 w-4" /></span>
-          <span><strong>{view.tag}</strong><small>{view.tagDetail}</small></span>
+        <div
+          key={`tag-${view.id}`}
+          className={`${styles.floatTag} ${styles.tagTop} ${styles.panelIn}`}
+        >
+          <span className={styles.tagIcon}>
+            <Icon name={view.icon} className="h-4 w-4" />
+          </span>
+          <span>
+            <strong>{view.tag}</strong>
+            <small>{view.tagDetail}</small>
+          </span>
           <Icon name="check" className={styles.tagCheck} />
         </div>
         <div className={`${styles.floatTag} ${styles.tagBottom}`}>
-          <span className={styles.scoreRing}>+<br /><b>1</b></span>
-          <span><strong>{view.badge.toUpperCase()}</strong><small>Small steps, real progress</small></span>
+          <span className={styles.scoreRing}>
+            +<br />
+            <b>1</b>
+          </span>
+          <span>
+            <strong>{view.badge.toUpperCase()}</strong>
+            <small>Small steps, real progress</small>
+          </span>
         </div>
 
-        <div key={`question-${view.id}`} className={`${styles.questionCard} ${styles.panelIn}`} aria-live="polite">
-          <div className={styles.questionMeta}><span className={styles.avatar}>O</span> {view.label} <span className={styles.questionPulse} /></div>
+        <div
+          key={`question-${view.id}`}
+          className={`${styles.questionCard} ${styles.panelIn}`}
+          aria-live="polite"
+        >
+          <div className={styles.questionMeta}>
+            <span className={styles.avatar}>O</span> {view.label}{" "}
+            <span className={styles.questionPulse} />
+          </div>
           <p>{view.title}</p>
-          <div className={styles.questionFoot}><span>{view.footer}</span><span>BUILT AROUND YOU</span></div>
+          <div className={styles.questionFoot}>
+            <span>{view.footer}</span>
+            <span>BUILT AROUND YOU</span>
+          </div>
         </div>
-        <div className={styles.stageCaption}>Choose a step to explore the practice loop.</div>
+        <div className={styles.stageCaption}>
+          Choose a step to explore the practice loop.
+        </div>
       </div>
     </div>
   );

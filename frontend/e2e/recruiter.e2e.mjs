@@ -92,9 +92,7 @@ try {
     await linkedin.click();
     await anonymous.page.waitForURL("**/api/auth/linkedin?**");
     assert.equal(returnTo, "/recruiter");
-    console.log(
-      "✓ Recruiter login preserves its LinkedIn return destination",
-    );
+    console.log("✓ Recruiter login preserves its LinkedIn return destination");
   }
 
   const candidate = await open(identities.candidate);

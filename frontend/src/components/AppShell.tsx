@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { api } from "@/lib/api";
 import { useAuth } from "./AuthProvider";
+import { Icon } from "./Icon";
 
 const candidateLinks = [
   ["/dashboard", "Overview", "dashboard"],
@@ -33,11 +34,7 @@ const publicPaths = [
 ];
 export function Brand() {
   return (
-    <Link
-      href="/"
-      className="flex items-center"
-      aria-label="Okkra home"
-    >
+    <Link href="/" className="flex items-center" aria-label="Okkra home">
       <Image
         src="/okkra-logo.svg"
         alt="Okkra"

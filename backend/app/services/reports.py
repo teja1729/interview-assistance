@@ -115,12 +115,7 @@ def process_one(engine=None, job_id=None):
         ]
         if job_id is not None:
             claimable.append(AgentJob.id == job_id)
-        candidates = session.exec(
-            select(AgentJob)
-            .where(*claimable)
-            .order_by(AgentJob.created_at)
-            .limit(10)
-        ).all()
+        candidates = session.exec(select(AgentJob).where(*claimable).order_by(AgentJob.created_at).limit(10)).all()
         job = None
         for candidate in candidates:
             lease = uid()

@@ -62,7 +62,10 @@ export default function InterviewCallPage() {
     setPanel,
   } = useInterviewSession(id);
   useEffect(() => {
-    conversationEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    conversationEnd.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
   }, [turns]);
   if (!iv)
     return (
@@ -241,7 +244,7 @@ export default function InterviewCallPage() {
                     }}
                   />
                   <button
-              className="rounded-xl bg-accent px-5 text-sm font-medium text-white disabled:opacity-40"
+                    className="rounded-xl bg-accent px-5 text-sm font-medium text-white disabled:opacity-40"
                     onClick={submitTyped}
                     disabled={
                       phase !== "ready" ||
@@ -259,50 +262,50 @@ export default function InterviewCallPage() {
               className={`m-3 mb-0 w-80 shrink-0 flex-col rounded-2xl bg-white text-foreground max-sm:fixed max-sm:inset-x-3 max-sm:bottom-24 max-sm:top-16 max-sm:z-20 max-sm:w-auto ${panel ? "flex" : "hidden lg:flex"}`}
               aria-label="Interview conversation"
             >
-                <div className="flex items-center justify-between border-b border-border px-4 py-4">
-                  <div>
-                    <h2 className="text-sm font-semibold">Conversation</h2>
-                    <p className="mt-1 text-xs text-muted">Your interview chat</p>
-                  </div>
-                  <button
-                    aria-label="Close transcript"
-                    onClick={() => setPanel(false)}
-                    className="lg:hidden"
-                  >
-                    <CloseIcon />
-                  </button>
+              <div className="flex items-center justify-between border-b border-border px-4 py-4">
+                <div>
+                  <h2 className="text-sm font-semibold">Conversation</h2>
+                  <p className="mt-1 text-xs text-muted">Your interview chat</p>
                 </div>
-                <ol
-                  aria-live="polite"
-                  className="flex-1 space-y-4 overflow-y-auto px-4 py-4 text-sm"
+                <button
+                  aria-label="Close transcript"
+                  onClick={() => setPanel(false)}
+                  className="lg:hidden"
                 >
-                  {turns.map((t, i) => (
-                    <li key={t.id ?? `${t.at}-${i}`} className="space-y-3">
-                      <div className="flex justify-start">
-                        <div className="max-w-[90%] rounded-2xl rounded-tl-sm bg-background px-3 py-2.5">
+                  <CloseIcon />
+                </button>
+              </div>
+              <ol
+                aria-live="polite"
+                className="flex-1 space-y-4 overflow-y-auto px-4 py-4 text-sm"
+              >
+                {turns.map((t, i) => (
+                  <li key={t.id ?? `${t.at}-${i}`} className="space-y-3">
+                    <div className="flex justify-start">
+                      <div className="max-w-[90%] rounded-2xl rounded-tl-sm bg-background px-3 py-2.5">
+                        <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-accent">
+                          Interviewer
+                        </p>
+                        <p className="leading-6">{t.question}</p>
+                      </div>
+                    </div>
+                    {t.answer && (
+                      <div className="flex justify-end">
+                        <div className="max-w-[90%] rounded-2xl rounded-tr-sm bg-[#e9f0ec] px-3 py-2.5 text-foreground">
                           <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-accent">
-                            Interviewer
+                            You
                           </p>
-                          <p className="leading-6">{t.question}</p>
+                          <p className="whitespace-pre-wrap leading-6">
+                            {t.answer}
+                          </p>
                         </div>
                       </div>
-                      {t.answer && (
-                        <div className="flex justify-end">
-            <div className="max-w-[90%] rounded-2xl rounded-tr-sm bg-[#e9f0ec] px-3 py-2.5 text-foreground">
-                            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-accent">
-                              You
-                            </p>
-                            <p className="whitespace-pre-wrap leading-6">
-                              {t.answer}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                  <li ref={conversationEnd} aria-hidden="true" />
-                </ol>
-              </aside>
+                    )}
+                  </li>
+                ))}
+                <li ref={conversationEnd} aria-hidden="true" />
+              </ol>
+            </aside>
           </div>
           <div
             data-testid="status"
@@ -365,7 +368,7 @@ export default function InterviewCallPage() {
               />
               {phase === "recording" && (
                 <span
-              className="pointer-events-none absolute inset-0 rounded-full border border-accent"
+                  className="pointer-events-none absolute inset-0 rounded-full border border-accent"
                   style={{ transform: `scale(${1.1 + level * 0.4})` }}
                 />
               )}
@@ -409,10 +412,7 @@ export default function InterviewCallPage() {
         </>
       )}
       {phase === "lobby" && error && (
-        <p
-          role="alert"
-          className="px-5 pb-5 text-center text-sm text-red-200"
-        >
+        <p role="alert" className="px-5 pb-5 text-center text-sm text-red-200">
           {error}
         </p>
       )}
