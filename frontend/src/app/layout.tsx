@@ -4,9 +4,9 @@ import { AuthProvider } from "@/components/AuthProvider";
 import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
-  title: "okkra — Practice with purpose",
+  title: "Okkra — From Practice to Offer",
   description:
-    "Personalized mock interviews, grounded feedback, and a practice plan built around your next role.",
+    "Build confidence with interview practice, then let the right recruiters find you.",
 };
 export default function RootLayout({
   children,

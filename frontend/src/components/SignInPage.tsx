@@ -1,14 +1,19 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
-import styles from "./SignInPage.module.css";
 import { useAuth } from "@/components/AuthProvider";
-import { Icon } from "@/components/Icon";
+import styles from "./SignInPage.module.css";
 
-export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
+type Props = {
+  recruiter?: boolean;
+  signup?: boolean;
+};
+
+export function SignInPage({ recruiter = false, signup = false }: Props) {
   const destination = recruiter ? "/recruiter" : "/dashboard";
   const [config, setConfig] = useState<{
     google_enabled: boolean;
@@ -21,6 +26,7 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
   const [busy, setBusy] = useState(false);
   const { refresh, session, loading } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     let active = true;
     api
@@ -45,6 +51,7 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
       active = false;
     };
   }, [configAttempt]);
+
   useEffect(() => {
     if (!loading && session) {
       const next = new URLSearchParams(window.location.search).get("next");
@@ -58,6 +65,7 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
       );
     }
   }, [loading, session, router, destination]);
+
   async function demo() {
     setBusy(true);
     try {
@@ -68,170 +76,197 @@ export function SignInPage({ recruiter = false }: { recruiter?: boolean }) {
       setBusy(false);
     }
   }
+
+  function startOAuth(provider: "google" | "linkedin") {
+    const next =
+      new URLSearchParams(window.location.search).get("next") ?? destination;
+    window.location.assign(
+      new URL(
+        `/api/auth/${provider}?next=${encodeURIComponent(next)}`,
+        window.location.origin,
+      ).href,
+    );
+  }
+
+  const heading = signup
+    ? "Get started free"
+    : recruiter
+      ? "Meet your next candidate."
+      : "Welcome back.";
+  const intro = signup
+    ? "Create your account securely with Google or LinkedIn."
+    : recruiter
+      ? "Sign in to introduce your company and explore candidates who have chosen to be discovered."
+      : "Continue your interview practice and see the progress you have made.";
+
   return (
-    <div className={`${styles.auth} grid min-h-screen lg:grid-cols-2`}>
-      <div className="flex flex-col bg-background px-8 py-8 lg:px-16">
-        <Link href="/" className={styles.wordmark} aria-label="okkra home">
+    <main className={styles.page}>
+      <section className={styles.card} aria-labelledby="auth-heading">
+        <Link href="/" className={styles.brand} aria-label="Okkra home">
           <Image
             src="/okkra-logo.svg"
             alt="Okkra"
             width={145}
             height={54}
-            className="h-[54px] w-[145px] object-contain"
+            className={styles.brandLogo}
             priority
           />
         </Link>
-        <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-20">
-          <p className="eyebrow">
-            {recruiter ? "Recruiter access" : "Your next chapter"}
-          </p>
-          <h1 className={`${styles.heading} mt-4`}>
+
+        <div className={styles.header}>
+          <p className={styles.eyebrow}>
             {recruiter
-              ? "Meet your next candidate."
-              : "Welcome to better practice."}
+              ? "RECRUITER ACCESS"
+              : signup
+                ? "CREATE ACCOUNT"
+                : "WELCOME BACK"}
+          </p>
+          <h1 className={styles.heading} id="auth-heading">
+            {heading}
           </h1>
-          <p className="mt-4 text-sm leading-6 text-muted">
-            {recruiter
-              ? "Sign in with Google, add your company details, and explore candidates who have chosen to be discovered."
-              : "One account for your interviews, feedback, and everything you’re working toward."}
+          <p className={styles.description}>{intro}</p>
+        </div>
+
+        {error && (
+          <p className={styles.errorBox} role="alert">
+            {error}
           </p>
-          {error && (
-            <p role="alert" className="error-banner mt-6">
-              {error}
-            </p>
-          )}
-          {configFailed && (
-            <div className="mt-8">
-              <p role="alert" className="error-banner">
-                Sign-in is temporarily unavailable. Please try again.
-              </p>
-              <button
-                className="btn-ghost mt-3 w-full"
-                onClick={() => {
-                  setConfigFailed(false);
-                  setConfigAttempt((attempt) => attempt + 1);
-                }}
-              >
-                Retry sign-in options
-              </button>
-            </div>
-          )}
-          {!config && !configFailed && (
-            <p role="status" className="mt-8 text-sm text-muted">
-              Loading sign-in options…
-            </p>
-          )}
-          {config?.google_enabled && (
-            <a
-              href="/api/auth/google"
-              onClick={(event) => {
-                event.preventDefault();
-                const next =
-                  new URLSearchParams(window.location.search).get("next") ??
-                  destination;
-                window.location.assign(
-                  new URL(
-                    `/api/auth/google?next=${encodeURIComponent(next)}`,
-                    window.location.origin,
-                  ).href,
-                );
-              }}
-              className="btn-ghost mt-8 !py-3.5"
-            >
-              <span className="text-lg font-bold text-[#4285f4]">G</span>
-              Continue with Google
-            </a>
-          )}
-          {config?.linkedin_enabled && (
-            <a
-              href="/api/auth/linkedin"
-              onClick={(event) => {
-                event.preventDefault();
-                const next =
-                  new URLSearchParams(window.location.search).get("next") ??
-                  destination;
-                window.location.assign(
-                  new URL(
-                    `/api/auth/linkedin?next=${encodeURIComponent(next)}`,
-                    window.location.origin,
-                  ).href,
-                );
-              }}
-              className={`btn-ghost !py-3.5 ${config.google_enabled ? "mt-3" : "mt-8"}`}
-            >
-              <span className="text-lg font-bold text-[#0a66c2]">in</span>
-              Continue with LinkedIn
-            </a>
-          )}
-          {config && !config.google_enabled && !config.linkedin_enabled && (
-            <div className="mt-8 rounded-xl border border-border bg-background p-4 text-xs leading-5 text-muted">
-              Google sign-in is awaiting configuration by the application owner.
-              {config?.demo_enabled
-                ? " You can explore the complete app below."
-                : " Please try again later."}
-            </div>
-          )}
-          {config?.demo_enabled && (
+        )}
+
+        {configFailed ? (
+          <div className={styles.configMessage}>
+            <p role="alert">Sign-in options could not be loaded.</p>
             <button
-              className="btn-primary mt-3 !py-3.5"
-              onClick={demo}
-              disabled={busy}
+              className={styles.textButton}
+              onClick={() => {
+                setConfigFailed(false);
+                setConfigAttempt((attempt) => attempt + 1);
+              }}
             >
-              {busy ? "Opening your account…" : "Open local test account"}
-              <Icon name="arrow" className="h-4 w-4" />
+              Try again
             </button>
-          )}
-          <p className="mt-5 text-xs leading-5 text-muted">
-            {recruiter
-              ? "Candidates decide whether to share their resume and email with you. Private interview answers and reports are never shared."
-              : "Your resume and answers are processed by the application’s AI provider. Camera preview stays on your device."}
+          </div>
+        ) : !config ? (
+          <p className={styles.loading} role="status">
+            Loading sign-in options…
           </p>
-          <Link
-            href={recruiter ? "/login" : "/recruiter/login"}
-            className="mt-6 text-sm underline underline-offset-4"
-          >
-            {recruiter
-              ? "Looking to practise? Candidate sign in"
-              : "Hiring? Recruiter sign in"}
-          </Link>
-          <Link href="/" className="mt-8 text-xs text-accent hover:underline">
-            ← Back to home
-          </Link>
+        ) : (
+          <div className={styles.providers} aria-busy={busy}>
+            {config.google_enabled && (
+              <button
+                type="button"
+                className={styles.providerButton}
+                onClick={() => startOAuth("google")}
+              >
+                <span className={styles.googleMark} aria-hidden="true">
+                  G
+                </span>
+                Continue with Google
+              </button>
+            )}
+            {config.linkedin_enabled && (
+              <button
+                type="button"
+                className={styles.providerButton}
+                onClick={() => startOAuth("linkedin")}
+              >
+                <span className={styles.linkedinMark} aria-hidden="true">
+                  in
+                </span>
+                Continue with LinkedIn
+              </button>
+            )}
+            {!config.google_enabled && !config.linkedin_enabled && (
+              <p className={styles.configMessage} role="status">
+                Sign-in is temporarily unavailable. Please try again later.
+              </p>
+            )}
+            {config.demo_enabled && (
+              <button
+                type="button"
+                className={styles.demoButton}
+                onClick={demo}
+                disabled={busy}
+              >
+                {busy ? "Opening your account…" : "Open local test account"}
+              </button>
+            )}
+          </div>
+        )}
+
+        <div className={styles.dividerRow}>
+          <span />
+          <span>SECURE SIGN-IN</span>
+          <span />
         </div>
-      </div>
-      <div className="hidden flex-col justify-center bg-[#e9f0ec] p-16 text-[#26342f] lg:flex">
-        <p className="text-xs uppercase tracking-[.2em] text-accent">
-          {recruiter
-            ? "Make a thoughtful introduction"
-            : "Prepare with intention"}
+
+        <p className={styles.switchText}>
+          {recruiter ? (
+            <>
+              Looking to practise? <Link href="/login">Candidate sign in</Link>
+            </>
+          ) : signup ? (
+            <>
+              Already have an account? <Link href="/login">Sign in</Link>
+            </>
+          ) : (
+            <>
+              New to Okkra? <Link href="/signup">Create an account</Link>
+            </>
+          )}
         </p>
-        <h2 className="mt-7 max-w-md text-4xl font-medium leading-tight tracking-tight">
+        <p className={styles.privacyNote}>
           {recruiter
-            ? "A better conversation starts with permission."
-            : "Less memorizing. More understanding your own story."}
-        </h2>
-        <div className="mt-12 space-y-7">
-          {(recruiter
-            ? [
-                "Profiles published by the candidates themselves",
-                "An introduction with your company and opportunity",
-                "Resume access after the candidate approves",
-              ]
-            : [
-                "Questions grounded in your resume",
-                "Follow-ups that challenge your thinking",
-                "A clear plan for your next practice session",
-              ]
-          ).map((s, i) => (
-            <div key={s} className="flex items-center gap-4">
-              <span className="grid h-8 w-8 place-items-center rounded-full border border-accent/30 font-mono text-xs text-accent">
-                0{i + 1}
-              </span>
-              <span className="text-sm text-foreground/75">{s}</span>
-            </div>
-          ))}
+            ? "Candidates choose whether to share their profile. Resume access requires their approval."
+            : "Your interview answers and reports stay private. You control whether recruiters can discover your profile."}
+        </p>
+        <Link href="/" className={styles.backLink}>
+          ← Back to home
+        </Link>
+      </section>
+
+      <aside className={styles.sidePanel}>
+        <div className={styles.sidePanelInner}>
+          <p className={styles.sideEyebrow}>FROM PRACTICE TO OFFER</p>
+          {recruiter ? (
+            <>
+              <h2 className={styles.sideHeading}>
+                Good hiring starts with permission.
+              </h2>
+              <div className={styles.sideSteps}>
+                {[
+                  "Candidates choose to publish their profile",
+                  "You introduce your company and opportunity",
+                  "Resume access follows candidate approval",
+                ].map((step, index) => (
+                  <div className={styles.sideStep} key={step}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <p>{step}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className={styles.sideHeading}>
+                Make your experience easier to talk about.
+              </h2>
+              <div className={styles.sideSteps}>
+                {[
+                  "Practise with questions shaped around your role",
+                  "Get feedback grounded in your own answers",
+                  "Choose if and when recruiters can discover you",
+                ].map((step, index) => (
+                  <div className={styles.sideStep} key={step}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <p>{step}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </div>
+      </aside>
+    </main>
   );
 }

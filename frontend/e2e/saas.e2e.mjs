@@ -51,8 +51,8 @@ const ready = () =>
   );
 try {
   await page.goto(BASE);
-  await page.getByRole("heading", { name: /Your experience/ }).waitFor();
-  await shot("01-landing");
+  await page.getByRole("heading", { name: /From Practice/ }).waitFor();
+  await shot("01-b2b-home");
   await page.setViewportSize({ width: 390, height: 844 });
   assert(
     await page.evaluate(
@@ -62,7 +62,7 @@ try {
   );
   await shot("02-mobile");
   await page.setViewportSize({ width: 1440, height: 1000 });
-  step("Public landing and mobile layout");
+  step("B2B homepage and mobile layout");
 
   await page.goto(`${BASE}/login`);
   await page.getByRole("button", { name: "Open local test account" }).click();

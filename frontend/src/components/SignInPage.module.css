@@ -1,27 +1,290 @@
-/* Login layout only. Colors come from the homepage tokens in globals.css. */
-.auth {
-  background: var(--background);
-  color: var(--foreground);
+.page {
+  --bg: #f6f3eb;
+  --bg-subtle: #f0ece1;
+  --text-primary: #151515;
+  --text-secondary: #67625b;
+  --text-tertiary: #9c968e;
+  --border: rgb(21 21 21 / 16%);
+  --border-strong: rgb(21 21 21 / 28%);
+  --warning: #b5541a;
+  --error: #9b1c1c;
+  --error-bg: #fef2f2;
+  --radius: 4px;
+  --font: "Inter", "Avenir Next", "Segoe UI", sans-serif;
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font);
 }
-.heading {
-  font-size: clamp(36px, 5vw, 56px);
+
+.card {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  flex-direction: column;
+  justify-self: center;
+  padding: 48px 56px 64px;
+}
+
+.brand {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 56px;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.brandLogo {
+  width: 122px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.header {
+  margin-bottom: 36px;
+}
+
+.eyebrow,
+.sideEyebrow {
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+  font-size: 11px;
   font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
   line-height: 1.08;
   letter-spacing: -0.035em;
 }
-.wordmark {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -1px;
+
+.description {
+  max-width: 400px;
+  margin: 12px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
 }
-.wordmark i {
-  width: 5px;
-  height: 5px;
-  background: var(--accent);
-  border-radius: 50%;
-  align-self: flex-start;
-  margin-top: 7px;
+
+.providers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.providerButton,
+.demoButton {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.providerButton:hover,
+.demoButton:hover {
+  border-color: var(--text-primary);
+  background: rgb(21 21 21 / 4%);
+}
+
+.googleMark {
+  color: #4285f4;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.linkedinMark {
+  color: #0a66c2;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.demoButton {
+  border-color: var(--text-primary);
+  background: var(--text-primary);
+  color: var(--bg);
+}
+
+.demoButton:hover {
+  background: #2a2a2a;
+  color: var(--bg);
+}
+
+.demoButton:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.errorBox,
+.configMessage {
+  margin-bottom: 16px;
+  border: 1px solid rgb(155 28 28 / 20%);
+  border-radius: var(--radius);
+  background: var(--error-bg);
+  padding: 12px 14px;
+  color: var(--error);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.configMessage {
+  border-color: var(--border);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+}
+
+.textButton {
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-primary);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.loading {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.dividerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 20px;
+  color: var(--text-tertiary);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.dividerRow span:first-child,
+.dividerRow span:last-child {
+  height: 1px;
+  flex: 1;
+  background: var(--border);
+}
+
+.switchText,
+.privacyNote {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.switchText a,
+.backLink {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.privacyNote {
+  margin-top: 20px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.backLink {
+  width: fit-content;
+  margin-top: 24px;
+  font-size: 12px;
+}
+
+.sidePanel {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--text-primary);
+  padding: 64px;
+}
+
+.sidePanelInner {
+  width: 100%;
+  max-width: 400px;
+}
+
+.sideEyebrow {
+  margin-bottom: 32px;
+  color: rgb(246 243 235 / 48%);
+}
+
+.sideHeading {
+  margin: 0 0 36px;
+  color: var(--bg);
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.sideSteps {
+  display: flex;
+  flex-direction: column;
+}
+
+.sideStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgb(246 243 235 / 10%);
+}
+
+.sideStep span {
+  min-width: 22px;
+  color: rgb(246 243 235 / 38%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.sideStep p {
+  margin: 0;
+  color: rgb(246 243 235 / 82%);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    max-width: 560px;
+    padding: 36px 24px 56px;
+  }
+
+  .brand {
+    margin-bottom: 48px;
+  }
+
+  .sidePanel {
+    display: none;
+  }
 }

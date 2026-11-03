@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bar {
+  flex: 0 0 3px;
+  border-radius: 2px;
+  transition: height 250ms ease;
+}
+
+.active {
+  animation: pulse 700ms ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scaleY(0.55);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}

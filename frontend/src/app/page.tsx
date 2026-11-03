@@ -1,230 +1,779 @@
-import Link from "next/link";
-import { Brand } from "@/components/AppShell";
-import { Icon } from "@/components/Icon";
-import { InteractivePracticeScene } from "./InteractivePracticeScene";
-import styles from "./page.module.css";
+"use client";
 
-const steps = [
+import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import Waveform from "@/components/b2b/Waveform";
+import styles from "./home.module.css";
+
+// ─── Scroll reveal hook ───────────────────────────────────────────────────────
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("visible");
+        }),
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+    );
+    document
+      .querySelectorAll(".reveal, .reveal-left, .reveal-scale")
+      .forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
+// ─── Pricing toggle ───────────────────────────────────────────────────────────
+const PLANS = [
   {
-    number: "01",
-    icon: "file",
-    title: "Bring your real story",
-    body: "Add your resume and the role you want. Okkra builds the practice around your actual experience.",
-    note: "YOUR EXPERIENCE, IN CONTEXT",
+    id: "free",
+    name: "Free",
+    tag: "Always free",
+    monthly: "₹0",
+    yearly: "₹0",
+    desc: "Get a feel for Okkra before committing.",
+    features: [
+      "3 sessions per month",
+      "Text mode only",
+      "Basic STAR feedback",
+      "Readiness score",
+    ],
+    cta: "Start free",
+    href: "/signup",
+    highlight: false,
   },
   {
-    number: "02",
-    icon: "mic",
-    title: "Find your words out loud",
-    body: "Meet a voice interviewer that listens, follows up, and gives you room to think.",
-    note: "VOICE OR TEXT, YOUR CALL",
+    id: "starter",
+    name: "Starter",
+    tag: "For freshers",
+    monthly: "₹999",
+    yearly: "₹9,999",
+    desc: "Full access to practice. Right for freshers entering the market.",
+    features: [
+      "Unlimited sessions",
+      "Voice + Text modes",
+      "Full STAR + filler analysis",
+      "Readiness score & trend",
+      "Resume visibility to recruiters",
+    ],
+    cta: "Start Starter",
+    href: "/signup?plan=starter",
+    highlight: false,
   },
   {
-    number: "03",
-    icon: "spark",
-    title: "Make the next answer stronger",
-    body: "Get feedback tied to what you said, then practice the exact skill you want to improve.",
-    note: "FEEDBACK YOU CAN USE",
+    id: "pro",
+    name: "Pro",
+    tag: "Most popular",
+    monthly: "₹2,999",
+    yearly: "₹29,999",
+    desc: "For mid-level professionals stepping up or switching tracks.",
+    features: [
+      "Everything in Starter",
+      "Advanced feedback analytics",
+      "Category performance tracking",
+      "Priority recruiter discovery",
+      "Drill recommendations",
+    ],
+    cta: "Start Pro",
+    href: "/signup?plan=pro",
+    highlight: true,
+  },
+  {
+    id: "senior",
+    name: "Senior",
+    tag: "For leaders",
+    monthly: "₹4,999",
+    yearly: "₹49,999",
+    desc: "For senior and leadership roles with elevated expectations.",
+    features: [
+      "Everything in Pro",
+      "Leadership interview formats",
+      "Executive communication coaching",
+      "Top recruiter priority listing",
+      "Dedicated improvement path",
+    ],
+    cta: "Start Senior",
+    href: "/signup?plan=senior",
+    highlight: false,
   },
 ];
 
-export default function LandingPage() {
-  return (
-    <div className="min-h-screen overflow-hidden bg-background">
-      <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
-        <Brand />
-        <nav aria-label="Main" className="flex items-center gap-3 sm:gap-6">
-          <Link
-            href="/pricing"
-            className="hidden text-sm text-muted transition hover:text-foreground sm:block"
-          >
-            Plans
-          </Link>
-          <Link
-            href="/recruiter/login"
-            className="hidden text-sm text-muted transition hover:text-foreground md:block"
-          >
-            Recruiter login
-          </Link>
-          <Link
-            href="/login"
-            className="text-sm text-muted transition hover:text-foreground"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/login"
-            className="btn-primary !rounded-full !px-5 !py-2.5"
-          >
-            Get started <Icon name="arrow" className="h-4 w-4" />
-          </Link>
-        </nav>
-      </header>
+const STEPS = [
+  {
+    num: "01",
+    title: "Learn",
+    desc: "Role-specific question banks, interview format guides, and preparation frameworks for every level.",
+  },
+  {
+    num: "02",
+    title: "Practise",
+    desc: "AI-powered mock sessions with voice or text. Structured feedback on clarity, structure, and impact.",
+  },
+  {
+    num: "03",
+    title: "Get Exposed",
+    desc: "Your interview readiness profile surfaces to vetted recruiters once you grant access. No cold applications.",
+  },
+  {
+    num: "04",
+    title: "Get Placed",
+    desc: "Recruiters reach out to you directly. You decide who gets your full profile. Zero agency fees.",
+  },
+];
 
-      <main>
-        <section className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-8 sm:px-8 md:pb-24 lg:grid-cols-[.95fr_1.05fr] lg:gap-4 lg:px-12 lg:pt-12">
-          <div className="relative z-[1] py-6 lg:py-12">
-            <div className={`${styles.eyebrow} enter`}>
-              <span className={styles.eyebrowDot} />
-              INTERVIEW PRACTICE THAT GETS PERSONAL
-            </div>
+export default function HomePage() {
+  useScrollReveal();
+  const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
+  const [waveActive, setWaveActive] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setWaveActive(true), 1200);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <div className={styles.page}>
+      <nav className={styles.nav} aria-label="Main navigation">
+        <div className={styles.navInner}>
+          <Link href="/" className={styles.wordmark} aria-label="Okkra home">
+            <Image
+              src="/okkra-logo.svg"
+              alt="Okkra"
+              width={145}
+              height={54}
+              className={styles.headerLogo}
+              priority
+            />
+          </Link>
+          <div className={styles.navLinks}>
+            <Link href="/#how-it-works">How it works</Link>
+            <Link href="/#pricing">Pricing</Link>
+            <Link href="/recruiter/login">For recruiters</Link>
+          </div>
+          <div className={styles.navActions}>
+            <Link href="/login" className={styles.navSignIn}>
+              Sign in
+            </Link>
+            <Link href="/signup" className="btn btn-primary btn-sm">
+              Get started
+            </Link>
+          </div>
+        </div>
+        <div className={styles.navDivider} />
+      </nav>
+
+      {/* ─── HERO ──────────────────────────────────────────────────────────── */}
+      <section className={styles.hero} id="hero" aria-label="Hero">
+        <div className={styles.heroInner}>
+          <div className={styles.heroLeft}>
+            <p className={`label-sm ${styles.heroEyebrow} reveal`}>
+              AI-POWERED INTERVIEW PLATFORM
+            </p>
             <h1
-              className={`${styles.heroTitle} enter mt-7`}
-              style={{ animationDelay: ".08s" }}
+              className={`${styles.heroHeadline} reveal`}
+              style={{ transitionDelay: "80ms" }}
             >
-              Your story is
+              From Practice
               <br />
-              <span className={styles.heroAccent}>the answer.</span>
+              to Offer.
             </h1>
             <p
-              className="enter mt-7 max-w-lg text-base leading-7 text-muted sm:text-lg sm:leading-8"
-              style={{ animationDelay: ".16s" }}
+              className={`${styles.heroSub} reveal`}
+              style={{ transitionDelay: "160ms" }}
             >
-              Practice saying it with confidence. Okkra turns your resume and
-              target role into a real voice interview, then helps you sharpen
-              the answers that matter.
+              Build confidence with AI-powered mock interviews,
+              <br className={styles.heroBreak} />
+              then let the right recruiters find you.
             </p>
             <div
-              className="enter mt-9 flex flex-wrap items-center gap-3"
-              style={{ animationDelay: ".24s" }}
+              className={`${styles.heroCtas} reveal`}
+              style={{ transitionDelay: "240ms" }}
             >
               <Link
-                href="/login"
-                className="btn-primary !rounded-full !px-6 !py-3.5"
+                href="/signup"
+                className="btn btn-primary btn-lg"
+                id="hero-signup-btn"
               >
-                Practice your first answer{" "}
-                <Icon name="arrow" className="h-4 w-4" />
+                Get started free
               </Link>
-              <Link
+              <a
                 href="#how-it-works"
-                className="rounded-full border border-border bg-surface px-5 py-3.5 text-sm font-medium transition hover:bg-accent-soft"
+                className={`${styles.heroLink} text-link body-sm`}
               >
-                See how it works
-              </Link>
+                See how it works ↓
+              </a>
             </div>
             <div
-              className={`${styles.promise} enter mt-6`}
-              style={{ animationDelay: ".32s" }}
+              className={`${styles.heroStats} reveal`}
+              style={{ transitionDelay: "320ms" }}
             >
-              <span>
-                <Icon name="check" className="h-3.5 w-3.5" /> Resume-grounded
-              </span>
-              <span>
-                <Icon name="check" className="h-3.5 w-3.5" /> Voice-to-voice
-              </span>
-              <span>
-                <Icon name="check" className="h-3.5 w-3.5" /> Built for practice
-              </span>
+              {STATS.map((s, i) => (
+                <span key={i} className={styles.heroStat}>
+                  <span className={styles.heroStatNum}>{s.num}</span>
+                  <span className={styles.heroStatLabel}>{s.label}</span>
+                  {i < STATS.length - 1 && (
+                    <span className={styles.heroStatDot} aria-hidden />
+                  )}
+                </span>
+              ))}
             </div>
           </div>
 
-          <InteractivePracticeScene />
-        </section>
+          <div
+            className={`${styles.heroRight} reveal-scale`}
+            style={{ transitionDelay: "120ms" }}
+          >
+            <div className={styles.heroVisual}>
+              {/* Waveform accent */}
+              <div className={styles.heroWaveform}>
+                <Waveform bars={40} active={waveActive} height={96} spectral />
+              </div>
+              {/* 4-step journey vertical */}
+              <div className={styles.heroJourney}>
+                {STEPS.map((step, i) => (
+                  <div key={step.num} className={styles.heroJourneyStep}>
+                    <span className={styles.heroJourneyNum}>{step.num}</span>
+                    <span className={styles.heroJourneyTitle}>
+                      {step.title}
+                    </span>
+                    {i < STEPS.length - 1 && (
+                      <div className={styles.heroJourneyLine} aria-hidden />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <div
-          className={styles.ticker}
-          aria-label="Resume-grounded practice, voice interviews, and useful feedback"
-        >
-          <div className={styles.tickerTrack} aria-hidden="true">
-            {[0, 1].map((copy) => (
-              <div className={styles.tickerGroup} key={copy}>
-                <span>YOUR EXPERIENCE</span>
-                <i />
-                <span>REAL VOICE PRACTICE</span>
-                <i />
-                <span>FEEDBACK THAT FITS</span>
-                <i />
-                <span>YOUR NEXT CHAPTER</span>
-                <i />
+      <hr className="divider" />
+
+      {/* ─── HOW IT WORKS ──────────────────────────────────────────────────── */}
+      <section
+        className={styles.section}
+        id="how-it-works"
+        aria-labelledby="hiw-title"
+      >
+        <div className={styles.sectionInner}>
+          <p className={`label-sm ${styles.sectionEyebrow} reveal`}>
+            HOW IT WORKS
+          </p>
+          <h2
+            className={`display-md ${styles.sectionHeadline} reveal`}
+            style={{ transitionDelay: "60ms" }}
+            id="hiw-title"
+          >
+            Four steps. One outcome.
+          </h2>
+
+          <div className={`${styles.steps} reveal-group`}>
+            {STEPS.map((step, i) => (
+              <div key={step.num} className={styles.stepItem}>
+                <div
+                  className={`${styles.stepInner} reveal`}
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                >
+                  <span className={styles.stepNum}>{step.num}</span>
+                  <div className={styles.stepBody}>
+                    <h3 className={styles.stepTitle}>{step.title}</h3>
+                    <p className={`body-sm ${styles.stepDesc}`}>{step.desc}</p>
+                  </div>
+                </div>
+                {i < STEPS.length - 1 && (
+                  <hr className={`divider ${styles.stepDivider}`} />
+                )}
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        <section
-          id="how-it-works"
-          className="mx-auto max-w-7xl px-5 py-20 sm:px-8 md:py-28 lg:px-12"
-        >
-          <div className="mb-12 grid gap-5 md:grid-cols-[1fr_.7fr] md:items-end">
-            <div>
-              <p className="eyebrow">A BETTER WAY TO GET READY</p>
-              <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                Practice the interview.
+      <hr className="divider" />
+
+      {/* ─── FOR JOB SEEKERS ───────────────────────────────────────────────── */}
+      <section className={styles.section} aria-labelledby="seekers-title">
+        <div className={styles.sectionInner}>
+          <div className={`grid-12 ${styles.splitSection}`}>
+            <div className="col-6">
+              <p className={`label-sm ${styles.sectionEyebrow} reveal`}>
+                FOR JOB SEEKERS
+              </p>
+              <h2
+                className={`display-md ${styles.splitHeadline} reveal`}
+                style={{ transitionDelay: "60ms" }}
+                id="seekers-title"
+              >
+                Practice that actually prepares you.
+              </h2>
+              <p
+                className={`body-lg ${styles.splitSub} reveal`}
+                style={{ transitionDelay: "120ms" }}
+              >
+                Whether you are a fresher stepping into your first interview, or
+                a director changing tracks — Okkra meets you where you are.
+              </p>
+
+              <div
+                className={`${styles.featureList} reveal`}
+                style={{ transitionDelay: "180ms" }}
+              >
+                {SEEKER_FEATURES.map((f, i) => (
+                  <div key={i} className={styles.featureItem}>
+                    <span className={`${styles.featureCheck} text-success`}>
+                      ✓
+                    </span>
+                    <span className="body-sm">{f}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div
+                className={`${styles.splitCta} reveal`}
+                style={{ transitionDelay: "240ms" }}
+              >
+                <Link
+                  href="/signup"
+                  className="btn btn-primary"
+                  id="seekers-cta-btn"
+                >
+                  Start practising →
+                </Link>
+              </div>
+            </div>
+
+            <div
+              className={`col-6 ${styles.splitVisual} reveal-scale`}
+              style={{ transitionDelay: "160ms" }}
+            >
+              <div className={styles.readinessCard}>
+                <p className="label-xs" style={{ marginBottom: 16 }}>
+                  INTERVIEW READINESS
+                </p>
+                <div className={styles.readinessNum}>
+                  <span
+                    style={{
+                      fontSize: 72,
+                      fontWeight: 200,
+                      letterSpacing: "-0.04em",
+                      lineHeight: 1,
+                    }}
+                  >
+                    74
+                  </span>
+                  <span
+                    className="body-xs"
+                    style={{
+                      alignSelf: "flex-end",
+                      marginBottom: 8,
+                      marginLeft: 4,
+                    }}
+                  >
+                    /100
+                  </span>
+                </div>
+                <p
+                  className="body-xs mt-8"
+                  style={{ color: "var(--text-tertiary)" }}
+                >
+                  ↑ +8 pts this week
+                </p>
+                <div
+                  className={styles.readinessMiniWave}
+                  style={{ marginTop: 20 }}
+                >
+                  <Waveform bars={20} active={false} height={40} spectral />
+                </div>
+                <hr className="divider" style={{ margin: "20px 0" }} />
+                {MINI_SCORES.map((s) => (
+                  <div key={s.label} className={styles.miniScore}>
+                    <span className="body-xs">{s.label}</span>
+                    <div className={styles.miniScoreTrack}>
+                      <div
+                        className={styles.miniScoreFill}
+                        style={{ width: `${s.val}%` }}
+                      />
+                    </div>
+                    <span className={styles.miniScoreVal}>{s.val}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* ─── FOR RECRUITERS ────────────────────────────────────────────────── */}
+      <section
+        className={`${styles.section} ${styles.recruiterSection}`}
+        aria-labelledby="recruiters-title"
+      >
+        <div className={styles.sectionInner}>
+          <div className={styles.recruiterInner}>
+            <div className={styles.recruiterLeft}>
+              <p
+                className={`label-sm ${styles.sectionEyebrow} reveal`}
+                style={{ color: "rgba(246,243,235,0.5)" }}
+              >
+                FOR RECRUITERS
+              </p>
+              <h2
+                className={`display-md ${styles.recruiterHeadline} reveal`}
+                style={{ transitionDelay: "60ms" }}
+                id="recruiters-title"
+              >
+                Find practised,
                 <br />
-                <span className="text-muted">Keep what makes you, you.</span>
+                prepared candidates.
+                <br />
+                Free.
+              </h2>
+              <p
+                className={`body-lg reveal`}
+                style={{
+                  transitionDelay: "120ms",
+                  color: "rgba(246,243,235,0.7)",
+                  maxWidth: 440,
+                }}
+              >
+                Browse candidates by role, level, and verified readiness score.
+                Candidates approve your access. You reach out directly — no
+                agency, no fees.
+              </p>
+            </div>
+            <div className={`${styles.recruiterRight} reveal-group`}>
+              {RECRUITER_POINTS.map((point, i) => (
+                <div
+                  key={i}
+                  className={`${styles.recruiterPoint} reveal`}
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                >
+                  <span className={styles.recruiterPointNum}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <p className={styles.recruiterPointTitle}>{point.title}</p>
+                    <p
+                      className={`body-xs`}
+                      style={{ color: "rgba(246,243,235,0.55)", marginTop: 4 }}
+                    >
+                      {point.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+              <div
+                className={`${styles.recruiterCta} reveal`}
+                style={{ transitionDelay: "320ms" }}
+              >
+                <Link
+                  href="/recruiter/login"
+                  className={styles.recruiterBtn}
+                  id="recruiter-cta-btn"
+                >
+                  Apply as a recruiter →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* ─── AI DIFFERENTIATOR ─────────────────────────────────────────────── */}
+      <section className={styles.section} aria-labelledby="ai-title">
+        <div className={styles.sectionInner}>
+          <div className={`grid-12 ${styles.aiSection}`}>
+            <div className="col-5">
+              <p className={`label-sm ${styles.sectionEyebrow} reveal`}>
+                OUR AI
+              </p>
+              <h2
+                className={`display-md ${styles.splitHeadline} reveal`}
+                style={{ transitionDelay: "60ms" }}
+                id="ai-title"
+              >
+                Not borrowed.
+                <br />
+                Built for interviews.
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-6 text-muted md:justify-self-end">
-              No generic scripts. No mystery scores. Just thoughtful reps,
-              grounded in your experience, with useful next steps after every
-              session.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {steps.map((step, index) => (
-              <article
-                className={`${styles.stepCard} enter`}
-                key={step.number}
-                style={{ animationDelay: `${index * 0.1}s` }}
+            <div className="col-7">
+              <p className={`body-lg ${styles.aiBody} reveal`}>
+                We did not wrap a general-purpose model and call it an interview
+                coach. Okkra&apos;s AI is trained specifically on interview
+                structure, scoring frameworks, and communication patterns. It
+                knows the difference between a strong STAR answer and a vague
+                one — because that&apos;s all it does.
+              </p>
+              <div
+                className={`${styles.aiPoints} reveal-group`}
+                style={{ marginTop: 32 }}
               >
-                <div className={styles.stepTop}>
-                  <span>{step.number}</span>
-                  <Icon name={step.icon} className="h-5 w-5" />
+                {AI_POINTS.map((pt, i) => (
+                  <div
+                    key={i}
+                    className={`${styles.aiPoint} reveal`}
+                    style={{ transitionDelay: `${i * 80}ms` }}
+                  >
+                    <span className={styles.aiPointLine} aria-hidden />
+                    <p className="body-sm">{pt}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* ─── PRICING ───────────────────────────────────────────────────────── */}
+      <section
+        className={styles.section}
+        id="pricing"
+        aria-labelledby="pricing-title"
+      >
+        <div className={styles.sectionInner}>
+          <p className={`label-sm ${styles.sectionEyebrow} reveal`}>PRICING</p>
+          <h2
+            className={`display-md ${styles.sectionHeadline} reveal`}
+            style={{ transitionDelay: "60ms" }}
+            id="pricing-title"
+          >
+            Simple. Honest. Flexible.
+          </h2>
+
+          {/* Billing toggle */}
+          <div
+            className={`${styles.billingToggle} reveal`}
+            style={{ transitionDelay: "120ms" }}
+          >
+            <button
+              className={`${styles.toggleBtn} ${billing === "monthly" ? styles.toggleActive : ""}`}
+              onClick={() => setBilling("monthly")}
+              id="billing-monthly-btn"
+              aria-pressed={billing === "monthly"}
+            >
+              Monthly
+            </button>
+            <button
+              className={`${styles.toggleBtn} ${billing === "yearly" ? styles.toggleActive : ""}`}
+              onClick={() => setBilling("yearly")}
+              id="billing-yearly-btn"
+              aria-pressed={billing === "yearly"}
+            >
+              Yearly
+              <span className={styles.saveBadge}>Save ~17%</span>
+            </button>
+          </div>
+
+          {/* Plans grid */}
+          <div className={`${styles.plansGrid} reveal-group`}>
+            {PLANS.map((plan, i) => (
+              <div
+                key={plan.id}
+                className={`${styles.planCard} ${plan.highlight ? styles.planCardHighlight : ""} reveal`}
+                style={{ transitionDelay: `${i * 70}ms` }}
+                aria-label={`${plan.name} plan`}
+              >
+                {plan.highlight && (
+                  <div className={styles.planPopular}>Most popular</div>
+                )}
+                <div className={styles.planHeader}>
+                  <div>
+                    <p className={styles.planTag}>{plan.tag}</p>
+                    <h3 className={styles.planName}>{plan.name}</h3>
+                  </div>
+                  <div className={styles.planPrice}>
+                    <span className={styles.planPriceNum}>
+                      {billing === "monthly" ? plan.monthly : plan.yearly}
+                    </span>
+                    <span className={styles.planPricePeriod}>
+                      /{billing === "monthly" ? "mo" : "yr"}
+                    </span>
+                  </div>
                 </div>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-                <div className={styles.stepNote}>
-                  <span />
-                  {step.note}
-                </div>
-              </article>
+                <p className={styles.planDesc}>{plan.desc}</p>
+                <ul
+                  className={styles.planFeatures}
+                  aria-label={`${plan.name} features`}
+                >
+                  {plan.features.map((f, fi) => (
+                    <li key={fi} className={styles.planFeatureItem}>
+                      <span className={styles.planFeatureDot} aria-hidden />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={plan.href}
+                  className={`btn ${plan.highlight ? "btn-primary" : "btn-secondary"} w-full ${styles.planCta}`}
+                  id={`plan-${plan.id}-cta-btn`}
+                  style={{ justifyContent: "center" }}
+                >
+                  {plan.cta}
+                </Link>
+              </div>
             ))}
           </div>
-        </section>
 
-        <section className="px-5 pb-20 sm:px-8 md:pb-28 lg:px-12">
-          <div className={styles.finalCta}>
-            <div className={styles.ctaOrbit} aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="relative z-[1] max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[.2em] text-white/65">
-                Your next interview starts here
-              </p>
-              <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
-                You already have the experience.
-                <br />
-                Let’s make it land.
-              </h2>
-              <p className="mt-5 max-w-lg text-sm leading-6 text-white/70">
-                One practice session can turn “I think I did okay” into “I know
-                what I want to say next time.”
-              </p>
+          <p
+            className={`body-xs ${styles.pricingNote} reveal`}
+            style={{ transitionDelay: "350ms" }}
+          >
+            Recruiter access is free. Recruiters can view a candidate&apos;s
+            resume only after the candidate approves their request.
+          </p>
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* ─── FINAL CTA ─────────────────────────────────────────────────────── */}
+      <section
+        className={`${styles.section} ${styles.ctaSection}`}
+        aria-labelledby="cta-title"
+      >
+        <div className={styles.sectionInner}>
+          <div className={styles.ctaInner}>
+            <p className={`label-sm ${styles.sectionEyebrow} reveal`}>
+              GET STARTED
+            </p>
+            <h2
+              className={`display-lg ${styles.ctaHeadline} reveal`}
+              style={{ transitionDelay: "60ms" }}
+              id="cta-title"
+            >
+              Your next interview
+              <br />
+              starts here.
+            </h2>
+            <div
+              className={`${styles.ctaBtns} reveal`}
+              style={{ transitionDelay: "140ms" }}
+            >
               <Link
-                href="/login"
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:shadow-lg"
+                href="/signup"
+                className="btn btn-primary btn-lg"
+                id="cta-signup-btn"
               >
-                Start practicing <Icon name="arrow" className="h-4 w-4" />
+                Create free account
+              </Link>
+              <Link
+                href="/signin"
+                className="btn btn-secondary btn-lg"
+                id="cta-signin-btn"
+              >
+                Sign in
               </Link>
             </div>
-            <div className={styles.ctaStamp} aria-hidden="true">
-              <Icon name="spark" className="h-8 w-8" />
-              <span>
-                MAKE IT
-                <br />
-                YOUR STORY
-              </span>
-            </div>
+            <p
+              className={`body-xs reveal`}
+              style={{
+                transitionDelay: "200ms",
+                color: "var(--text-tertiary)",
+                marginTop: 16,
+              }}
+            >
+              No credit card required. 3 sessions free every month.
+            </p>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      <footer className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 border-t border-border px-5 py-6 text-xs text-muted sm:px-8 lg:px-12">
-        <span>Okkra · Deliberate practice for your next chapter.</span>
-        <span>Practice feedback, never a hiring prediction.</span>
+      {/* ─── FOOTER ─────────────────────────────────────────────────────────── */}
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
+          <div className={styles.footerLeft}>
+            <div className={styles.footerWordmark}>
+              <Image
+                src="/okkra-logo.svg"
+                alt="Okkra"
+                width={145}
+                height={54}
+                className={styles.footerLogo}
+              />
+            </div>
+            <p
+              className="body-xs"
+              style={{ color: "var(--text-tertiary)", marginTop: 6 }}
+            >
+              From Practice to Offer.
+            </p>
+          </div>
+          <nav className={styles.footerLinks} aria-label="Footer navigation">
+            {FOOTER_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={styles.footerLink}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <hr className="divider" style={{ marginTop: 24 }} />
+        <p className={`body-xs ${styles.footerCopy}`}>
+          © {new Date().getFullYear()} Okkra. All rights reserved.
+        </p>
       </footer>
     </div>
   );
 }
+
+// ─── Static data ──────────────────────────────────────────────────────────────
+
+const STATS = [
+  { num: "4,200+", label: "sessions practiced" },
+  { num: "380+", label: "vetted recruiters" },
+  { num: "92%", label: "report more confidence" },
+];
+
+const SEEKER_FEATURES = [
+  "AI feedback on structure, clarity, and impact — after every session",
+  "Voice and text practice modes for any environment",
+  "Weekly readiness score that shows real improvement over time",
+  "Built for freshers stepping in and directors stepping up",
+  "Your profile is only visible to recruiters you approve",
+];
+
+const MINI_SCORES = [
+  { label: "Structure", val: 82 },
+  { label: "Clarity", val: 76 },
+  { label: "Metrics", val: 64 },
+];
+
+const RECRUITER_POINTS = [
+  {
+    title: "Browse by role and readiness",
+    desc: "Filter candidates by target role, experience level, and verified AI readiness score.",
+  },
+  {
+    title: "Candidate-controlled access",
+    desc: "You see a profile summary. The full resume unlocks only when the candidate approves your request.",
+  },
+  {
+    title: "Direct reach. Zero fees.",
+    desc: "Message candidates directly. No agency cut, no placement fee, no middleman.",
+  },
+];
+
+const AI_POINTS = [
+  "Trained on behavioral, case, and technical interview patterns",
+  "Understands STAR, SOAR, and narrative communication frameworks",
+  "Scores structure, metrics, filler words, and concision separately",
+  "No data shared with third-party AI providers",
+];
+
+const FOOTER_LINKS = [
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/signup", label: "Sign up" },
+  { href: "/signin", label: "Sign in" },
+  { href: "/dashboard", label: "App" },
+];
