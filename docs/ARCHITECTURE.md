@@ -21,10 +21,8 @@ flowchart LR
   Services --> Runtime[bounded agent runtime]
   Runtime --> Providers[Gemini / OpenAI / Sarvam / compatible]
   Runtime --> PG
-  Routes -->|job id| VercelQueue[Vercel Queues]
-  VercelQueue --> Subscriber[report subscriber]
-  Subscriber --> PG
-  Subscriber --> Runtime
+  Worker[Railway report worker] --> PG
+  Worker --> Runtime
 ```
 
 The frontend never holds provider credentials. Google or LinkedIn signs the identity assertion; a random
@@ -68,20 +66,18 @@ A turn requires the version the browser saw plus a unique request ID. A database
 claims a short lease, inference runs outside the transaction, and the final write checks the
 lease token and version. Duplicate completed requests return the stored response.
 
-The report job is inserted in the same transaction that freezes the interview. On Vercel, the API
-publishes its job ID to Vercel Queues after commit; a subscriber claims that durable PostgreSQL job
-with a fenced lease. PostgreSQL remains the source of truth, while Vercel Queues provides managed
-dispatch. The report and practice tasks become visible together; a stale subscriber cannot commit
-after another worker claims its lease. There is no dependency on process-local locks, an in-memory
-queue, or a browser remaining connected.
+The report job is inserted in the same transaction that freezes the interview. A separate Railway
+worker polls PostgreSQL for available jobs and claims them with a fenced lease. PostgreSQL is both
+the durable queue and source of truth. The report and practice tasks become visible together; a
+stale worker cannot commit after another worker claims its lease. There is no dependency on
+process-local locks, an in-memory queue, or a browser remaining connected.
 
 ## Deliberate choices
 
 - Keep the existing two-language stack rather than introduce another application framework.
 - Use a small explicit orchestrator rather than a framework whose hidden state would complicate
   debugging and coding-agent edits. Each agent is a prompt, contract, and invocation.
-- Keep job state and checkpoints in PostgreSQL. Vercel Queues only dispatches report job IDs to
-  subscribers; the existing database lease remains authoritative.
+- Keep job state, dispatch and checkpoints in PostgreSQL; the database lease remains authoritative.
 - Store trace metadata separately from private execution bundles. Prompt versions are retained in
   immutable prompt_bundles referenced from private interview/job snapshots; candidate answers remain in candidate-scoped tables.
 - Default to Sarvam cloud speech and automatic microphone turn-taking. Speech credentials,

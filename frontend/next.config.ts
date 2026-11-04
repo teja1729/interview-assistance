@@ -4,9 +4,7 @@ const nextConfig: NextConfig = {
   devIndicators: { position: "top-right" },
   distDir: process.env.NEXT_DIST_DIR ?? ".next",
   async rewrites() {
-    // Vercel Services routes /api through the deployment-level rewrite in vercel.json.
-    // Keep this proxy for local Next.js development, where the Vercel router is absent.
-    if (process.env.VERCEL === "1") return [];
+    // Proxy API requests to the private Railway API service, and to the local API in development.
     return [
       {
         source: "/api/:path*",

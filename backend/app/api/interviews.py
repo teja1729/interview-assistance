@@ -1,20 +1,15 @@
 """Thin HTTP boundary. Interview business rules live in services/interviews.py."""
 
-import logging
-import os
-
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlmodel import Session, select
-from vercel.queue import QueueClient
 
 from ..auth import Context, current_context
 from ..db import get_session
-from ..models import AgentJob, Interview
+from ..models import Interview
 from ..schemas import InterviewCreate, TextTurn
 from ..services import interviews as service
 
 router = APIRouter(prefix="/api/interviews", tags=["interviews"])
-log = logging.getLogger(__name__)
 
 
 @router.get("")
@@ -84,17 +79,8 @@ def turn_audio(
 
 
 @router.post("/{interview_id}/finish")
-async def finish(interview_id: str, ctx: Context = Depends(current_context), session: Session = Depends(get_session)):
-    result = service.finish(session, ctx, interview_id)
-    if result["status"] == "finishing" and os.getenv("VERCEL_DEPLOYMENT_ID"):
-        job = session.exec(select(AgentJob).where(AgentJob.interview_id == interview_id)).first()
-        if job:
-            try:
-                await QueueClient().send("interview-reports", {"job_id": job.id})
-            except Exception as exc:
-                log.warning("Could not enqueue report job=%s error=%s", job.id, type(exc).__name__)
-                raise HTTPException(503, "Report processing could not be started. Please retry.") from exc
-    return result
+def finish(interview_id: str, ctx: Context = Depends(current_context), session: Session = Depends(get_session)):
+    return service.finish(session, ctx, interview_id)
 
 
 @router.post("/{interview_id}/abandon")

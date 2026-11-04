@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { CompanyContext } from "@/components/CompanyContext";
@@ -20,8 +20,6 @@ export default function ReportPage() {
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState<number | null>(0);
   const [refreshKey, setRefreshKey] = useState(0);
-  const dispatchedFor = useRef<string | null>(null);
-
   useEffect(() => {
     let active = true;
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -30,13 +28,6 @@ export default function ReportPage() {
         const data = await api.interview(id);
         if (!active) return;
         setIv(data);
-        if (data.status === "finishing" && dispatchedFor.current !== id) {
-          dispatchedFor.current = id;
-          // Re-enqueue jobs created before Vercel Queue dispatch was deployed.
-          void api.finish(id).catch((e) => {
-            if (active) setError((e as Error).message);
-          });
-        }
         if (data.status === "finishing") timer = setTimeout(load, 2000);
       } catch (e) {
         if (active) setError((e as Error).message);

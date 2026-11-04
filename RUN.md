@@ -345,11 +345,8 @@ Complete [deployment prerequisites](docs/DEPLOYMENT.md): domain, HTTPS, Google c
 live model credentials, PostgreSQL backups and operating policies. Docker images still need a
 smoke test in your deployment environment.
 
-For a managed Railway setup with separate API, worker, PostgreSQL and web services, follow
-[docs/RAILWAY.md](docs/RAILWAY.md).
-
-For the Vercel Services configuration (FastAPI + Next.js) and Vercel Queues report processing,
-see [docs/VERCEL.md](docs/VERCEL.md).
+For production hosting on Railway (FastAPI + Next.js + PostgreSQL + report worker),
+see [docs/RAILWAY.md](docs/RAILWAY.md).
 
 ```bash
 # Create root Compose settings without overwriting an existing file.
@@ -429,7 +426,7 @@ git status --short
 | 403 on a mutation | Use the same browser origin; reload to refresh the session/CSRF token |
 | 409 after answering | Retry the pending request or reload; do not manually duplicate saved turns |
 | Local report stays pending | Start/restart `uv run python -m app.worker`; inspect its terminal output |
-| Vercel report stays pending | Confirm Vercel Queues is enabled, inspect the backend finish request and queue subscriber logs, then reopen the report page to re-dispatch its saved job |
+| Report stays pending on Railway | Confirm the worker service is running with the same PostgreSQL URL as the API, then inspect its Railway logs |
 | Report failed | Check provider credentials/quota in backend and worker logs, then use the report Retry button |
 | 429 quota reached | Check Plans & usage; use a fresh disposable DB for repeated test runs |
 | Sarvam/Gemini/OpenAI unavailable | Set its server key and restart API + worker; assign a configured profile in TOML [agents] |
