@@ -58,23 +58,41 @@ def consume(session, workspace, resource="ai_calls", limit=None, bucket_period=N
     session.commit()
 
 
+def record_text_turn(session, workspace):
+    """Count a successfully saved answer in untimed text topic practice."""
+    key = {"workspace_id": workspace.id, "period": period(), "resource": "text_turns"}
+    insert = sqlite_insert if session.bind.dialect.name == "sqlite" else pg_insert
+    session.execute(
+        insert(UsageBucket)
+        .values(**key, used=1)
+        .on_conflict_do_update(
+            index_elements=[UsageBucket.workspace_id, UsageBucket.period, UsageBucket.resource],
+            set_={"used": UsageBucket.used + 1},
+        )
+    )
+
+
 def rate_limit(session, workspace):
     consume(session, workspace, "requests", limit=30, bucket_period=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M"))
 
 
 def summary(session, workspace):
     plan = plan_limits(workspace)
+    text_turn_bucket = session.get(UsageBucket, (workspace.id, period(), "text_turns"))
     return {
         "plan": workspace.plan,
         "plan_name": plan["name"],
         "local_development_allowance": settings.environment == "development" and settings.local_usage_overrides,
         "period": period(),
         "resources": {
-            key: {
-                "used": (bucket.used if (bucket := session.get(UsageBucket, (workspace.id, period(), key))) else 0),
-                "limit": plan[key],
-            }
-            for key in ("interviews", "ai_calls")
+            **{
+                key: {
+                    "used": (bucket.used if (bucket := session.get(UsageBucket, (workspace.id, period(), key))) else 0),
+                    "limit": plan[key],
+                }
+                for key in ("interviews", "ai_calls")
+            },
+            "text_turns": {"used": text_turn_bucket.used if text_turn_bucket else 0},
         },
         "seats": plan["seats"],
     }

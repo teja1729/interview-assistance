@@ -12,13 +12,14 @@ All private endpoints require `interview_session` (HTTP-only). POST/PUT/PATCH/DE
 | Resumes | GET/POST /resumes; GET/DELETE /resumes/{id} |
 | Interviews | GET/POST /interviews; GET /interviews/{id}; POST /interviews/{id}/join, /turn-text, /turn, /finish, /abandon |
 | Practice | GET /practice; PATCH /practice/{id} |
-| Visibility | GET /agent-runs, /capabilities, /personas |
+| Visibility | GET /agent-runs (execution metadata; no UI), /capabilities, /personas |
 | Helpers | POST /suggest/titles, /suggest/job-description, /company-research, /tts |
 | Billing | GET /billing; POST /billing/checkout, /billing/portal, /billing/webhook |
 
 `GET /auth/me` returns `{user, account: {id, plan}, csrf_token, demo}`. Workspace management,
 invitations, switching and provider-preference routes are retired and return 404. All candidate
-resources and traces are scoped to the signed-in user. Billing offers Starter and Pro personal plans.
+resources and traces are scoped to the signed-in user. Billing currently enables Free and Pro
+personal entitlements; other public plan cards remain unavailable until configured by the operator.
 
 `POST /suggest/job-description` accepts `job_title`, `company`, and `experience_years` and returns
 `{job_description, demo}`. The text contains overview, responsibilities, requirements, optional skills
@@ -35,6 +36,9 @@ context, not verified employer vacancies.
 to the new roles; unknown IDs return 422. Interview responses include `persona_profile` with the
 public definition snapshotted at creation. Render its name and icon instead of maintaining a second
 frontend role map. Older interviews resolve their profile through the legacy alias mapping.
+The create request accepts `mode: "voice" | "text"` (defaults to `voice`). Text mode stores the
+selected topic in the interview brief, uses the same transcript and report pipeline, has no time
+expiry, and returns `mode: "text"` so the client can skip speech and microphone controls.
 
 `POST /interviews/{id}/turn-text`:
 
@@ -56,6 +60,10 @@ report is ready. Poll GET /interviews/{id}. `finished` includes the validated re
 Lists have bounded sizes. Interview history supports limit (max 100) and offset. Agent activity
 returns the latest 100 entries; practice returns up to 200 tasks. Extend pagination contracts before
 using these endpoints for unbounded analytics.
+
+`GET /billing` includes monthly `resources.interviews` limits and a `resources.text_turns.used`
+count for successfully submitted answers in text topic practice. The UI does not display internal
+AI call quota counters.
 
 ## Error semantics
 

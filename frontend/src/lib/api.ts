@@ -165,6 +165,7 @@ export type InterviewStatus =
   | "abandoned";
 export type Interview = {
   id: string;
+  mode: "voice" | "text";
   user_id: string;
   created_at: number;
   started_at: number | null;
@@ -235,7 +236,12 @@ export type Usage = {
   plan: string;
   plan_name: string;
   period: string;
-  resources: Record<"interviews" | "ai_calls", { used: number; limit: number }>;
+  resources: Record<
+    "interviews" | "ai_calls",
+    { used: number; limit: number }
+  > & {
+    text_turns: { used: number };
+  };
 };
 export type PracticeTask = {
   id: string;
@@ -429,6 +435,7 @@ export const api = {
     request<InterviewSummary[]>(`/interviews?offset=${offset}`),
   interview: (id: string) => request<Interview>(`/interviews/${id}`),
   createInterview: (body: {
+    mode?: "voice" | "text";
     job_title: string;
     company: string;
     experience_years: number;

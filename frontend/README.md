@@ -4,13 +4,16 @@ Read the repository AGENTS.md, then docs/ARCHITECTURE.md and docs/DEVELOPMENT.md
 
 - `src/lib/api.ts`: typed same-origin requests, CSRF, session discovery and stable turn request IDs.
 - `AuthProvider`: session context. `AppShell`: public/private layout and personal account context.
-- `/`: public landing. `/login`, `/pricing`: public routes.
+- `/`: public B2B-app homepage, ported into the production frontend.
+- `/recruiter`: API-backed recruiter directory and onboarding. `/login`, `/pricing`: public routes.
 - `/dashboard`, `/setup`, `/resumes`: primary preparation flow.
 - `/interview/[id]`: interview presentation. `src/features/interview/useInterviewSession.ts` owns
   browser session/device phases; the backend owns the authoritative interview lifecycle. Read
   `src/features/interview/README.md` before changing recording, timers or request retries.
 - `/report/[id]`: polls durable report status and supports retry after terminal failure.
 - `/practice`, `/settings`, `/billing`: personal account features.
+- `/billing` uses the shared public plan catalog from `src/lib/plans.ts`; live interview and text-turn
+  usage still comes from the authenticated billing API.
 - `lib/recorder.ts`, `lib/speech.ts`: browser device lifecycle; keep vendor reasoning code out.
 
 Use the API client for all mutations. Do not put tokens in localStorage. Voice routing comes from
@@ -22,8 +25,8 @@ Build uses Webpack and system fonts, so no font service/network download is need
 
 ## Login design and recruiter workflow
 
-Candidate and recruiter login use the homepage palette. Keep login-only layout in `SignInPage.module.css`
-and shared colors in `globals.css`.
+Candidate and recruiter login use the B2B homepage's split-panel design, while OAuth and sessions
+stay on the production backend. Keep login-only layout in `SignInPage.module.css`.
 The application retains its original sidebar, teal theme, cards and dark voice
 screen. `../B2B-app` remains a separate prototype; do not import its localStorage stores, simulated
 speech or feedback engine. Device orchestration stays in `features/interview/useInterviewSession.ts`.

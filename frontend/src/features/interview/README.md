@@ -22,6 +22,9 @@ Preserve these contracts when extending the feature:
   Company facts and their citations render through `components/CompanyContext.tsx`. Search Suggestions
   use a script-free sandboxed frame; never grant it same-origin access or inject its HTML into the page.
 - Typed answers reach the API verbatim. Voice answers use a WAV recording and server transcription.
+- Topic text practice uses the same server-owned session, transcript and report lifecycle, while
+  keeping prompts and answers in chat, disabling speech/microphone/camera, and allowing untimed
+  practice until the user finishes or the topic plan is complete.
 - The live call shows the turn history as a chat sidebar on desktop and a toggleable conversation
   panel on small screens. While recording, clearly tell candidates they can mute the mic to submit
   their answer; preserve the hands-free pause-to-submit behavior.

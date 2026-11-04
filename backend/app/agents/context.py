@@ -88,6 +88,7 @@ def preference_flags(text):
 
 def live_context(iv, turns, answer, remaining):
     current = turns[-1]
+    untimed = iv.plan.get("_mode") == "text"
     data = agent_context(iv, current.question)
     # Current topic is at most two answered follow-ups; older topics only contribute a coverage map.
     recent = [t for t in turns if t.topic == current.topic][-3:]
@@ -107,15 +108,15 @@ def live_context(iv, turns, answer, remaining):
     data.update(
         history=history,
         answer=answer,
-        remaining_seconds=remaining,
+        remaining_seconds=None if untimed else remaining,
         followups=iv.followup_count,
         covered_topics=[q["topic"] for i, q in enumerate(bank) if i in visited and i != iv.current_topic],
         current_topic=iv.current_topic,
         answer_id=current.id,
         candidate_memory=iv.plan.get("_memory", []),
         remaining_topics=available,
-        finish_allowed=remaining <= 180,
-        target_seconds_per_topic=round(remaining / (len(available) + 1)),
+        finish_allowed=untimed or remaining <= 180,
+        target_seconds_per_topic=None if untimed else round(remaining / (len(available) + 1)),
     )
     return data
 

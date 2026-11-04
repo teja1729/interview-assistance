@@ -120,20 +120,26 @@ export function useInterviewSession(id: string) {
         setTurns(data.turns);
         version.current = data.version;
         setRemaining(data.remaining_seconds);
-        deadline.current = data.started_at
-          ? Date.now() + data.remaining_seconds * 1000
-          : 0;
+        deadline.current =
+          data.mode === "text"
+            ? 0
+            : data.started_at
+              ? Date.now() + data.remaining_seconds * 1000
+              : 0;
         const deviceSupported = WavRecorder.isSupported();
-        setVoiceInput(caps.voice_input && deviceSupported);
-        setCloudVoice(caps.cloud_voice);
+        const textMode = data.mode === "text";
+        setVoiceInput(!textMode && caps.voice_input && deviceSupported);
+        setCloudVoice(!textMode && caps.cloud_voice);
+        setTyping(textMode || !caps.voice_input || !deviceSupported);
         setMicUnavailable(
-          !caps.voice_input
-            ? "Microphone answers are unavailable because voice transcription is not configured. You can type your answer."
-            : !deviceSupported
-              ? "Microphone access requires a supported browser on HTTPS or localhost. You can type your answer."
-              : "",
+          textMode
+            ? "Text practice is active. Type your answer below."
+            : !caps.voice_input
+              ? "Microphone answers are unavailable because voice transcription is not configured. You can type your answer."
+              : !deviceSupported
+                ? "Microphone access requires a supported browser on HTTPS or localhost. You can type your answer."
+                : "",
         );
-        if (!caps.voice_input || !deviceSupported) setTyping(true);
         setCurrent(data.current_question ?? "");
         setClosing(data.closing_remark);
         setPhase(
@@ -214,9 +220,15 @@ export function useInterviewSession(id: string) {
       const data = await api.join(id);
       version.current = data.version;
       setIv(data);
-      deadline.current = Date.now() + data.remaining_seconds * 1000;
+      deadline.current =
+        data.mode === "text" ? 0 : Date.now() + data.remaining_seconds * 1000;
       setRemaining(data.remaining_seconds);
-      await speakLine(data.current_question ?? current, "ready");
+      if (data.mode === "text") {
+        setCurrent(data.current_question ?? current);
+        setPhase("ready");
+      } else {
+        await speakLine(data.current_question ?? current, "ready");
+      }
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -289,7 +301,8 @@ export function useInterviewSession(id: string) {
     try {
       const result = await pending.current();
       version.current = result.version;
-      deadline.current = Date.now() + result.remaining_seconds * 1000;
+      deadline.current =
+        iv?.mode === "text" ? 0 : Date.now() + result.remaining_seconds * 1000;
       pending.current = null;
       setHasPending(false);
       if (result.repeat) {
@@ -374,7 +387,7 @@ export function useInterviewSession(id: string) {
       !text ||
       locked.current ||
       pending.current ||
-      remaining <= 0 ||
+      (remaining <= 0 && iv?.mode !== "text") ||
       phase !== "ready"
     )
       return;
@@ -382,7 +395,7 @@ export function useInterviewSession(id: string) {
       expected = version.current;
     pending.current = () => api.textTurn(id, text, expected, requestId);
     setHasPending(true);
-    await sendPending();
+    await sendPending(iv?.mode !== "text");
   }
   async function endCall() {
     if (locked.current) return;

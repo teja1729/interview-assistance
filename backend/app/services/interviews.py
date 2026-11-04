@@ -25,7 +25,7 @@ from ..providers.base import agent_profiles
 from ..schemas import InterviewBrief, InterviewDecision, Plan, TurnDecision
 from .company_research import research
 from .interview_policy import question_bounds, remaining_topics, update_memory, validate_decision, validate_plan
-from .usage import consume, rate_limit
+from .usage import consume, rate_limit, record_text_turn
 
 
 def get_interview(session, ctx, interview_id, mutate=False):
@@ -54,6 +54,7 @@ def public(session, iv):
     turns = turns_for(session, iv)
     data = iv.model_dump(exclude={"resume_snapshot", "lock_token", "lock_until", "ai_profiles", "workspace_id"})
     data["plan"] = {"focus_areas": iv.plan.get("focus_areas", [])}
+    data["mode"] = iv.plan.get("_mode", "voice")
     data["persona_profile"] = public_persona(interview_persona(iv))
     brief = brief_for(iv)
     data["language"] = brief.language
@@ -102,7 +103,7 @@ def create(session: Session, ctx: Context, body):
     )
     consume(session, ctx.workspace)
     iv = Interview(
-        **body.model_dump(exclude={"language", "company_url", "company_research_id"}),
+        **body.model_dump(exclude={"mode", "language", "company_url", "company_research_id"}),
         workspace_id=ctx.workspace.id,
         user_id=ctx.user.id,
         resume_snapshot=snapshot,
@@ -122,6 +123,7 @@ def create(session: Session, ctx: Context, body):
         company_context=company_context,
     )
     iv.plan = {
+        "_mode": body.mode,
         "_brief": brief.model_dump(),
         "_persona": selected_persona,
         "_execution": execution_snapshot(
@@ -185,7 +187,10 @@ def apply_turn(session, ctx, interview_id, version, request_id, answer=None, aud
         return operation.response
     if iv.status != "active":
         raise HTTPException(409, "This interview is not accepting answers")
-    if time.time() > iv.started_at + iv.duration_minutes * 60 + 120:
+    text_mode = iv.plan.get("_mode") == "text"
+    if text_mode and audio is not None:
+        raise HTTPException(400, "Text topic practice accepts typed answers only")
+    if not text_mode and time.time() > iv.started_at + iv.duration_minutes * 60 + 120:
         raise HTTPException(409, "The interview has expired. Finish it to see your report.")
     rate_limit(session, ctx.workspace)
     lease = uid()
@@ -247,11 +252,13 @@ def apply_turn(session, ctx, interview_id, version, request_id, answer=None, aud
         topic, count = iv.current_topic, iv.followup_count
         bank = iv.plan["question_bank"]
         closing = CLOSINGS[brief_for(iv).language]
-        done = remaining(iv) <= 120
+        done = not text_mode and remaining(iv) <= 120
         plan = dict(iv.plan)
         if modern:
             plan["_memory"] = update_memory(plan, decision)
-            done = done or (decision.action == "finish" and remaining(iv) <= 180)
+            done = done or (decision.action == "finish" and (text_mode or remaining(iv) <= 180))
+        elif text_mode and decision.action == "finish":
+            done = True
         if done:
             reply = closing
         elif decision.action == "follow_up" and count < 2:
@@ -322,6 +329,8 @@ def apply_turn(session, ctx, interview_id, version, request_id, answer=None, aud
                 response=response,
             )
         )
+        if text_mode:
+            record_text_turn(session, ctx.workspace)
         session.commit()
         return response
     except Exception:

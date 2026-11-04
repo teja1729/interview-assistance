@@ -312,6 +312,7 @@ class Transcript(Contract):
 
 
 class InterviewCreate(BaseModel):
+    mode: Literal["voice", "text"] = "voice"
     job_title: str = Field(min_length=2, max_length=150)
     company: str = Field(default="", max_length=150)
     experience_years: int = Field(default=0, ge=0, le=50)

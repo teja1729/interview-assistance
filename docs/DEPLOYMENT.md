@@ -65,3 +65,45 @@ worker handles one job at a time per process; add worker replicas to increase re
 The runtime is intentionally bounded, without autonomous tool execution. Before high-volume public
 traffic add platform-level rate controls, observability alerts, constrained document extraction and
 measured capacity targets. Container build and live credentials must be verified in your deployment environment.
+
+## Railway AI deployment prompt
+
+Paste this prompt into Railway's AI assistant to create the initial services. Review its
+proposed configuration before deploying, and add credentials manually through Railway's
+Variables page.
+
+```text
+Deploy this repo on Railway as three services:
+
+API
+- Root: /backend
+- Use backend/Dockerfile.
+- Run FastAPI on 0.0.0.0:8000.
+- Healthcheck: /api/ready
+- Pre-deploy command: alembic upgrade head
+- Keep private; frontend and worker need to reach it.
+
+Worker
+- Root: /backend
+- Use the backend build.
+- Start command: python -m app.worker
+- No public domain.
+
+Web
+- Root: /frontend
+- Use frontend/Dockerfile.
+- Set BACKEND_URL=http://api.railway.internal:8000
+- Give it a public Railway domain.
+
+Use my existing Supabase PostgreSQL database. Do not create a new database or change its data.
+Do not invent or expose secrets. I will add secrets manually in Railway Variables.
+
+After setup, tell me which variables to add to each service and show me the build, start,
+healthcheck, and pre-deploy settings so I can review them before deploying.
+```
+
+For this initial move, reusing the existing database keeps the current app data in place.
+Add the same production `DATABASE_URL`, `SESSION_SECRET`, and required provider credentials
+to the API and worker. Set `APP_ENV=production`, `AUTH_DEMO_ENABLED=false`, and
+`INLINE_WORKER=false` on both; set `FRONTEND_ORIGIN` to the web service's public HTTPS URL.
+Do not switch DNS from the current host until the Railway deployment and sign-in flow work.

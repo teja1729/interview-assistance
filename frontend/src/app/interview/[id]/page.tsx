@@ -111,47 +111,58 @@ export default function InterviewCallPage() {
         clock={clock}
         title={iv.job_title}
         company={iv.company}
-        remaining={phase === "lobby" ? null : remaining}
+        remaining={phase === "lobby" || iv.mode === "text" ? null : remaining}
       />
       {phase === "lobby" ? (
         <div className="flex min-h-0 flex-1 flex-col items-center gap-8 overflow-y-auto px-6 py-8 lg:justify-center lg:flex-row lg:gap-14">
-          <div className="relative aspect-video w-full max-w-xl overflow-hidden rounded-2xl bg-[#2d413a]">
-            {camOn ? (
-              <video
-                ref={bindVideo}
-                autoPlay
-                playsInline
-                muted
-                className="h-full w-full -scale-x-100 object-cover"
-              />
-            ) : (
-              <div className="grid h-full place-items-center text-white/50">
-                Your camera stays on your device
+          {iv.mode !== "text" && (
+            <div className="relative aspect-video w-full max-w-xl overflow-hidden rounded-2xl bg-[#2d413a]">
+              {camOn ? (
+                <video
+                  ref={bindVideo}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="h-full w-full -scale-x-100 object-cover"
+                />
+              ) : (
+                <div className="grid h-full place-items-center text-white/50">
+                  Your camera stays on your device
+                </div>
+              )}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                <RoundBtn
+                  on={camOn}
+                  onClick={() => (camOn ? stopCamera() : startCamera())}
+                  label={camOn ? "Turn off camera" : "Turn on camera"}
+                  icon={camOn ? <CamIcon /> : <CamOffIcon />}
+                />
               </div>
-            )}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-              <RoundBtn
-                on={camOn}
-                onClick={() => (camOn ? stopCamera() : startCamera())}
-                label={camOn ? "Turn off camera" : "Turn on camera"}
-                icon={camOn ? <CamIcon /> : <CamOffIcon />}
-              />
             </div>
-          </div>
+          )}
           <div className="max-w-sm text-center">
-            <InterviewerAvatar icon={iv.persona_profile?.icon} compact />
-            <h1 className="mt-5 text-2xl font-medium">Ready to join?</h1>
+            {iv.mode !== "text" && (
+              <InterviewerAvatar icon={iv.persona_profile?.icon} compact />
+            )}
+            <h1 className="mt-5 text-2xl font-medium">
+              {iv.mode === "text" ? "Ready to practice?" : "Ready to join?"}
+            </h1>
             <p className="mt-2 text-sm font-medium text-[#dce9e2]">
-              {personaName} · AI practice
+              {iv.mode === "text"
+                ? "Text topic practice"
+                : `${personaName} · AI practice`}
             </p>
             <p className="mt-3 text-sm leading-6 text-white/60">
-              {iv.duration_minutes} minutes to explore your experience with your{" "}
-              {personaName.toLowerCase()}. Your clock starts when you join.
+              {iv.mode === "text"
+                ? `Practice ${iv.job_title.replace(/^Topic practice: /, "")} by chatting with the interviewer. Take as long as you need.`
+                : `${iv.duration_minutes} minutes to explore your experience with your ${personaName.toLowerCase()}. Your clock starts when you join.`}
             </p>
             <p className="mt-3 text-xs text-white/50">
-              {voiceInput
-                ? "Your interviewer speaks, then your microphone opens. Pause for three seconds to send your answer. Camera is optional."
-                : micUnavailable}
+              {iv.mode === "text"
+                ? "Read each question and type your answer. No microphone or camera is needed."
+                : voiceInput
+                  ? "Your interviewer speaks, then your microphone opens. Pause for three seconds to send your answer. Camera is optional."
+                  : micUnavailable}
             </p>
             <div className="mt-4 max-h-56 overflow-y-auto">
               <CompanyContext brief={iv.company_context} dark />
@@ -160,7 +171,7 @@ export default function InterviewCallPage() {
               className="mt-6 rounded-full bg-accent px-8 py-3 font-medium text-white"
               onClick={join}
             >
-              Join now
+              {iv.mode === "text" ? "Begin text practice" : "Join now"}
             </button>
             <Link
               href="/dashboard"
@@ -177,10 +188,21 @@ export default function InterviewCallPage() {
               <div
                 className={`relative flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-[#2d413a] to-[#1f302b] ring-2 ${phase === "speaking" ? "ring-accent" : "ring-transparent"}`}
               >
-                <div className="relative">
-                  <InterviewerAvatar icon={iv.persona_profile?.icon} />
-                  {phase === "speaking" && <SpeakingBars />}
-                </div>
+                {iv.mode === "text" ? (
+                  <div className="mx-6 max-w-2xl rounded-2xl border border-white/10 bg-black/20 p-6 text-center sm:p-10">
+                    <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-white/50">
+                      Current question
+                    </p>
+                    <p className="text-lg leading-8 sm:text-2xl">
+                      {phase === "done" ? closing : current}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="relative">
+                    <InterviewerAvatar icon={iv.persona_profile?.icon} />
+                    {phase === "speaking" && <SpeakingBars />}
+                  </div>
+                )}
                 {phase === "done" && (
                   <div className="absolute top-7 rounded-full bg-black/30 px-4 py-2 text-xs">
                     Interview complete
@@ -194,7 +216,7 @@ export default function InterviewCallPage() {
                     </p>
                   )}
                 </div>
-                {captions && caption && (
+                {iv.mode !== "text" && captions && caption && (
                   <div className="absolute inset-x-0 bottom-10 mx-auto max-w-2xl px-5">
                     <p
                       data-testid="caption"
@@ -235,7 +257,11 @@ export default function InterviewCallPage() {
                     placeholder="Think it through, then share your answer…"
                     value={typed}
                     onChange={(e) => setTyped(e.target.value)}
-                    disabled={phase !== "ready" || remaining <= 0 || hasPending}
+                    disabled={
+                      phase !== "ready" ||
+                      (iv.mode !== "text" && remaining <= 0) ||
+                      hasPending
+                    }
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
@@ -248,7 +274,7 @@ export default function InterviewCallPage() {
                     onClick={submitTyped}
                     disabled={
                       phase !== "ready" ||
-                      remaining <= 0 ||
+                      (iv.mode !== "text" && remaining <= 0) ||
                       !typed.trim() ||
                       hasPending
                     }
@@ -318,7 +344,7 @@ export default function InterviewCallPage() {
               "Saving your session…"
             ) : phase === "recording" ? (
               `Listening · ${recSeconds.toFixed(0)}s${autoListen && cloudVoice ? " · Mute the mic to send your answer, or pause for 3 seconds for hands-free sending" : " · Select the mic button to send your answer when finished"}`
-            ) : remaining <= 0 ? (
+            ) : iv.mode !== "text" && remaining <= 0 ? (
               "Your time is up. Finish to get your report."
             ) : phase === "ready" ? (
               micUnavailable ||
@@ -349,56 +375,72 @@ export default function InterviewCallPage() {
             )}
           </div>
           <div className="flex items-center justify-center gap-2 px-3 pb-5 pt-2">
-            <div className="relative">
-              <RoundBtn
-                on
-                active={phase === "recording"}
-                disabled={!micEnabled}
-                onClick={toggleMic}
-                label={
-                  phase === "recording"
-                    ? "Send answer"
-                    : micDenied
-                      ? "Retry microphone"
-                      : !voiceInput
-                        ? "Microphone unavailable"
-                        : "Answer"
-                }
-                icon={micEnabled ? <MicIcon /> : <MicOffIcon />}
-              />
-              {phase === "recording" && (
-                <span
-                  className="pointer-events-none absolute inset-0 rounded-full border border-accent"
-                  style={{ transform: `scale(${1.1 + level * 0.4})` }}
+            {iv.mode !== "text" && (
+              <div className="relative">
+                <RoundBtn
+                  on
+                  active={phase === "recording"}
+                  disabled={!micEnabled}
+                  onClick={toggleMic}
+                  label={
+                    phase === "recording"
+                      ? "Send answer"
+                      : micDenied
+                        ? "Retry microphone"
+                        : !voiceInput
+                          ? "Microphone unavailable"
+                          : "Answer"
+                  }
+                  icon={micEnabled ? <MicIcon /> : <MicOffIcon />}
                 />
-              )}
-            </div>
-            <RoundBtn
-              on={camOn}
-              onClick={() => (camOn ? stopCamera() : startCamera())}
-              label={camOn ? "Turn off camera" : "Turn on camera"}
-              icon={camOn ? <CamIcon /> : <CamOffIcon />}
-            />
-            <RoundBtn
-              on={captions}
-              onClick={() => setCaptions((v) => !v)}
-              label="Captions"
-              icon={<CcIcon />}
-            />
-            <RoundBtn
-              on={typing}
-              onClick={toggleTyping}
-              disabled={phase === "recording" || busy}
-              label="Type an answer"
-              icon={<KeyboardIcon />}
-            />
+                {phase === "recording" && (
+                  <span
+                    className="pointer-events-none absolute inset-0 rounded-full border border-accent"
+                    style={{ transform: `scale(${1.1 + level * 0.4})` }}
+                  />
+                )}
+              </div>
+            )}
+            {iv.mode !== "text" && (
+              <>
+                <RoundBtn
+                  on={camOn}
+                  onClick={() => (camOn ? stopCamera() : startCamera())}
+                  label={camOn ? "Turn off camera" : "Turn on camera"}
+                  icon={camOn ? <CamIcon /> : <CamOffIcon />}
+                />
+                <RoundBtn
+                  on={captions}
+                  onClick={() => setCaptions((v) => !v)}
+                  label="Captions"
+                  icon={<CcIcon />}
+                />
+                <RoundBtn
+                  on={typing}
+                  onClick={toggleTyping}
+                  disabled={phase === "recording" || busy}
+                  label="Type an answer"
+                  icon={<KeyboardIcon />}
+                />
+              </>
+            )}
             <button
               onClick={endCall}
               disabled={busy}
               aria-label={phase === "done" ? "Get report" : "End interview"}
               className="ml-1 flex h-12 items-center rounded-full bg-accent px-5 text-xs font-medium disabled:opacity-40"
             >
-              {phase === "done" ? "Get report" : <EndIcon />}
+              {iv.mode === "text" ? (
+                phase === "done" ? (
+                  "Get report"
+                ) : (
+                  "Finish practice"
+                )
+              ) : phase === "done" ? (
+                "Get report"
+              ) : (
+                <EndIcon />
+              )}
             </button>
             <div className="lg:hidden">
               <RoundBtn
