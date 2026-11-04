@@ -649,7 +649,7 @@ export default function SetupPage() {
             ? "Briefing the interviewer…"
             : format === "text"
               ? "Start text practice"
-              : "Start voice interview"}
+              : "Start interview"}
         </button>
         {starting && (
           <p className="text-center text-xs text-muted">
