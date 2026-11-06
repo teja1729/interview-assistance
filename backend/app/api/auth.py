@@ -14,6 +14,7 @@ from ..auth import COOKIE, Context, current_context, issue_session
 from ..config import settings
 from ..db import get_session
 from ..models import LoginSession, Membership, User, Workspace
+from ..services.usage import effective_plan
 
 router = APIRouter(prefix="/api/auth", tags=["authentication"])
 log = logging.getLogger(__name__)
@@ -204,7 +205,7 @@ def demo_login(response: Response, session: Session = Depends(get_session)):
 def me(ctx: Context = Depends(current_context)):
     return {
         "user": ctx.user.model_dump(exclude={"google_sub", "auth_provider"}),
-        "account": {"id": ctx.workspace.id, "plan": ctx.workspace.plan},
+        "account": {"id": ctx.workspace.id, "plan": effective_plan(ctx.workspace)},
         "csrf_token": ctx.login.csrf_token,
         "demo": ctx.user.google_sub == "development-demo",
     }

@@ -1,5 +1,6 @@
 """Atomic, database-backed usage limits shared by all API/worker processes."""
 
+import time
 from datetime import UTC, datetime
 
 from fastapi import HTTPException
@@ -12,7 +13,9 @@ from ..models import UsageBucket
 
 PLANS = {
     "free": {"name": "Starter", "interviews": 3, "ai_calls": 150, "seats": 1},
+    "starter": {"name": "Starter", "interviews": 20, "ai_calls": 1000, "seats": 1},
     "pro": {"name": "Pro", "interviews": 40, "ai_calls": 2000, "seats": 1},
+    "senior": {"name": "Senior", "interviews": 100, "ai_calls": 5000, "seats": 1},
     # Retained for existing Stripe subscriptions; no new team checkout is offered.
     "team": {"name": "Legacy", "interviews": 200, "ai_calls": 10000, "seats": 10},
 }
@@ -23,10 +26,16 @@ def period():
 
 
 def plan_limits(workspace):
-    plan = dict(PLANS.get(workspace.plan, PLANS["free"]))
+    plan = dict(PLANS.get(effective_plan(workspace), PLANS["free"]))
     if settings.environment == "development" and settings.local_usage_overrides:
         plan.update(interviews=max(0, settings.local_interview_limit), ai_calls=max(0, settings.local_ai_call_limit))
     return plan
+
+
+def effective_plan(workspace):
+    if workspace.billing_expires_at and workspace.billing_expires_at <= time.time():
+        return "free"
+    return workspace.plan
 
 
 def consume(session, workspace, resource="ai_calls", limit=None, bucket_period=None):
@@ -80,7 +89,7 @@ def summary(session, workspace):
     plan = plan_limits(workspace)
     text_turn_bucket = session.get(UsageBucket, (workspace.id, period(), "text_turns"))
     return {
-        "plan": workspace.plan,
+        "plan": effective_plan(workspace),
         "plan_name": plan["name"],
         "local_development_allowance": settings.environment == "development" and settings.local_usage_overrides,
         "period": period(),

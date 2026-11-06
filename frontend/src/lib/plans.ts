@@ -37,7 +37,7 @@ export const PUBLIC_PLANS: PublicPlan[] = [
     yearly: "₹9,999",
     desc: "Full access to practice. Right for freshers entering the market.",
     features: [
-      "Unlimited sessions",
+      "20 mock interviews per month",
       "Voice + Text modes",
       "Full STAR + filler analysis",
       "Readiness score & trend",
@@ -55,6 +55,7 @@ export const PUBLIC_PLANS: PublicPlan[] = [
     yearly: "₹29,999",
     desc: "For mid-level professionals stepping up or switching tracks.",
     features: [
+      "40 mock interviews per month",
       "Everything in Starter",
       "Advanced feedback analytics",
       "Category performance tracking",
@@ -73,6 +74,7 @@ export const PUBLIC_PLANS: PublicPlan[] = [
     yearly: "₹49,999",
     desc: "For senior and leadership roles with elevated expectations.",
     features: [
+      "100 mock interviews per month",
       "Everything in Pro",
       "Leadership interview formats",
       "Executive communication coaching",

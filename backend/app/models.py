@@ -44,12 +44,23 @@ class Workspace(SQLModel, table=True):
     """
 
     __tablename__ = "workspaces"
+    __table_args__ = (
+        Index("uq_workspaces_razorpay_order_id", "razorpay_order_id", unique=True),
+        Index("uq_workspaces_razorpay_payment_id", "razorpay_payment_id", unique=True),
+    )
     id: str = Field(default_factory=uid, primary_key=True)
     name: str
     plan: str = "free"
     stripe_customer_id: str | None = Field(default=None, unique=True)
     stripe_subscription_id: str | None = None
+    razorpay_order_id: str | None = None
+    razorpay_order_amount_paise: int | None = None
+    razorpay_order_plan: str = ""
+    razorpay_order_period: str = ""
+    razorpay_payment_id: str | None = None
+    billing_provider: str = ""
     billing_status: str = "free"
+    billing_expires_at: float | None = None
     billing_event_at: int = 0
     billing_version: int = Field(default=0, sa_column=Column(Integer, nullable=False, server_default="0"))
     ai_profiles: dict[str, str] = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))

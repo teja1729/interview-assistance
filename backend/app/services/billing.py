@@ -25,7 +25,10 @@ def prices():
 
 
 def enabled():
-    return bool(settings.stripe_key and settings.stripe_webhook_secret)
+    return bool(
+        (settings.stripe_key and settings.stripe_webhook_secret)
+        or (settings.razorpay_key_id and settings.razorpay_key_secret)
+    )
 
 
 def customer_snapshot(customer_id):

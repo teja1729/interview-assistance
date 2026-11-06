@@ -284,9 +284,9 @@ use that only when your normal stack is intentionally configured as a test demo.
 
 All commands below target the `DATABASE_URL` loaded by the backend.
 
-The current updates add `d20a77b9c431` (shared prompt bundles/practice sources) and
-`e54c91d703a2` (saved setup artifacts), following `c91f0326ad10`. Stop the API/worker, apply the migration,
-then restart both. `dev.sh` applies it automatically. Existing interviews and reports are preserved.
+The current migration head is `cf319e44a730` (Razorpay billing references). Stop the API/worker, apply
+pending migrations, then restart both. `dev.sh` applies them automatically. Existing interviews and
+reports are preserved.
 
 ```bash
 # Show the currently applied revision and available history.
@@ -397,6 +397,8 @@ Copy the listener's signing secret into `STRIPE_WEBHOOK_SECRET`, then restart th
 Customer Portal in Stripe and use **Plans & usage** to exercise a real test-mode checkout.
 Synthetic CLI events without a matching application customer do not upgrade an account.
 For port 8100, change the forwarding URL accordingly. Live billing uses separate live credentials.
+For Razorpay Standard Checkout variables, one-time access duration and test/live setup, see
+[Configuration](docs/CONFIGURATION.md#razorpay-standard-checkout).
 
 ## 13. Health, troubleshooting and quick reference
 

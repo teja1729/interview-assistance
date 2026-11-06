@@ -15,6 +15,7 @@ from sqlmodel import Session, select
 from app.api import billing
 from app.models import BillingEvent, Workspace
 from app.services import billing as service
+from app.services.usage import effective_plan
 
 SECRET = "whsec_test_fixture"
 
@@ -135,3 +136,132 @@ def test_concurrent_stale_snapshot_is_fenced_and_refetched(account, engine, monk
         assert workspace.billing_version == 2
         assert len(session.exec(select(BillingEvent)).all()) == 2
     assert calls == 3
+
+
+@pytest.mark.parametrize(
+    ("plan", "amount"),
+    [("starter", 99900), ("pro", 299900), ("senior", 499900)],
+)
+def test_razorpay_create_order_uses_server_price(account, engine, monkeypatch, plan, amount):
+    settings = replace(
+        billing.settings,
+        razorpay_key_id="rzp_test_fixture",
+        razorpay_key_secret="secret_fixture",
+        razorpay_starter_monthly_amount_paise=99900,
+        razorpay_pro_monthly_amount_paise=299900,
+        razorpay_senior_monthly_amount_paise=499900,
+    )
+    monkeypatch.setattr(billing, "settings", settings)
+    monkeypatch.setattr(billing.razorpay, "settings", settings)
+    calls = []
+
+    def create_order(amount, receipt, workspace_id, plan, billing_period):
+        calls.append((amount, receipt, workspace_id, plan, billing_period))
+        return {"id": "order_test_1", "amount": amount, "currency": "INR"}
+
+    monkeypatch.setattr(billing.razorpay, "create_order", create_order)
+    result = account.post("/api/billing/create-order", json={"plan": plan, "period": "monthly", "amount": 1})
+
+    assert result.status_code == 200
+    assert result.json()["order_id"] == "order_test_1"
+    assert result.json()["amount"] == amount
+    assert len(calls) == 1
+    assert calls[0][0] == amount
+    assert calls[0][1].startswith(f"{plan[:6]}-")
+    assert calls[0][2:] == (account.workspace_id, plan, "monthly")
+    with Session(engine) as session:
+        workspace = session.get(Workspace, account.workspace_id)
+        assert workspace.razorpay_order_id == "order_test_1"
+        assert workspace.razorpay_order_amount_paise == amount
+        assert workspace.razorpay_order_plan == plan
+
+
+@pytest.mark.parametrize(
+    ("plan", "amount"),
+    [("starter", 99900), ("pro", 299900), ("senior", 499900)],
+)
+def test_razorpay_payment_verification_grants_term_once(account, engine, monkeypatch, plan, amount):
+    settings = replace(
+        billing.settings,
+        razorpay_key_id="rzp_test_fixture",
+        razorpay_key_secret="secret_fixture",
+    )
+    monkeypatch.setattr(billing, "settings", settings)
+    monkeypatch.setattr(billing.razorpay, "settings", settings)
+    with Session(engine) as session:
+        workspace = session.get(Workspace, account.workspace_id)
+        workspace.razorpay_order_id = f"order_{plan}_test"
+        workspace.razorpay_order_amount_paise = amount
+        workspace.razorpay_order_plan = plan
+        workspace.razorpay_order_period = "monthly"
+        session.add(workspace)
+        session.commit()
+
+    monkeypatch.setattr(billing.razorpay, "verify_order_payment_signature", lambda *args: True)
+    monkeypatch.setattr(
+        billing.razorpay,
+        "fetch_payment",
+        lambda payment_id: {
+            "id": payment_id,
+            "order_id": f"order_{plan}_test",
+            "amount": amount,
+            "currency": "INR",
+            "status": "captured",
+        },
+    )
+    payload = {
+        "razorpay_payment_id": "pay_test_2",
+        "razorpay_order_id": f"order_{plan}_test",
+        "razorpay_signature": "signed_fixture",
+    }
+    first = account.post("/api/billing/verify-payment", json=payload)
+    assert first.status_code == 200
+    expiry = first.json()["expires_at"]
+    repeated = account.post("/api/billing/verify-payment", json=payload)
+    assert repeated.status_code == 200
+    assert repeated.json()["expires_at"] == expiry
+    with Session(engine) as session:
+        workspace = session.get(Workspace, account.workspace_id)
+        assert workspace.plan == plan
+        assert workspace.billing_provider == "razorpay_order"
+        assert workspace.razorpay_payment_id == "pay_test_2"
+        assert workspace.billing_expires_at == expiry
+
+
+def test_razorpay_invalid_signature_does_not_grant_plan(account, engine, monkeypatch):
+    settings = replace(billing.settings, razorpay_key_secret="secret_fixture")
+    monkeypatch.setattr(billing, "settings", settings)
+    monkeypatch.setattr(billing.razorpay, "settings", settings)
+    with Session(engine) as session:
+        workspace = session.get(Workspace, account.workspace_id)
+        workspace.razorpay_order_id = "order_test_3"
+        workspace.razorpay_order_amount_paise = 299900
+        workspace.razorpay_order_plan = "pro"
+        workspace.razorpay_order_period = "monthly"
+        session.add(workspace)
+        session.commit()
+
+    monkeypatch.setattr(billing.razorpay, "verify_order_payment_signature", lambda *args: False)
+    result = account.post(
+        "/api/billing/verify-payment",
+        json={
+            "razorpay_payment_id": "pay_bad",
+            "razorpay_order_id": "order_test_3",
+            "razorpay_signature": "wrong",
+        },
+    )
+    assert result.status_code == 400
+    with Session(engine) as session:
+        workspace = session.get(Workspace, account.workspace_id)
+        assert workspace.plan == "free"
+        assert workspace.razorpay_payment_id is None
+
+
+def test_razorpay_verification_requires_all_fields(account):
+    result = account.post("/api/billing/verify-payment", json={"razorpay_order_id": "order_missing"})
+    assert result.status_code == 400
+
+
+def test_expired_one_time_pro_access_uses_starter_limits():
+    workspace = Workspace(name="Expired account", plan="pro", billing_expires_at=time.time() - 1)
+    assert effective_plan(workspace) == "free"

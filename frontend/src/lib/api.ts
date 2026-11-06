@@ -287,13 +287,22 @@ export type AgentRun = {
 };
 export type Billing = Usage & {
   status: string;
+  effective_status: string;
+  provider: string;
+  expires_at: number | null;
   enabled: boolean;
+  checkout_prices_paise: {
+    starter: { monthly: number; yearly: number };
+    pro: { monthly: number; yearly: number };
+    senior: { monthly: number; yearly: number };
+  };
   plans: {
     id: string;
     name: string;
     interviews: number;
     ai_calls: number;
     available: boolean;
+    periods_available: ("monthly" | "yearly")[];
   }[];
 };
 
@@ -510,8 +519,27 @@ export const api = {
     request<PracticeTask>(`/practice/${id}`, json({ completed }, "PATCH")),
   agentRuns: () => request<AgentRun[]>("/agent-runs"),
   billing: () => request<Billing>("/billing"),
-  checkout: (plan: string) =>
-    request<{ url: string }>("/billing/checkout", json({ plan })),
+  createOrder: (plan: string, period: "monthly" | "yearly") =>
+    request<{
+      provider: "razorpay";
+      key_id: string;
+      plan: string;
+      order_id: string;
+      amount: number;
+      currency: string;
+      name: string;
+      description: string;
+      prefill: { email: string; name: string };
+    }>("/billing/create-order", json({ plan, period })),
+  verifyPayment: (payload: {
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
+  }) =>
+    request<{ verified: boolean; status: string; expires_at: number }>(
+      "/billing/verify-payment",
+      json(payload),
+    ),
   portal: () => request<{ url: string }>("/billing/portal", { method: "POST" }),
 };
 export const VERDICT_LABEL: Record<Report["verdict"], string> = {

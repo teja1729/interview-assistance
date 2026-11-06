@@ -10,7 +10,10 @@ from candidate-owned cache data. Import and release management live in `scripts/
 `speech.py` validates/handles transient audio independently from reasoning providers.
 `sarvam_speech.py` owns bounded, ordered transcription chunks and natural voice synthesis.
 Read `docs/VOICE.md` before changing audio deadlines, formats or turn-taking behavior.
-`billing.py` reconciles current Stripe subscriptions with versioned writes and idempotent event IDs.
+`billing.py` reconciles Stripe subscriptions and applies versioned one-time Razorpay entitlements.
+Razorpay order/payment HTTP and signature handling is isolated in `providers/razorpay.py`.
+Paid Razorpay purchases bind the selected tier and term to a server-created order; limits are defined
+in `usage.py` and order amounts in `config.py`.
 `job_descriptions.py` renders structured model output into editable text and saves it through
 `setup_cache.py`; cached descriptions/title suggestions avoid inference and quota reservation.
 `report_stages.py` runs bounded topic inference with a single checkpoint coordinator.

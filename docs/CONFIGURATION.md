@@ -29,6 +29,10 @@ The backend reads `backend/.env`; actual environment variables override the file
 | STRIPE_SECRET_KEY / STRIPE_WEBHOOK_SECRET | empty | Required together to enable billing |
 | STRIPE_PRO_PRICE_ID | empty | Recurring personal Pro price managed in Stripe |
 | STRIPE_TEAM_PRICE_ID | empty | Legacy subscription reconciliation only; no new team checkout |
+| RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET | empty | Server-side Razorpay Standard Checkout credentials |
+| RAZORPAY_STARTER_MONTHLY_AMOUNT_PAISE / YEARLY | 99900 / 999900 | One-time Starter prices for 30 / 365 days, in paise |
+| RAZORPAY_PRO_MONTHLY_AMOUNT_PAISE / YEARLY | 299900 / 2999900 | One-time Pro prices for 30 / 365 days, in paise |
+| RAZORPAY_SENIOR_MONTHLY_AMOUNT_PAISE / YEARLY | 499900 / 4999900 | One-time Senior prices for 30 / 365 days, in paise |
 | BACKEND_URL (frontend only) | http://127.0.0.1:8000 | Server-only proxy destination; supplied at build time for containers |
 
 Generate a secret with `python -c 'import secrets; print(secrets.token_urlsafe(48))'` and place it in
@@ -108,24 +112,38 @@ The browser prioritizes cloud speech whenever configured; old local browser-voic
 ignored. Transcription runs in verbatim mode. Change `SARVAM_TTS_VOICE` in server configuration,
 then restart the API. The interview UI has no model/provider selectors.
 
-## Stripe
+## Stripe legacy subscriptions
 
-1. Create a recurring Pro price in Stripe’s test mode, then set `STRIPE_PRO_PRICE_ID`.
-2. Set the test secret key. Forward events locally:
-   `stripe listen --forward-to localhost:8000/api/billing/webhook`.
-3. Set the emitted webhook signing secret. For production, register the HTTPS endpoint and use
-   the corresponding live credentials and signing secret.
-4. Subscribe to customer.subscription.created, .updated and .deleted. Enable Stripe Customer Portal.
-5. Exercise checkout, cancellation, failed payments and plan changes with test data.
+Stripe remains enabled for existing Pro subscriptions and their billing portal; new purchases use
+Razorpay Standard Checkout. Configure the existing test/live Stripe secrets and webhook signing
+secret to keep renewals and portal management working.
 
-Webhook signatures are verified against the raw request bytes. Only server-configured price IDs
-map to entitlements. Current customer subscriptions are reconciled, so an old cancellation cannot
-revoke a newer active plan. A database version fences concurrent snapshots; a losing writer refetches
-Stripe before retrying. Customers with more than 100 subscriptions require operator review.
-Client checkout success URLs do not grant access. `past_due`/inactive subscriptions use Starter
-limits; customize this explicit policy in services/billing.py if offering a grace period.
+Forward events locally with `stripe listen --forward-to localhost:8000/api/billing/webhook`. Subscribe
+to customer.subscription.created, .updated and .deleted. Webhook signatures are checked against the
+raw body and subscription state is reconciled with version fencing. `past_due`/inactive subscriptions
+use Starter limits.
 
 Reference: https://docs.stripe.com/webhooks
+
+## Razorpay Standard Checkout
+
+New Starter, Pro and Senior purchases use one-time Razorpay orders. Monthly purchases grant 30 days
+of access; yearly purchases grant 365 days. Repeat purchases extend from the later of the current
+expiry or payment verification time. Existing Stripe subscriptions remain on Stripe management and
+are not migrated. Backend monthly usage allowances are 20 interviews for Starter, 40 for Pro and
+100 for Senior; AI action allowances are 1,000, 2,000 and 5,000 respectively.
+
+1. Set `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` from the same Razorpay test or live mode.
+2. Optionally set the six `RAZORPAY_<PLAN>_<PERIOD>_AMOUNT_PAISE` values. Defaults match the current
+   displayed prices: Starter ₹999/₹9,999, Pro ₹2,999/₹29,999 and Senior ₹4,999/₹49,999. The browser
+   cannot submit the amount.
+3. Apply the Alembic migration and restart the API. No Razorpay webhook or plan setup is required.
+4. Test checkout with test-mode keys. The API creates the order, verifies the Standard Checkout HMAC
+   signature, fetches the payment from Razorpay, and checks order, amount, currency and captured status
+   before granting access.
+
+References: [Razorpay Standard Checkout integration](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/),
+[Create an Order](https://razorpay.com/docs/api/orders/create/).
 
 ## Company research
 

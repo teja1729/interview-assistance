@@ -3,9 +3,53 @@ import { useEffect, useState } from "react";
 import { api, type Billing } from "@/lib/api";
 import { Icon } from "@/components/Icon";
 import { PUBLIC_PLANS } from "@/lib/plans";
+
+type RazorpayResult = {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+};
+type RazorpayCheckoutOptions = {
+  key: string;
+  order_id: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  prefill: { email: string; name: string };
+  handler: (result: RazorpayResult) => void;
+  modal: { ondismiss: () => void };
+  notes?: Record<string, string>;
+};
+type RazorpayFailure = { error?: { description?: string } };
+declare global {
+  interface Window {
+    Razorpay?: new (options: RazorpayCheckoutOptions) => {
+      open: () => void;
+      on: (
+        event: "payment.failed",
+        handler: (event: RazorpayFailure) => void,
+      ) => void;
+    };
+  }
+}
+
+async function loadRazorpay(): Promise<void> {
+  if (window.Razorpay) return;
+  await new Promise<void>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve();
+    script.onerror = () =>
+      reject(new Error("Could not load Razorpay Checkout"));
+    document.body.appendChild(script);
+  });
+}
+
 export default function BillingPage() {
   const [billing, setBilling] = useState<Billing | null>(null);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
     "monthly",
@@ -25,6 +69,51 @@ export default function BillingPage() {
       setBusy(false);
     }
   }
+  async function startCheckout(planId: string) {
+    setBusy(true);
+    setError("");
+    try {
+      const checkout = await api.createOrder(planId, billingPeriod);
+      await loadRazorpay();
+      if (!window.Razorpay) throw new Error("Razorpay Checkout is unavailable");
+      const modal = new window.Razorpay({
+        key: checkout.key_id,
+        order_id: checkout.order_id,
+        amount: checkout.amount,
+        currency: checkout.currency,
+        name: checkout.name,
+        description: checkout.description,
+        prefill: checkout.prefill,
+        handler: async (result) => {
+          try {
+            await api.verifyPayment(result);
+            setNotice(
+              `Payment verified. Your ${checkout.name.replace("Suri ", "")} access is active for the selected term.`,
+            );
+            setBilling(await api.billing());
+          } catch (e) {
+            setError((e as Error).message);
+          } finally {
+            setBusy(false);
+          }
+        },
+        modal: { ondismiss: () => setBusy(false) },
+      });
+      modal.on("payment.failed", () => {
+        setError(
+          "Payment failed. Please try again or use another payment method.",
+        );
+        setBusy(false);
+      });
+      modal.open();
+    } catch (e) {
+      setError((e as Error).message);
+      setBusy(false);
+    }
+  }
+  async function manageSubscription() {
+    await redirect(api.portal);
+  }
   return (
     <div className="enter">
       <p className="eyebrow">Space for your next step</p>
@@ -35,6 +124,11 @@ export default function BillingPage() {
       {error && (
         <p role="alert" className="error-banner mt-6">
           {error}
+        </p>
+      )}
+      {notice && (
+        <p role="status" className="mt-6 text-sm text-accent">
+          {notice}
         </p>
       )}
       {!billing ? (
@@ -57,14 +151,22 @@ export default function BillingPage() {
                     Local development allowance is active.
                   </p>
                 )}
+                {billing.expires_at && billing.plan !== "free" && (
+                  <p className="mt-2 text-xs text-muted">
+                    Pro access ends{" "}
+                    {new Date(billing.expires_at * 1000).toLocaleDateString()}.
+                  </p>
+                )}
               </div>
-              <button
-                className="btn-ghost"
-                disabled={!billing.enabled || busy}
-                onClick={() => redirect(api.portal)}
-              >
-                Manage subscription
-              </button>
+              {billing.provider === "stripe" && (
+                <button
+                  className="btn-ghost"
+                  disabled={!billing.enabled || busy}
+                  onClick={manageSubscription}
+                >
+                  Manage subscription
+                </button>
+              )}
             </div>
             <div className="mt-7 grid gap-5 sm:grid-cols-2">
               <div className="rounded-2xl border border-border p-4">
@@ -128,10 +230,31 @@ export default function BillingPage() {
                 (item) => item.id === plan.id,
               );
               const isCurrent = billing.plan === plan.id;
+              const canRenew =
+                isCurrent &&
+                billing.provider === "razorpay_order" &&
+                Boolean(billing.expires_at);
               const checkoutReady =
                 billing.enabled &&
-                Boolean(accountPlan?.available) &&
+                Boolean(
+                  accountPlan?.available &&
+                  accountPlan.periods_available.includes(billingPeriod),
+                ) &&
                 plan.id !== "free";
+              const tierPrice =
+                billing.checkout_prices_paise?.[
+                  plan.id as "starter" | "pro" | "senior"
+                ];
+              const displayPrice =
+                plan.id !== "free" && tierPrice
+                  ? new Intl.NumberFormat("en-IN", {
+                      style: "currency",
+                      currency: "INR",
+                      maximumFractionDigits: 0,
+                    }).format(tierPrice[billingPeriod] / 100)
+                  : billingPeriod === "monthly"
+                    ? plan.monthly
+                    : plan.yearly;
               return (
                 <article
                   key={plan.id}
@@ -154,9 +277,15 @@ export default function BillingPage() {
                     )}
                   </div>
                   <p className="my-5 text-2xl font-semibold">
-                    {billingPeriod === "monthly" ? plan.monthly : plan.yearly}
+                    {displayPrice}
                     <span className="ml-1 text-sm font-normal text-muted">
-                      /{billingPeriod === "monthly" ? "mo" : "yr"}
+                      {plan.id !== "free"
+                        ? billingPeriod === "monthly"
+                          ? "one-time · 30 days"
+                          : "one-time · 365 days"
+                        : billingPeriod === "monthly"
+                          ? "/mo"
+                          : "/yr"}
                     </span>
                   </p>
                   <p className="min-h-14 text-sm leading-6 text-muted">
@@ -175,11 +304,15 @@ export default function BillingPage() {
                   </ul>
                   <button
                     className={`${plan.highlight ? "btn-primary" : "btn-ghost"} mt-7 w-full`}
-                    disabled={busy || isCurrent || !checkoutReady}
-                    onClick={() => redirect(() => api.checkout(plan.id))}
+                    disabled={
+                      busy || (isCurrent && !canRenew) || !checkoutReady
+                    }
+                    onClick={() => startCheckout(plan.id)}
                   >
                     {isCurrent
-                      ? "Current plan"
+                      ? canRenew
+                        ? `Renew ${plan.name}`
+                        : "Current plan"
                       : checkoutReady
                         ? plan.cta
                         : plan.id === "free"

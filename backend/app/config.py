@@ -45,6 +45,14 @@ class Settings:
     stripe_webhook_secret: str = os.getenv("STRIPE_WEBHOOK_SECRET", "")
     stripe_pro_price: str = os.getenv("STRIPE_PRO_PRICE_ID", "")
     stripe_team_price: str = os.getenv("STRIPE_TEAM_PRICE_ID", "")
+    razorpay_key_id: str = os.getenv("RAZORPAY_KEY_ID", "")
+    razorpay_key_secret: str = os.getenv("RAZORPAY_KEY_SECRET", "")
+    razorpay_starter_monthly_amount_paise: int = int(os.getenv("RAZORPAY_STARTER_MONTHLY_AMOUNT_PAISE", "99900"))
+    razorpay_starter_yearly_amount_paise: int = int(os.getenv("RAZORPAY_STARTER_YEARLY_AMOUNT_PAISE", "999900"))
+    razorpay_pro_monthly_amount_paise: int = int(os.getenv("RAZORPAY_PRO_MONTHLY_AMOUNT_PAISE", "299900"))
+    razorpay_pro_yearly_amount_paise: int = int(os.getenv("RAZORPAY_PRO_YEARLY_AMOUNT_PAISE", "2999900"))
+    razorpay_senior_monthly_amount_paise: int = int(os.getenv("RAZORPAY_SENIOR_MONTHLY_AMOUNT_PAISE", "499900"))
+    razorpay_senior_yearly_amount_paise: int = int(os.getenv("RAZORPAY_SENIOR_YEARLY_AMOUNT_PAISE", "4999900"))
     inline_worker: bool = os.getenv("INLINE_WORKER", "false").lower() == "true"
     local_usage_overrides: bool = os.getenv("LOCAL_USAGE_OVERRIDES", "false").lower() == "true"
     local_interview_limit: int = int(os.getenv("LOCAL_INTERVIEW_LIMIT", "100"))
