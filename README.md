@@ -89,4 +89,4 @@ npm run test:e2e  # use RUN.md's isolated test stack, not the live app
 
 Production deployment needs your Google OAuth credentials, a real model profile, PostgreSQL,
 HTTPS, and Stripe credentials if you offer paid plans. These external accounts are not created
-by this repository. Real-provider accuracy, latency and pricing require evaluation for your target roles.
+by this repository. Real-provider accuracy and latency are tracked by automated evaluation for your target roles.

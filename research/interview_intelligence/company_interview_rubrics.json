@@ -1,0 +1,446 @@
+{
+  "metadata": {
+    "dataset": "company_role_mock_interview_rubrics",
+    "created_at": "2026-09-26",
+    "geography": "India-first",
+    "scope": ["Meta", "Google", "Sarvam AI", "Swiggy", "Locus.sh"],
+    "roles": ["software_engineer", "ai_engineer", "ml_engineer"],
+    "status": "practice_rubric",
+    "disclaimer": "These rubrics are evidence-informed simulations based on public interview reports, official preparation material and role signals. They are not private company hiring rubrics and must not be presented as guaranteed scoring rules."
+  },
+  "scoring_scale": {
+    "1": {
+      "label": "insufficient",
+      "meaning": "Cannot establish the required competency; answer is incorrect, unsupported or incomplete."
+    },
+    "2": {
+      "label": "developing",
+      "meaning": "Shows partial understanding but needs substantial prompting, correction or missing key considerations."
+    },
+    "3": {
+      "label": "meets_practice_bar",
+      "meaning": "Provides a correct, reasonable answer with acceptable reasoning and handles normal follow-ups."
+    },
+    "4": {
+      "label": "strong",
+      "meaning": "Provides a clear, correct and well-structured answer; anticipates trade-offs and handles follow-ups independently."
+    },
+    "5": {
+      "label": "exceptional",
+      "meaning": "Demonstrates depth, precision, strong judgment and transferable reasoning; identifies risks and improves the solution proactively."
+    }
+  },
+  "universal_evaluation_rules": {
+    "score_observable_evidence_only": true,
+    "do_not_score": ["accent", "confidence inferred from voice", "personality stereotypes", "fluency unrelated to the role", "prior company prestige", "memorization of an exact public question"],
+    "candidate_answer_policy": "Preserve the answer verbatim, then attach concise evaluator notes and evidence excerpts.",
+    "follow_up_policy": [
+      "Ask at least one clarification or trade-off follow-up for every technical question.",
+      "Ask a failure-mode or testing follow-up for design and AI/ML questions.",
+      "Do not lower the score merely because the candidate did not guess an undisclosed company-specific detail.",
+      "A known question may test reasoning, not recall; change surface details when generating practice variants."
+    ],
+    "round_decision": {
+      "strong_pass": "Weighted score >= 4.0 and no critical dimension below 3.",
+      "pass": "Weighted score >= 3.2 and no critical dimension below 2.",
+      "borderline": "Weighted score from 2.6 to 3.19, or one critical dimension at 2.",
+      "needs_practice": "Weighted score < 2.6 or a critical dimension at 1."
+    },
+    "critical_dimension_rule": "A role-critical failure cannot be hidden by strong communication or unrelated scores."
+  },
+  "dimension_library": {
+    "coding": [
+      {"id": "problem_framing", "criterion": "Clarifies requirements, constraints, inputs, outputs and edge cases."},
+      {"id": "algorithmic_reasoning", "criterion": "Selects and explains an appropriate algorithm or data structure."},
+      {"id": "correctness", "criterion": "Produces a logically correct solution and notices counterexamples."},
+      {"id": "complexity", "criterion": "Explains time and space complexity and improves the approach when needed."},
+      {"id": "implementation_and_testing", "criterion": "Writes readable code, tests representative cases and debugs methodically."},
+      {"id": "technical_communication", "criterion": "Explains thought process, assumptions and trade-offs clearly."}
+    ],
+    "system_design": [
+      {"id": "requirements", "criterion": "Identifies users, use cases, functional requirements and non-functional constraints."},
+      {"id": "architecture", "criterion": "Decomposes the system into sensible components and interfaces."},
+      {"id": "data_and_apis", "criterion": "Chooses appropriate data models, APIs, storage and consistency boundaries."},
+      {"id": "scale_and_reliability", "criterion": "Addresses traffic, latency, availability, failures, observability and capacity."},
+      {"id": "tradeoffs", "criterion": "Explains alternatives and makes decisions appropriate to the stated constraints."},
+      {"id": "design_communication", "criterion": "Drives a structured discussion and responds well to changing requirements."}
+    ],
+    "behavioral": [
+      {"id": "ownership_and_impact", "criterion": "Describes personal responsibility, measurable impact and decisions made."},
+      {"id": "collaboration", "criterion": "Works through disagreement, feedback and cross-functional dependencies."},
+      {"id": "learning_and_adaptability", "criterion": "Learns from failure and adapts decisions when evidence changes."},
+      {"id": "judgment", "criterion": "Balances speed, quality, risk, users and business priorities."},
+      {"id": "specificity", "criterion": "Uses a concrete situation, actions taken and results rather than generic claims."}
+    ],
+    "ai_ml": [
+      {"id": "problem_formulation", "criterion": "Defines the prediction/generation task, users, constraints and baseline."},
+      {"id": "data_and_features", "criterion": "Discusses data quality, labeling, leakage, representation and distribution shift."},
+      {"id": "modeling", "criterion": "Chooses suitable models and explains assumptions, trade-offs and alternatives."},
+      {"id": "evaluation", "criterion": "Selects metrics and test design that reflect user and business costs."},
+      {"id": "production_system", "criterion": "Addresses serving, latency, cost, monitoring, rollback and iteration."},
+      {"id": "safety_and_failure_modes", "criterion": "Identifies hallucination, bias, privacy, abuse and reliability risks where relevant."}
+    ],
+    "practical_build": [
+      {"id": "working_solution", "criterion": "Produces a usable solution within the timebox and stated constraints."},
+      {"id": "debugging", "criterion": "Uses evidence, tests and instrumentation to isolate failures."},
+      {"id": "code_quality", "criterion": "Keeps implementation readable, modular and maintainable."},
+      {"id": "evaluation_and_iteration", "criterion": "Measures quality, compares alternatives and proposes meaningful improvements."},
+      {"id": "scope_and_delivery", "criterion": "Prioritizes a viable core solution and communicates unfinished work honestly."}
+    ],
+    "project_deep_dive": [
+      {"id": "technical_depth", "criterion": "Can explain architecture, implementation and personal contribution in detail."},
+      {"id": "decision_quality", "criterion": "Explains why choices were made and what alternatives were rejected."},
+      {"id": "scale_and_operations", "criterion": "Understands production behavior, failures, monitoring and maintenance."},
+      {"id": "reflection", "criterion": "Can identify weaknesses, improvements and lessons learned."}
+    ]
+  },
+  "company_role_rubrics": [
+    {
+      "company": "Meta",
+      "role": "software_engineer",
+      "evidence_basis": ["meta_interviewpilot", "meta_exponent", "meta_india_jointaro", "Meta official full-loop guide"],
+      "rounds": [
+        {"name": "coding", "weight": 0.40, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "implementation_and_testing", "technical_communication"], "critical": ["correctness", "algorithmic_reasoning"]},
+        {"name": "design", "weight": 0.25, "dimensions": ["requirements", "architecture", "data_and_apis", "scale_and_reliability", "tradeoffs", "design_communication"], "critical": ["architecture", "tradeoffs"]},
+        {"name": "behavioral", "weight": 0.20, "dimensions": ["ownership_and_impact", "collaboration", "learning_and_adaptability", "judgment", "specificity"], "critical": ["ownership_and_impact", "specificity"]},
+        {"name": "communication", "weight": 0.15, "dimensions": ["technical_communication", "design_communication"], "critical": ["technical_communication"]}
+      ],
+      "company_specific_emphasis": ["speed with correctness", "product impact", "cross-functional collaboration", "moving from a correct solution to an optimized solution"],
+      "practice_question_families": ["graph/tree/array coding", "feed or social graph design", "cross-functional impact stories", "test cases and optimization follow-ups"]
+    },
+    {
+      "company": "Meta",
+      "role": "ai_engineer",
+      "evidence_basis": ["meta_exponent", "Meta official ML onsite guide", "meta_interviewpilot"],
+      "rounds": [
+        {"name": "coding", "weight": 0.25, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "implementation_and_testing"], "critical": ["correctness"]},
+        {"name": "ml_or_ai_system_design", "weight": 0.35, "dimensions": ["problem_formulation", "data_and_features", "modeling", "evaluation", "production_system", "safety_and_failure_modes"], "critical": ["problem_formulation", "evaluation", "production_system"]},
+        {"name": "behavioral", "weight": 0.20, "dimensions": ["ownership_and_impact", "collaboration", "learning_and_adaptability", "judgment", "specificity"], "critical": ["ownership_and_impact"]},
+        {"name": "communication", "weight": 0.20, "dimensions": ["technical_communication", "design_communication"], "critical": ["technical_communication"]}
+      ],
+      "company_specific_emphasis": ["AI product impact", "model quality and cost trade-offs", "reliability of AI-assisted systems", "clear explanation of technical choices"],
+      "practice_question_families": ["ranking/feed systems", "code-review agent", "LLM evaluation", "model serving and cost", "AI failure modes"]
+    },
+    {
+      "company": "Google",
+      "role": "software_engineer",
+      "evidence_basis": ["google_gfg", "google_leetcode", "google_jointaro", "Google India job descriptions"],
+      "rounds": [
+        {"name": "coding", "weight": 0.45, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "implementation_and_testing", "technical_communication"], "critical": ["algorithmic_reasoning", "correctness", "complexity"]},
+        {"name": "system_design_or_domain", "weight": 0.20, "dimensions": ["requirements", "architecture", "data_and_apis", "scale_and_reliability", "tradeoffs", "design_communication"], "critical": ["scale_and_reliability"]},
+        {"name": "googleyness_or_behavioral", "weight": 0.20, "dimensions": ["ownership_and_impact", "collaboration", "learning_and_adaptability", "judgment", "specificity"], "critical": ["collaboration", "specificity"]},
+        {"name": "communication", "weight": 0.15, "dimensions": ["technical_communication", "design_communication"], "critical": ["technical_communication"]}
+      ],
+      "company_specific_emphasis": ["unfamiliar-problem decomposition", "ambiguity clarification", "optimality", "edge cases", "large-scale engineering judgment"],
+      "practice_question_families": ["arrays/two pointers", "BFS/DFS and graphs", "DP and greedy", "ambiguous problem statements", "Googleyness stories"]
+    },
+    {
+      "company": "Google",
+      "role": "ai_engineer",
+      "evidence_basis": ["google_leetcode", "google_jointaro", "Google India job descriptions", "Google DeepMind careers"],
+      "rounds": [
+        {"name": "coding", "weight": 0.30, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "implementation_and_testing"], "critical": ["correctness", "algorithmic_reasoning"]},
+        {"name": "ml_or_ai_domain", "weight": 0.30, "dimensions": ["problem_formulation", "data_and_features", "modeling", "evaluation", "production_system", "safety_and_failure_modes"], "critical": ["problem_formulation", "evaluation"]},
+        {"name": "system_design", "weight": 0.20, "dimensions": ["requirements", "architecture", "data_and_apis", "scale_and_reliability", "tradeoffs", "design_communication"], "critical": ["scale_and_reliability"]},
+        {"name": "behavioral_and_communication", "weight": 0.20, "dimensions": ["ownership_and_impact", "collaboration", "learning_and_adaptability", "judgment", "specificity", "technical_communication"], "critical": ["collaboration", "technical_communication"]}
+      ],
+      "company_specific_emphasis": ["research-to-production reasoning", "large-scale ML systems", "responsible AI", "mathematical and algorithmic clarity"],
+      "practice_question_families": ["recommendation systems", "ML metrics", "model serving", "data distribution shift", "graphs/DP plus AI domain follow-ups"]
+    },
+    {
+      "company": "Sarvam AI",
+      "role": "ai_engineer",
+      "evidence_basis": ["sarvam_github", "sarvam_glassdoor", "sarvam_reddit"],
+      "rounds": [
+        {"name": "practical_build", "weight": 0.35, "dimensions": ["working_solution", "debugging", "code_quality", "evaluation_and_iteration", "scope_and_delivery"], "critical": ["working_solution", "evaluation_and_iteration"]},
+        {"name": "ai_ml_domain", "weight": 0.30, "dimensions": ["problem_formulation", "data_and_features", "modeling", "evaluation", "production_system", "safety_and_failure_modes"], "critical": ["evaluation", "production_system"]},
+        {"name": "coding_and_fundamentals", "weight": 0.15, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "technical_communication"], "critical": ["correctness"]},
+        {"name": "founder_or_behavioral", "weight": 0.20, "dimensions": ["ownership_and_impact", "learning_and_adaptability", "judgment", "specificity", "technical_communication"], "critical": ["ownership_and_impact", "specificity"]}
+      ],
+      "company_specific_emphasis": ["proof of work", "speech and multilingual AI", "fast delivery", "debugging with limited time", "ownership and mission alignment"],
+      "practice_question_families": ["VAD/ASR build", "speech pipeline design", "multilingual or code-mixed AI", "LLM/RAG implementation", "model evaluation and latency"]
+    },
+    {
+      "company": "Sarvam AI",
+      "role": "software_engineer",
+      "evidence_basis": ["sarvam_glassdoor", "sarvam_github"],
+      "rounds": [
+        {"name": "practical_build_or_assignment", "weight": 0.35, "dimensions": ["working_solution", "debugging", "code_quality", "scope_and_delivery", "technical_communication"], "critical": ["working_solution"]},
+        {"name": "coding_and_backend", "weight": 0.25, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "implementation_and_testing"], "critical": ["correctness"]},
+        {"name": "ai_or_speech_context", "weight": 0.20, "dimensions": ["problem_formulation", "production_system", "evaluation", "safety_and_failure_modes"], "critical": ["problem_formulation"]},
+        {"name": "founder_or_hr", "weight": 0.20, "dimensions": ["ownership_and_impact", "learning_and_adaptability", "judgment", "specificity"], "critical": ["ownership_and_impact"]}
+      ],
+      "company_specific_emphasis": ["working software", "backend reliability", "AI product context", "learning speed", "comfort with ambiguity"],
+      "practice_question_families": ["assignment deep dive", "DSA fundamentals", "backend APIs", "speech/LLM integration", "why Sarvam and ownership stories"]
+    },
+    {
+      "company": "Swiggy",
+      "role": "software_engineer",
+      "evidence_basis": ["swiggy_jointaro_ai", "swiggy_jointaro_sde", "swiggy_glassdoor"],
+      "rounds": [
+        {"name": "coding", "weight": 0.20, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "implementation_and_testing"], "critical": ["correctness"]},
+        {"name": "backend_and_cs", "weight": 0.20, "dimensions": ["problem_framing", "correctness", "data_and_apis", "scale_and_reliability", "technical_communication"], "critical": ["scale_and_reliability"]},
+        {"name": "lld_or_machine_coding", "weight": 0.20, "dimensions": ["requirements", "architecture", "data_and_apis", "tradeoffs", "implementation_and_testing"], "critical": ["architecture", "tradeoffs"]},
+        {"name": "hld_and_product_systems", "weight": 0.25, "dimensions": ["requirements", "architecture", "data_and_apis", "scale_and_reliability", "tradeoffs", "design_communication"], "critical": ["scale_and_reliability"]},
+        {"name": "hm_and_behavioral", "weight": 0.15, "dimensions": ["ownership_and_impact", "collaboration", "judgment", "specificity"], "critical": ["ownership_and_impact"]}
+      ],
+      "company_specific_emphasis": ["consumer-scale reliability", "logistics and operational constraints", "practical implementation", "concurrency and data stores", "product trade-offs"],
+      "practice_question_families": ["rate limiter", "delivery/dispatch service", "SQL/NoSQL choice", "concurrency", "project scalability", "DSA plus LLD follow-up"]
+    },
+    {
+      "company": "Swiggy",
+      "role": "ai_engineer",
+      "evidence_basis": ["swiggy_jointaro_ai", "swiggy_glassdoor", "swiggy public ML guide"],
+      "rounds": [
+        {"name": "coding_and_backend", "weight": 0.20, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "complexity", "implementation_and_testing"], "critical": ["correctness"]},
+        {"name": "ml_system_design", "weight": 0.35, "dimensions": ["problem_formulation", "data_and_features", "modeling", "evaluation", "production_system", "safety_and_failure_modes"], "critical": ["evaluation", "production_system"]},
+        {"name": "ai_application", "weight": 0.20, "dimensions": ["problem_formulation", "modeling", "evaluation", "production_system", "safety_and_failure_modes"], "critical": ["evaluation"]},
+        {"name": "system_design_and_behavioral", "weight": 0.25, "dimensions": ["requirements", "architecture", "scale_and_reliability", "tradeoffs", "ownership_and_impact", "specificity"], "critical": ["scale_and_reliability", "ownership_and_impact"]}
+      ],
+      "company_specific_emphasis": ["business-aware metrics", "ETA and ranking/dispatch problems", "RAG/agents", "latency and cost", "real-world asymmetric failure costs"],
+      "practice_question_families": ["ETA model evaluation", "delivery/rider ranking", "RAG or agentic workflow", "online inference", "experimentation and monitoring"]
+    },
+    {
+      "company": "Locus.sh",
+      "role": "software_engineer",
+      "evidence_basis": ["locus_leetcode", "locus_oahelper"],
+      "rounds": [
+        {"name": "online_assessment", "weight": 0.20, "dimensions": ["problem_framing", "algorithmic_reasoning", "correctness", "implementation_and_testing"], "critical": ["correctness"]},
+        {"name": "lld_or_practical_coding", "weight": 0.25, "dimensions": ["requirements", "architecture", "data_and_apis", "tradeoffs", "implementation_and_testing"], "critical": ["architecture", "implementation_and_testing"]},
+        {"name": "hld_logistics_systems", "weight": 0.30, "dimensions": ["requirements", "architecture", "data_and_apis", "scale_and_reliability", "tradeoffs", "design_communication"], "critical": ["scale_and_reliability", "tradeoffs"]},
+        {"name": "project_and_vp_discussion", "weight": 0.25, "dimensions": ["technical_depth", "decision_quality", "scale_and_operations", "reflection", "technical_communication"], "critical": ["technical_depth", "reflection"]}
+      ],
+      "company_specific_emphasis": ["logistics and supply-chain systems", "practical system design", "consistency and queues", "project ownership", "senior-level technical depth"],
+      "practice_question_families": ["bank system", "flash sale", "rate limiting", "inventory consistency", "queue processing", "past project deep dive"]
+    },
+    {
+      "company": "Locus.sh",
+      "role": "ai_engineer",
+      "evidence_basis": ["locus_leetcode", "locus_oahelper"],
+      "rubric_status": "provisional_low_evidence",
+      "rounds": [
+        {"name": "coding_and_practical_build", "weight": 0.25, "dimensions": ["problem_framing", "correctness", "implementation_and_testing", "scope_and_delivery"], "critical": ["correctness"]},
+        {"name": "logistics_ml_design", "weight": 0.35, "dimensions": ["problem_formulation", "data_and_features", "modeling", "evaluation", "production_system", "safety_and_failure_modes"], "critical": ["problem_formulation", "evaluation", "production_system"]},
+        {"name": "system_design", "weight": 0.25, "dimensions": ["requirements", "architecture", "scale_and_reliability", "tradeoffs", "design_communication"], "critical": ["scale_and_reliability"]},
+        {"name": "project_discussion", "weight": 0.15, "dimensions": ["technical_depth", "decision_quality", "scale_and_operations", "reflection"], "critical": ["technical_depth"]}
+      ],
+      "company_specific_emphasis": ["route and logistics optimization", "operational metrics", "production ML", "scalable dispatch systems"],
+      "practice_question_families": ["ETA/route prediction", "fleet or delivery optimization", "inventory/dispatch systems", "model monitoring", "project deep dive"],
+      "caveat": "Direct public AI/ML interview evidence is insufficient; use this as a role-informed practice rubric until more reports are collected."
+    }
+  ],
+  "mock_interview_execution": {
+    "question_selection": [
+      "Filter by company and role.",
+      "Prefer questions with confidence high or medium.",
+      "Match level and India location when available.",
+      "Use low-confidence questions only as labeled practice variants.",
+      "Do not repeat the exact same question in a later session; preserve the skill and change the surface details."
+    ],
+    "per_question_record": {
+      "required": ["question_id", "round", "candidate_answer_verbatim", "dimension_scores", "evidence_notes", "follow_up_used"],
+      "dimension_score_format": {"score": "1-5", "evidence": "short answer-linked explanation", "improvement": "specific next action"}
+    },
+    "report_output": {
+      "include": ["weighted_total", "round_scores", "critical_dimension_failures", "strongest_evidence", "weakest_evidence", "company_specific_preparation_plan", "confidence_and_data_limitations"],
+      "never_claim": ["actual company hiring decision", "guaranteed interview question", "employment probability", "official company score"]
+    }
+  },
+  "extracted_knowledge_expansion": {
+    "new_evidence": [
+      {
+        "company": "Sarvam AI",
+        "role": "ai_engineer",
+        "source_refs": ["sarvam_reddit", "sarvam_glassdoor"],
+        "observations": [
+          "A VAD practical task was judged on speech-detection accuracy, code quality and possible improvements; the candidate reported no DSA in that particular loop.",
+          "Another public entry reports a timed project assessment, then DSA/resume discussion and a founder conversation.",
+          "A separate internship report describes a diarization pipeline assignment, suggesting speech tasks vary by team and level."
+        ],
+        "rubric_effect": "Increase practical-build and evaluation weight for speech/AI tracks, but keep DSA as a variant rather than a universal requirement.",
+        "confidence": "medium"
+      },
+      {
+        "company": "Sarvam AI",
+        "role": "ai_engineer",
+        "source_refs": ["sarvam_reddit"],
+        "new_question_families": [
+          "Build or debug a VAD/diarization pipeline under a timebox.",
+          "Explain accuracy trade-offs between denoising, WebRTC, GMM and neural approaches.",
+          "Discuss ASR, speech segmentation, multilingual or code-mixed data issues.",
+          "Explain how to validate an AI feature when external APIs are unavailable.",
+          "Describe what should be improved after the first working prototype."
+        ],
+        "confidence": "medium"
+      },
+      {
+        "company": "Google",
+        "role": "software_engineer",
+        "source_refs": ["Google India job descriptions"],
+        "new_question_families": [
+          "Design, test, deploy and maintain a service at large scale.",
+          "Explain a distributed-computing or data-storage trade-off.",
+          "Discuss code review, testability and reliability of a production change."
+        ],
+        "confidence": "high_for_role_relevance_low_for_previously_asked_status"
+      },
+      {
+        "company": "Meta",
+        "role": "software_engineer",
+        "source_refs": ["Meta official full-loop guide", "meta_interviewpilot"],
+        "new_question_families": [
+          "Solve a coding problem in a simple shared editor and optimize it through follow-ups.",
+          "Design a product or API and explain how it scales with user growth.",
+          "Describe a high-impact decision, disagreement or fast execution under ambiguity."
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "advanced_scoring_guidance": {
+      "coding": {
+        "1": "Cannot establish a valid approach or solution.",
+        "3": "Correct solution with reasonable complexity, basic tests and limited prompting.",
+        "5": "Clarifies ambiguity, derives an efficient solution, proves correctness informally, tests edge cases and adapts to follow-ups.",
+        "automatic_concern": "Candidate gives a memorized answer but cannot explain constraints, correctness or modifications."
+      },
+      "system_design": {
+        "1": "Lists technologies without requirements, interfaces or failure handling.",
+        "3": "Produces a coherent design for stated scale and explains basic trade-offs.",
+        "5": "Quantifies assumptions, chooses boundaries deliberately, handles bottlenecks/failures/observability and revises the design when requirements change.",
+        "automatic_concern": "Design works only on the happy path or ignores data consistency and operational ownership."
+      },
+      "ai_ml": {
+        "1": "Names models or tools without defining the task, data or metric.",
+        "3": "Defines a sensible baseline, metric, model and serving approach.",
+        "5": "Connects data quality, model choice, evaluation, user/business cost, drift, safety, latency and iteration into one coherent lifecycle.",
+        "automatic_concern": "Uses accuracy alone for an asymmetric or generative problem, or cannot explain how quality is measured in production."
+      },
+      "practical_build": {
+        "1": "Does not produce a working core or cannot debug failures.",
+        "3": "Ships a working core with understandable code and basic evaluation.",
+        "5": "Delivers a focused solution, instruments it, validates quality, explains limitations and proposes high-value next iterations.",
+        "automatic_concern": "Adds complexity or external dependencies without validating the core behavior."
+      },
+      "behavioral": {
+        "1": "Provides generic claims with no personal action or result.",
+        "3": "Gives a specific example with clear action and reasonable outcome.",
+        "5": "Shows ownership, measurable impact, honest reflection, stakeholder judgment and a meaningful lesson that changed later behavior.",
+        "automatic_concern": "Claims team success without identifying personal contribution or trade-offs."
+      }
+    },
+    "follow_up_library": {
+      "coding": ["What changes if memory is constrained?", "What input breaks this approach?", "Can you reduce the complexity?", "How would you test this in production?"],
+      "system_design": ["What is the bottleneck at 10x traffic?", "What happens during a dependency outage?", "What data can be stale and what must be strongly consistent?", "How would you observe and roll back this system?"],
+      "ai_ml": ["What is your baseline?", "Which metric reflects user harm?", "How do you detect drift or hallucination?", "What is the latency/cost budget?", "How do you create a reliable offline and online evaluation?"],
+      "practical_build": ["What did you deliberately leave out?", "How did you validate accuracy?", "Which failure case did you find last?", "How would you improve it with one more day?"],
+      "behavioral": ["What did you personally own?", "What disagreement occurred?", "What evidence changed your decision?", "What would your teammate say you should improve?"]
+    },
+    "company_specific_domain_probes": {
+      "Meta": ["product impact", "social graph/feed/ranking", "fast execution", "cross-functional decisions"],
+      "Google": ["large-scale infrastructure", "distributed systems", "algorithmic ambiguity", "testing and reliability", "responsible AI"],
+      "Sarvam AI": ["Indic languages", "speech/ASR/VAD", "code-mixed data", "low-resource evaluation", "prototype-to-production delivery"],
+      "Swiggy": ["ETA and dispatch", "delivery logistics", "asymmetric business metrics", "concurrency", "RAG/agents"],
+      "Locus.sh": ["routing and fleet optimization", "inventory/consistency", "queues and caching", "logistics operations", "production ownership"]
+    }
+  },
+  "seniority_calibration": {
+    "junior_or_entry": {
+      "primary_signal": "Strong fundamentals, clear reasoning, coachability and ability to produce a correct small solution.",
+      "expected_behavior": ["Clarifies the task", "Explains a simple correct approach", "Tests basic edge cases", "Responds constructively to hints"],
+      "do_not_overweight": ["Production-scale architecture", "Breadth of tools", "Polished leadership stories"]
+    },
+    "mid_level": {
+      "primary_signal": "Independent ownership from problem framing through implementation, testing and operational trade-offs.",
+      "expected_behavior": ["Makes explicit assumptions", "Chooses maintainable abstractions", "Discusses failure modes and observability", "Uses evidence to prioritize trade-offs"]
+    },
+    "senior_or_staff": {
+      "primary_signal": "Handles ambiguity, sets technical direction, manages system and organizational constraints, and raises the bar for others.",
+      "expected_behavior": ["Quantifies scale and risk", "Explains migration and rollback strategy", "Balances short-term delivery with platform health", "Shows influence beyond personal code"]
+    },
+    "scoring_rule": "Score against the target level, not against the strongest possible answer. A level-appropriate answer can pass without staff-level breadth."
+  },
+  "critical_gates": {
+    "purpose": "Prevent a high average score from hiding a role-critical failure.",
+    "rules": [
+      "Coding-heavy software-engineer loops require coding score >= 3 and no unresolved correctness failure.",
+      "AI-engineer loops require AI/ML score >= 3 and a concrete evaluation plan; model-name recall alone cannot pass.",
+      "Practical-build rounds require a working core, reproducible validation and an explanation of limitations.",
+      "System-design rounds require explicit requirements, a coherent architecture and at least one failure or scale trade-off.",
+      "Behavioral or manager rounds require personally owned evidence; generic hypothetical answers cannot satisfy the gate."
+    ],
+    "decision_labels": {
+      "strong_pass": "All critical gates pass and overall evidence is consistently >= 4.",
+      "pass": "All critical gates pass; weaknesses are coachable and overall evidence is >= 3.",
+      "borderline": "No critical failure, but evidence is mixed, heavily prompted or below target level in one important dimension.",
+      "no_hire": "Any critical gate fails, or the candidate shows an integrity, safety or collaboration red flag."
+    }
+  },
+  "evidence_capture_contract": {
+    "required_per_question": ["question_id", "round_type", "target_level", "dimension_scores", "observed_evidence", "follow_ups_used", "prompting_level", "confidence", "decision_impact"],
+    "observed_evidence_rule": "Record observable behavior or a concise answer excerpt; never write only 'good', 'weak' or a score.",
+    "prompting_scale": {
+      "none": "Candidate progresses without interviewer rescue.",
+      "light": "One clarification or nudge; candidate independently recovers.",
+      "moderate": "Multiple directed hints are needed to reach a viable path.",
+      "heavy": "Interviewer supplies the approach or most of the missing reasoning."
+    },
+    "confidence_scale": "high when directly supported by a recent candidate report or official company material; medium when triangulated from several indirect reports; low when inferred from a single sparse or stale report."
+  },
+  "standardized_interviewer_protocol": {
+    "question_delivery": ["Use the same core prompt for comparable candidates", "State timebox and allowed assumptions", "Do not reveal the intended solution path", "Use the same hint ladder before adjusting difficulty"],
+    "hint_ladder": ["Restate constraints", "Ask for a small example", "Ask what invariant or failure case matters", "Offer a bounded direction only when the rubric permits it"],
+    "anti_bias_checks": ["Separate communication style from technical correctness", "Do not reward company-specific trivia unless the role explicitly requires it", "Score evidence before reading the final recommendation", "Mark missing evidence as unknown rather than inventing a weakness"],
+    "adaptation_rule": "Adapt difficulty only after the candidate demonstrates the current level; record why the question changed."
+  },
+  "enhanced_question_bank": {
+    "Meta": {
+      "software_engineer": [
+        {"prompt": "Design a feed or ranking service and explain how you would measure relevance, latency and harmful regressions.", "tests": ["coding", "system_design", "product_impact"], "confidence": "medium"},
+        {"prompt": "Describe a disagreement about a technical decision where you changed the outcome or your own view.", "tests": ["behavioral", "influence"], "confidence": "medium"}
+      ],
+      "ai_engineer": [
+        {"prompt": "Design an ML ranking pipeline and explain offline evaluation, online experimentation, feature freshness and rollback.", "tests": ["ai_ml", "system_design", "product_impact"], "confidence": "medium"}
+      ]
+    },
+    "Google": {
+      "software_engineer": [
+        {"prompt": "Design a highly available service: define SLOs, storage choices, testing strategy and behavior during a regional dependency failure.", "tests": ["system_design", "reliability"], "confidence": "high_for_role_relevance"},
+        {"prompt": "Solve a graph or dynamic-programming problem, then defend correctness, complexity and test coverage.", "tests": ["coding", "communication"], "confidence": "medium"}
+      ],
+      "ai_engineer": [
+        {"prompt": "Design an ML service from training data to online inference, including skew, drift, privacy and rollback detection.", "tests": ["ai_ml", "system_design", "responsible_ai"], "confidence": "medium"}
+      ]
+    },
+    "Sarvam AI": {
+      "ai_engineer": [
+        {"prompt": "Build a small speech-segmentation or VAD component without external APIs, then explain its error analysis and multilingual limitations.", "tests": ["practical_build", "speech", "evaluation"], "confidence": "high"},
+        {"prompt": "Design evaluation for a code-mixed Indic-language assistant when there is no single ground-truth answer.", "tests": ["ai_ml", "evaluation", "language"], "confidence": "medium"}
+      ],
+      "software_engineer": [
+        {"prompt": "Implement a reliable service boundary around an AI model: timeouts, retries, streaming, fallbacks, observability and cost controls.", "tests": ["coding", "system_design", "production"], "confidence": "medium"}
+      ]
+    },
+    "Swiggy": {
+      "software_engineer": [
+        {"prompt": "Design a rate-limited order or dispatch workflow and explain idempotency, concurrency, retries and user-visible failure states.", "tests": ["system_design", "concurrency", "reliability"], "confidence": "medium"},
+        {"prompt": "Explain how you would choose between SQL and NoSQL for a high-volume operational workflow and migrate safely.", "tests": ["system_design", "data_modeling"], "confidence": "medium"}
+      ],
+      "ai_engineer": [
+        {"prompt": "Design ETA prediction or rider assignment: define labels, leakage controls, offline/online metrics, cold starts and real-time constraints.", "tests": ["ai_ml", "optimization", "system_design"], "confidence": "medium"},
+        {"prompt": "Evaluate an AI/RAG feature where latency, cost, relevance and operational correctness conflict.", "tests": ["ai_ml", "product_metrics", "production"], "confidence": "low_to_medium"}
+      ]
+    },
+    "Locus.sh": {
+      "software_engineer": [
+        {"prompt": "Design a logistics platform component with queues, caching, rate limits and consistency guarantees during a flash-sale-like load spike.", "tests": ["system_design", "distributed_systems", "operations"], "confidence": "high"},
+        {"prompt": "Extend a bank-like domain model while preserving invariants, then explain the LLD and test strategy.", "tests": ["coding", "lld", "correctness"], "confidence": "high"}
+      ],
+      "ai_engineer": [
+        {"prompt": "Design route or fleet optimization with changing constraints, delayed data and a measurable fallback when the optimizer is unavailable.", "tests": ["ai_ml", "optimization", "system_design"], "confidence": "low"}
+      ]
+    }
+  },
+  "enhancement_log": [
+    {"date": "2026-09-26", "change": "Added seniority calibration, critical gates, evidence capture contract, standardized interviewer protocol and company-role question variants.", "basis": ["Sarvam VAD practical-task report", "Locus SDE-2 DSA/LLD and logistics design report", "Swiggy ML interview-guide themes", "Google and Meta role/loop evidence"], "status": "heuristic_until_triangulated"}
+  ]
+}

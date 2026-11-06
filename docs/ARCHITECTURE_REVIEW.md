@@ -20,7 +20,7 @@ AGENT_ARCHITECTURE_REVIEW.md records the previous baseline. This document covers
 | 12. Repeated full prompt snapshots | Real duplication. | Prompt bundles stored once by hash and referenced from interviews. Hash integrity checked. Revision 2 inline bundles remain readable; no destructive rewrite of history. |
 | 13. Dead prompt / duplicated boilerplate | Worth simplifying while preserving old sessions. | Unreachable generic evaluator removed; shared preamble composed into revision 3 bundles. Legacy variants are deliberately retained for supported old contracts. |
 | 14. No streaming | Worth a separate measured voice change; the claimed latency reduction is unproven. | Deferred. Speech remains STT -> validated/committed decision -> full TTS playback. Current microphone/playback regressions pass. Streaming needs adapter, cancellation, partial-failure, playback-order and latency tests; do not speak unvalidated model proposals. |
-| 15. No evaluation loop | Highest-priority quality gap. A deterministic provider cannot certify judgment. | Twenty synthetic reference cases; opt-in paid runner records prompt/model bundles, score drift, evidence rejection, action accuracy, repairs, latency and variance. Reference ranges still need independent human review and a held-out set. Live failures are reported, never filled with synthetic scores. |
+| 15. No evaluation loop | Highest-priority quality gap. A deterministic provider cannot certify judgment. | Twenty synthetic reference cases; opt-in runner records prompt/model bundles, score drift, evidence rejection, action accuracy, repairs, latency and variance. Automated checks use provisional targets and a held-out set; live failures are reported, never filled with synthetic scores. |
 | 16. Eleven language locales | A product/speech capability boundary, not an accidental promise of worldwide voice support. | Explicitly retained for the default Sarvam voice integration (English plus ten Indian languages). This does not restrict account geography. Expanding locales requires tested STT/TTS and model contracts. |
 | 17. Custom grading instructions | Worth hardening; no regex fully solves prompt injection. | Obvious manipulation is flagged/excluded from live preferences. Evaluator inputs omit all raw preferences/resume/company research, with a strict allowlist. Exact evidence checks and service-owned scores remain independent controls. |
 
@@ -50,8 +50,8 @@ regex. Its adapter now omits regex constraints from the wire schema while keepin
 checks. Invalid quotes are never silently rewritten. Evidence is generated before criterion ratings so
 references point to an already constructed list, with explicit zero-based repair feedback.
 
-An exact quote establishes provenance, not whether it justifies the score. Criterion applicability and
-semantic quality still require human review. No result here certifies hiring predictions or guarantees
+An exact quote establishes provenance, not whether it justifies the score. Automated consistency checks
+cannot prove semantic quality for all inputs. No result here certifies hiring predictions or guarantees
 that every future model response will meet the contract. Interrupted/invalid calls fail visibly and the
 checkpointed report can be retried; completed valid stages are retained.
 
@@ -75,7 +75,7 @@ contract and prompt changes were combined: this is not an isolated prompt experi
 sample per case, includes network variance, and does not measure end-to-end speech latency.
 
 Follow-up agreement is only 65% against provisional references; do not claim calibrated interviewing
-judgment. The remaining work is human review, repeated and held-out evaluation, applicability checks,
-and targeted dialogue improvements. Scores/weights remain practice feedback. Local ignored manifests
+judgment. Automated follow-up work is repeated held-out evaluation, applicability checks, and targeted
+dialogue improvements. Scores/weights remain practice feedback. Local ignored manifests
 are evaluations/results/baseline-v2.json and evaluations/results/final-v3.json, each retaining the exact
 prompt/profile/policy bundle. No private user transcript was used.

@@ -115,8 +115,8 @@ from the final aggregate. Send the evaluator question/answer evidence rather tha
 records containing the interviewer's private assessment, to reduce influence from prior judgments.
 
 Acceptance: empty evidence is rejected; quote attribution is exact; component sums are enforced;
-verdict and explanation agree; output size is bounded. Human-reviewed evaluation data is still
-needed to establish judgment quality: structural validation does not establish correctness.
+verdict and explanation agree; output size is bounded. Automated synthetic regression checks provide
+repeatable quality signals, while structural validation alone does not establish correctness for all inputs.
 
 ### 6. Medium: custom interview preferences disappear at a handoff
 

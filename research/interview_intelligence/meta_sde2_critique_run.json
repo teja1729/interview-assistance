@@ -1,0 +1,271 @@
+{
+  "metadata": {
+    "pipeline_version": "1.0",
+    "generated_at": "2026-09-26",
+    "parameters": {
+      "company": "Meta",
+      "role": "software engineer",
+      "level": "SDE-2",
+      "location": "India",
+      "months": 24,
+      "focus": [
+        "ranking"
+      ]
+    },
+    "provider": "openai",
+    "research_model": "gpt-4.1-mini",
+    "synthesis_model": "gpt-4.1-nano",
+    "research_output_tokens": 3500,
+    "synthesis_output_tokens": 4000,
+    "search_context_size": "medium",
+    "allow_insufficient_evidence": true,
+    "evidence_status": "insufficient_evidence",
+    "search_plan": [
+      "\"Meta\" \"software engineer\" SDE-2 India interview experience questions rounds 2024-09-26..2026-09-26",
+      "\"Meta\" \"software engineer\" SDE-2 India site:reddit.com OR site:leetcode.com OR site:geeksforgeeks.org interview",
+      "\"Meta\" \"software engineer\" SDE-2 India site:glassdoor.co.in interview questions",
+      "Meta careers software engineer ranking",
+      "Meta engineering blog technical architecture ranking"
+    ],
+    "search_execution": "provider_web_search_tool_for_openai; model-reported coverage is not treated as independent proof",
+    "storage": "local_json_only"
+  },
+  "research_packet": {
+    "company": "Meta",
+    "role": "Software Engineer",
+    "level": "SDE-2",
+    "location": "India",
+    "start_date": "2024-09-26",
+    "end_date": "2026-09-26",
+    "research_questions": [
+      "ranking"
+    ],
+    "focus_coverage": [
+      {
+        "focus": "ranking",
+        "status": "covered",
+        "evidence_ids": [
+          "e1",
+          "e2",
+          "e3"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "e1",
+        "source_id": "src_083683fac20fefb33798",
+        "source_url": "https://www.swe180.com/interview-experience/meta/sde-2",
+        "source_title": "Meta SDE 2 / Software Engineer II Interview Experience | SWE180",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-08-26",
+        "published_date_basis": "page_publication",
+        "interview_date": "",
+        "interview_date_basis": "unknown",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 1",
+        "claim": "The candidate applied for SDE 2 / Software Engineer II at Meta. The process was structured around Mid Level expectations and large-scale product and cloud software scenarios.",
+        "observed_questions_or_tasks": [
+          "Given an array of request costs for Meta's multi-tenant SaaS platform, find the longest continuous segment whose total cost is at most a budget B.",
+          "What edge cases would you test before submitting this solution?"
+        ],
+        "follow_ups_or_probes": [
+          "Explain why non-negative values matter in the sliding window approach.",
+          "What are the edge cases to consider for this problem?"
+        ],
+        "extraction_basis": "explicit_source_text",
+        "evaluation_signals": [
+          "Technical proficiency in coding and problem-solving.",
+          "Ability to explain trade-offs and edge cases.",
+          "Experience with large-scale product and cloud software scenarios."
+        ],
+        "candidate_outcome": "Selected for next round / hireable with normal calibration.",
+        "confidence": "high",
+        "independence_key": "turn0search0",
+        "evidence_limitations": [
+          "Specific details about the candidate's performance are not provided."
+        ]
+      },
+      {
+        "evidence_id": "e2",
+        "source_id": "src_1bb10a6b59ea4d514e33",
+        "source_url": "https://www.glassdoor.com/Interview/Meta-Interview-Questions-E40772.htm?filter.jobTitleExact=Software+Engineer+%28Swe+II%29",
+        "source_title": "Meta Software Engineer (Swe II) Interview Questions | Glassdoor",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-06-08",
+        "published_date_basis": "page_publication",
+        "interview_date": "",
+        "interview_date_basis": "unknown",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 1",
+        "claim": "Standard interview process of general medium to easy LeetCode questions (2 per round) and system design that pertains to the company like Instagram or Facebook feed. Process took about 6 weeks.",
+        "observed_questions_or_tasks": [
+          "General LeetCode questions (easy to medium)",
+          "System design questions related to company products"
+        ],
+        "follow_ups_or_probes": [
+          "Can you elaborate on the system design questions related to Instagram or Facebook feed?"
+        ],
+        "extraction_basis": "explicit_source_text",
+        "evaluation_signals": [
+          "Proficiency in LeetCode-style coding problems.",
+          "Understanding of system design concepts related to social media platforms."
+        ],
+        "candidate_outcome": "Accepted offer.",
+        "confidence": "medium",
+        "independence_key": "turn0search2",
+        "evidence_limitations": [
+          "Specific details about the candidate's performance are not provided."
+        ]
+      },
+      {
+        "evidence_id": "e3",
+        "source_id": "src_c1c4d3f0937c39ef77d0",
+        "source_url": "https://www.interviewquery.com/guides/meta-software-engineer",
+        "source_title": "Meta Software Engineer Interview Guide (2026): Process, Questions & Salary | InterviewQuery",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-09-25",
+        "published_date_basis": "page_publication",
+        "interview_date": "",
+        "interview_date_basis": "unknown",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 1",
+        "claim": "Meta Software Engineer interviews typically span a recruiter call, a technical phone screen or online assessment, and a multi-round loop covering LeetCode-style coding, system design, and behavioral questions, based on candidate reports.",
+        "observed_questions_or_tasks": [
+          "LeetCode-style coding problems",
+          "System design questions",
+          "Behavioral questions"
+        ],
+        "follow_ups_or_probes": [
+          "Can you provide examples of LeetCode-style coding problems asked?",
+          "What are the key behavioral questions asked during the interview?"
+        ],
+        "extraction_basis": "explicit_source_text",
+        "evaluation_signals": [
+          "Ability to solve LeetCode-style coding problems.",
+          "Understanding of system design principles.",
+          "Strong behavioral competencies."
+        ],
+        "candidate_outcome": "Not reported.",
+        "confidence": "medium",
+        "independence_key": "turn0search1",
+        "evidence_limitations": [
+          "Specific details about the candidate's performance are not provided."
+        ]
+      }
+    ],
+    "unresolved_contradictions": [],
+    "coverage_gaps": []
+  },
+  "knowledge_and_rubric": {
+    "company": "Meta",
+    "role": "Software Engineer",
+    "level": "SDE-2",
+    "location": "India",
+    "evidence_summary": "Interview process focuses on problem-solving with coding questions and system design, covering large-scale product scenarios; candidate outcomes range from hireable to accepted but no performance details are available.",
+    "company_mindset": [
+      "Structured and technical focus on problem-solving and system design"
+    ],
+    "role_signals": [
+      "Coding proficiency, system design understanding, behavioral competencies"
+    ],
+    "likely_process_variants": [
+      "LeetCode-style coding questions, system design, behavioral interviews"
+    ],
+    "round_rubrics": [
+      {
+        "round_name": "Round 1",
+        "purpose": "Assess technical problem-solving and system design skills for mid-level expectations.",
+        "dimensions": [
+          "Coding problems",
+          "System design",
+          "Behavioral questions"
+        ],
+        "strong_evidence": [
+          "Candidate demonstrates proficiency in solving medium-level coding problems.",
+          "Candidate understands system design principles for large-scale products."
+        ],
+        "weak_evidence": [
+          "Limited details on the candidate’s overall performance."
+        ],
+        "critical_gate": "Candidate must solve a complex coding problem and answer system design questions satisfactorily.",
+        "company_specific_probes": [
+          "Explain trade-offs in system design choices.",
+          "Discuss why non-negative values matter in the coding problem."
+        ],
+        "likely_question_families": [
+          "Coding problem-solving",
+          "System design",
+          "Behavioral competency assessment"
+        ],
+        "evidence_ids": [
+          "e1",
+          "e2",
+          "e3"
+        ],
+        "confidence": "medium",
+        "basis_type": "mixed"
+      }
+    ],
+    "observed_question_families": [
+      "Coding problem-solving",
+      "System design",
+      "Behavioral questions"
+    ],
+    "scoring_scale": [
+      {
+        "level": "high",
+        "meaning": "Candidate exhibits strong problem-solving and design skills."
+      },
+      {
+        "level": "medium",
+        "meaning": "Candidate demonstrates acceptable proficiency with some gaps."
+      },
+      {
+        "level": "low",
+        "meaning": "Candidate lacks core skills or cannot perform under interview conditions."
+      }
+    ],
+    "hard_gates": [
+      "Successful coding problem resolution",
+      "Clear understanding of system design principles"
+    ],
+    "preparation_priorities": [
+      "Strong coding practice, familiarization with system design scenarios for social media platforms"
+    ],
+    "confidence_and_limits": [
+      "High confidence based on multiple sources, but performance specifics are limited."
+    ],
+    "source_urls": [
+      "https://www.swe180.com/interview-experience/meta/sde-2",
+      "https://www.glassdoor.com/Interview/Meta-Interview-Questions-E40772.htm?filter.jobTitleExact=Software+Engineer+%28Swe+II%29",
+      "https://www.interviewquery.com/guides/meta-software-engineer"
+    ],
+    "seniority_calibration": [
+      {
+        "level": "SDE-2",
+        "expectation": "Mid-level software engineer with proficiency in coding, system design, and behavioral skills."
+      }
+    ],
+    "evidence_capture_contract": [
+      "Capture candidate's problem-solving approach, code quality, and reasoning in system design."
+    ],
+    "interviewer_protocol": [
+      "Follow structured coding, design, and behavioral question flow.",
+      "Ensure probing candidates' explanations and reasoning."
+    ],
+    "anti_bias_checks": [
+      "Use standardized rubrics for evaluation.",
+      "Review evaluations for consistency and avoid subjective biases."
+    ]
+  }
+}

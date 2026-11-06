@@ -110,5 +110,5 @@ stages, restart recovery, credential rotation, model/prompt edits, long multilin
 leases. Provider tests must enforce the supplied timeout/output budget. See EXTENDING.md and RUN.md.
 The 20-case synthetic evaluation CLI in `backend/evaluations/` records prompt/model snapshots, drift,
 quote rejection, action accuracy, variance and latency. It is offline by default and needs explicit paid
-flags for model calls. Reference ranges remain provisional. Live quality still requires human review: fixture success proves workflow correctness,
-not calibrated hiring judgment or universal factual accuracy.
+flags for model calls. Reference ranges remain provisional. Automated regression detects drift and
+contract failures; fixture success does not prove hiring validity or universal factual accuracy.

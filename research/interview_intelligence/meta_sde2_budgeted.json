@@ -1,0 +1,483 @@
+{
+  "metadata": {
+    "pipeline_version": "1.0",
+    "generated_at": "2026-09-26",
+    "parameters": {
+      "company": "Meta",
+      "role": "software engineer",
+      "level": "SDE-2",
+      "location": "India",
+      "months": 24,
+      "focus": [
+        "ranking"
+      ]
+    },
+    "provider": "openai",
+    "research_model": "gpt-4.1-mini",
+    "synthesis_model": "gpt-4.1-nano",
+    "research_output_tokens": 3000,
+    "synthesis_output_tokens": 4000,
+    "search_context_size": "low",
+    "search_plan": [
+      "\"Meta\" \"software engineer\" SDE-2 India interview experience questions rounds 2024-09-26..2026-09-26",
+      "\"Meta\" \"software engineer\" SDE-2 India site:reddit.com OR site:leetcode.com OR site:geeksforgeeks.org interview",
+      "\"Meta\" \"software engineer\" SDE-2 India site:glassdoor.co.in interview questions",
+      "Meta careers software engineer ranking",
+      "Meta engineering blog technical architecture ranking"
+    ],
+    "search_execution": "provider_web_search_tool_for_openai; model-reported coverage is not treated as independent proof",
+    "storage": "local_json_only"
+  },
+  "research_packet": {
+    "company": "Meta",
+    "role": "Software Engineer",
+    "level": "SDE-2",
+    "location": "India",
+    "start_date": "2024-09-26",
+    "end_date": "2026-09-26",
+    "research_questions": [
+      "Meta SDE-2 interview process in India",
+      "Meta SDE-2 interview questions and rounds in India",
+      "Meta SDE-2 interview experiences in India"
+    ],
+    "evidence": [
+      {
+        "evidence_id": "e1",
+        "source_id": "src_083683fac20fefb33798",
+        "source_url": "https://www.swe180.com/interview-experience/meta/sde-2",
+        "source_title": "Meta SDE 2 / Software Engineer II Interview Experience | SWE180",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-08-29",
+        "interview_date": "2026-08-29",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 1",
+        "claim": "The first round is a 45-minute coding interview focusing on data structures and algorithms, where candidates are expected to solve two coding problems.",
+        "observed_questions_or_tasks": [
+          "Solve two coding problems related to data structures and algorithms."
+        ],
+        "follow_ups_or_probes": [
+          "Can you explain your approach to solving these problems?"
+        ],
+        "evaluation_signals": [
+          "Problem-solving skills",
+          "Coding proficiency",
+          "Time management"
+        ],
+        "candidate_outcome": "Selected for next round",
+        "confidence": "high",
+        "independence_key": "e1",
+        "evidence_limitations": [
+          "Specific questions asked during the interview are not disclosed."
+        ]
+      },
+      {
+        "evidence_id": "e2",
+        "source_id": "src_083683fac20fefb33798",
+        "source_url": "https://www.swe180.com/interview-experience/meta/sde-2",
+        "source_title": "Meta SDE 2 / Software Engineer II Interview Experience | SWE180",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-08-29",
+        "interview_date": "2026-08-29",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 2",
+        "claim": "The second round is a 30-minute behavioral interview assessing leadership principles and past experiences through situational prompts.",
+        "observed_questions_or_tasks": [
+          "Describe a time when you led a team to overcome a significant challenge.",
+          "How do you handle conflicts within a team?"
+        ],
+        "follow_ups_or_probes": [
+          "Can you provide more details about the situation?",
+          "What was the outcome of your actions?"
+        ],
+        "evaluation_signals": [
+          "Leadership skills",
+          "Communication abilities",
+          "Conflict resolution"
+        ],
+        "candidate_outcome": "Selected for next round",
+        "confidence": "high",
+        "independence_key": "e1",
+        "evidence_limitations": [
+          "Specific questions asked during the interview are not disclosed."
+        ]
+      },
+      {
+        "evidence_id": "e3",
+        "source_id": "src_083683fac20fefb33798",
+        "source_url": "https://www.swe180.com/interview-experience/meta/sde-2",
+        "source_title": "Meta SDE 2 / Software Engineer II Interview Experience | SWE180",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-08-29",
+        "interview_date": "2026-08-29",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 3",
+        "claim": "The third round is a 45-minute product architecture interview, where candidates are asked to design a full-stack product, such as an online food delivery application, covering various architectural aspects and scalability considerations.",
+        "observed_questions_or_tasks": [
+          "Design an online food delivery application considering scalability and performance.",
+          "How would you handle high traffic scenarios?"
+        ],
+        "follow_ups_or_probes": [
+          "What technologies would you choose for this system?",
+          "How would you ensure data consistency?"
+        ],
+        "evaluation_signals": [
+          "System design skills",
+          "Scalability considerations",
+          "Technical knowledge"
+        ],
+        "candidate_outcome": "Selected for next round",
+        "confidence": "high",
+        "independence_key": "e1",
+        "evidence_limitations": [
+          "Specific questions asked during the interview are not disclosed."
+        ]
+      },
+      {
+        "evidence_id": "e4",
+        "source_id": "src_083683fac20fefb33798",
+        "source_url": "https://www.swe180.com/interview-experience/meta/sde-2",
+        "source_title": "Meta SDE 2 / Software Engineer II Interview Experience | SWE180",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-08-29",
+        "interview_date": "2026-08-29",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 4",
+        "claim": "The fourth round is a 60-minute AI-enabled coding interview, where candidates are expected to understand and complete logic within a partially built game scenario, along with optimizing a strategy.",
+        "observed_questions_or_tasks": [
+          "Complete the logic in a partially built game scenario.",
+          "Optimize the strategy for the game."
+        ],
+        "follow_ups_or_probes": [
+          "Can you explain your thought process during this task?",
+          "What optimizations did you consider?"
+        ],
+        "evaluation_signals": [
+          "Adaptability to new interview formats",
+          "Problem-solving skills",
+          "Understanding of AI concepts"
+        ],
+        "candidate_outcome": "Selected for next round",
+        "confidence": "high",
+        "independence_key": "e1",
+        "evidence_limitations": [
+          "Specific questions asked during the interview are not disclosed."
+        ]
+      },
+      {
+        "evidence_id": "e5",
+        "source_id": "src_083683fac20fefb33798",
+        "source_url": "https://www.swe180.com/interview-experience/meta/sde-2",
+        "source_title": "Meta SDE 2 / Software Engineer II Interview Experience | SWE180",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-08-29",
+        "interview_date": "2026-08-29",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 5",
+        "claim": "The fifth round is a 45-minute pure data structures and algorithms interview, consisting of two coding problems.",
+        "observed_questions_or_tasks": [
+          "Solve two coding problems related to data structures and algorithms."
+        ],
+        "follow_ups_or_probes": [
+          "Can you explain your approach to solving these problems?"
+        ],
+        "evaluation_signals": [
+          "Problem-solving skills",
+          "Coding proficiency",
+          "Time management"
+        ],
+        "candidate_outcome": "Selected for next round",
+        "confidence": "high",
+        "independence_key": "e1",
+        "evidence_limitations": [
+          "Specific questions asked during the interview are not disclosed."
+        ]
+      },
+      {
+        "evidence_id": "e6",
+        "source_id": "src_1bb10a6b59ea4d514e33",
+        "source_url": "https://www.glassdoor.com/Interview/Meta-Interview-Questions-E40772.htm?filter.jobTitleExact=Software+Engineer+%28Swe+II%29",
+        "source_title": "Meta Software Engineer (Swe II) Interview Questions | Glassdoor",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-06-08",
+        "interview_date": "2026-06-08",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 1",
+        "claim": "The first round consists of general medium to easy LeetCode questions, with two questions per round.",
+        "observed_questions_or_tasks": [
+          "Solve two LeetCode-style coding problems."
+        ],
+        "follow_ups_or_probes": [
+          "Can you explain your approach to solving these problems?"
+        ],
+        "evaluation_signals": [
+          "Problem-solving skills",
+          "Coding proficiency",
+          "Time management"
+        ],
+        "candidate_outcome": "Selected for next round",
+        "confidence": "high",
+        "independence_key": "e6",
+        "evidence_limitations": [
+          "Specific questions asked during the interview are not disclosed."
+        ]
+      },
+      {
+        "evidence_id": "e7",
+        "source_id": "src_1bb10a6b59ea4d514e33",
+        "source_url": "https://www.glassdoor.com/Interview/Meta-Interview-Questions-E40772.htm?filter.jobTitleExact=Software+Engineer+%28Swe+II%29",
+        "source_title": "Meta Software Engineer (Swe II) Interview Questions | Glassdoor",
+        "source_type": "secondary_aggregation",
+        "published_date": "2026-06-08",
+        "interview_date": "2026-06-08",
+        "company": "Meta",
+        "role": "Software Engineer",
+        "level": "SDE-2",
+        "location": "India",
+        "round": "Round 2",
+        "claim": "The second round is a system design interview pertaining to company-specific products like Instagram or Facebook feed.",
+        "observed_questions_or_tasks": [
+          "Design a system for Instagram or Facebook feed."
+        ],
+        "follow_ups_or_probes": [
+          "What are the scalability considerations for this system?"
+        ],
+        "evaluation_signals": [
+          "System design skills",
+          "Understanding of company products",
+          "Technical knowledge"
+        ],
+        "candidate_outcome": "Selected for next round",
+        "confidence": "high",
+        "independence_key": "e6",
+        "evidence_limitations": [
+          "Specific questions asked during the interview are not disclosed."
+        ]
+      }
+    ],
+    "unresolved_contradictions": [],
+    "coverage_gaps": []
+  },
+  "knowledge_and_rubric": {
+    "company": "Meta",
+    "role": "Software Engineer",
+    "level": "SDE-2",
+    "location": "India",
+    "evidence_summary": "The interview process comprises five rounds: initial coding, behavioral, system design, AI-enabled coding, and advanced coding, focusing on data structures, algorithms, system design, AI concepts, and leadership skills.",
+    "company_mindset": [
+      "Emphasis on problem-solving, system architecture, leadership, and adaptability."
+    ],
+    "role_signals": [
+      "Technical expertise in data structures, algorithms, system design, AI, and leadership."
+    ],
+    "likely_process_variants": [
+      "Standard process with possible variations in specific questions or focus areas."
+    ],
+    "round_rubrics": [
+      {
+        "round_name": "Round 1",
+        "purpose": "Assess coding skills with data structures and algorithms.",
+        "dimensions": [
+          "Problem-solving skills",
+          "Coding proficiency",
+          "Time management"
+        ],
+        "strong_evidence": [
+          "Solve two coding problems related to data structures and algorithms."
+        ],
+        "weak_evidence": [
+          "Exact questions not disclosed."
+        ],
+        "critical_gate": "Correctly solving coding problems.",
+        "company_specific_probes": [
+          "Approach explanation."
+        ],
+        "likely_question_families": [
+          "LeetCode-style problems"
+        ],
+        "evidence_ids": [
+          "e6",
+          "e1"
+        ],
+        "confidence": "high",
+        "basis_type": "observed"
+      },
+      {
+        "round_name": "Round 2",
+        "purpose": "Evaluate leadership, communication, and conflict resolution skills.",
+        "dimensions": [
+          "Leadership",
+          "Communication",
+          "Conflict resolution"
+        ],
+        "strong_evidence": [
+          "Describe leading a team or handling conflicts."
+        ],
+        "weak_evidence": [
+          "Specific scenarios not provided."
+        ],
+        "critical_gate": "Leadership and team handling ability.",
+        "company_specific_probes": [
+          "Details of conflict resolution."
+        ],
+        "likely_question_families": [
+          "Team leadership scenarios"
+        ],
+        "evidence_ids": [
+          "e2",
+          "e7"
+        ],
+        "confidence": "high",
+        "basis_type": "observed"
+      },
+      {
+        "round_name": "Round 3",
+        "purpose": "Assess system design capabilities for large-scale products.",
+        "dimensions": [
+          "System design skills",
+          "Scalability considerations",
+          "Technical knowledge"
+        ],
+        "strong_evidence": [
+          "Design a full-stack product like a food delivery app."
+        ],
+        "weak_evidence": [
+          "Specific technology choices not disclosed."
+        ],
+        "critical_gate": "Feasible, scalable architecture design.",
+        "company_specific_probes": [
+          "Technology choices",
+          "Data consistency"
+        ],
+        "likely_question_families": [
+          "Designing scalable systems"
+        ],
+        "evidence_ids": [
+          "e3",
+          "e7"
+        ],
+        "confidence": "high",
+        "basis_type": "observed"
+      },
+      {
+        "round_name": "Round 4",
+        "purpose": "Evaluate problem-solving and understanding of AI concepts through game logic optimization.",
+        "dimensions": [
+          "Problem-solving skills",
+          "AI concepts comprehension",
+          "Adaptability"
+        ],
+        "strong_evidence": [
+          "Complete and optimize logic in a game scenario."
+        ],
+        "weak_evidence": [
+          "Details of game or logic not disclosed."
+        ],
+        "critical_gate": "Correct logic completion and optimization.",
+        "company_specific_probes": [
+          "Thought process explanation",
+          "Optimization considerations"
+        ],
+        "likely_question_families": [
+          "Game logic and AI"
+        ],
+        "evidence_ids": [
+          "e4"
+        ],
+        "confidence": "high",
+        "basis_type": "observed"
+      },
+      {
+        "round_name": "Round 5",
+        "purpose": "Test deep problem-solving skills with core algorithms and data structures.",
+        "dimensions": [
+          "Data structures and algorithms expertise",
+          "Time management"
+        ],
+        "strong_evidence": [
+          "Solve two coding problems related to data structures and algorithms."
+        ],
+        "weak_evidence": [
+          "Specific problem details not disclosed."
+        ],
+        "critical_gate": "Accurate and efficient problem solutions.",
+        "company_specific_probes": [
+          "Approach explanation."
+        ],
+        "likely_question_families": [
+          "LeetCode-style problems"
+        ],
+        "evidence_ids": [
+          "e5",
+          "e6"
+        ],
+        "confidence": "high",
+        "basis_type": "observed"
+      }
+    ],
+    "observed_question_families": [
+      "LeetCode problems",
+      "Leadership scenarios",
+      "System design",
+      "Game logic and AI"
+    ],
+    "scoring_scale": [
+      {
+        "level": "High",
+        "meaning": "Clear evidence of required skills and attributes."
+      }
+    ],
+    "hard_gates": [
+      "Problem-solving in coding rounds",
+      "Leadership and communication in behavioral rounds",
+      "Scalable system design in design rounds"
+    ],
+    "preparation_priorities": [
+      "Practice coding problems",
+      "Review system design principles",
+      "Reflect on leadership experiences"
+    ],
+    "confidence_and_limits": [
+      "Highly confident in process description based on multiple rounds.",
+      "Limited insight into specific questions asked."
+    ],
+    "source_urls": [
+      "https://www.swe180.com/interview-experience/meta/sde-2",
+      "https://www.glassdoor.com/Interview/Meta-Interview-Questions-E40772.htm?filter.jobTitleExact=Software+Engineer+%28Swe+II%29"
+    ],
+    "seniority_calibration": [
+      {
+        "level": "SDE-2",
+        "expectation": "Proficient in data structures, algorithms, system design, AI, and leadership."
+      }
+    ],
+    "evidence_capture_contract": [
+      "Capture specific questions, candidate responses, and evaluation signals during each round."
+    ],
+    "interviewer_protocol": [
+      "Ensure questions are aligned with the provided rubric.",
+      "Probe for approach and reasoning."
+    ],
+    "anti_bias_checks": [
+      "Randomize candidate questions.",
+      "Ensure evaluation based on evidence, not assumptions."
+    ]
+  }
+}

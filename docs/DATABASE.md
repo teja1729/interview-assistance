@@ -16,8 +16,16 @@ new SQLite `saas.db`; the prototype database is not modified or assigned to a ne
 | operations | Unique interview/request ID, content fingerprint, stored successful response |
 | agent_runs | Tenant-scoped execution metadata (no prompt/answer content) |
 | agent_jobs | One durable report job per interview, retry/lease state and private checkpoint artifacts |
+| prompt_bundles | Immutable operator prompt text keyed by SHA-256; referenced by private snapshots |
 | company_research | Candidate-owned source cache, normalized query key, snapshot JSON and expiry |
+| company_intelligence_imports | Global immutable workbook import metadata, validation report and staged/active/superseded release state |
+| company_intelligence_records | Global workbook row snapshots with sheet key, company/role filters and publication state |
+| setup_artifacts | Candidate-owned saved role briefs and title suggestions with normalized input keys |
+| recruiter_profiles | Self-reported recruiter company/title, keyed by user |
+| candidate_profiles | Explicitly published candidate fields and selected resume; no private records |
+| resume_access_requests | Candidate/recruiter consent state with pinned resume and identity snapshot |
 | practice_tasks | Candidate-owned exercises produced by the coach |
+| practice_task_sources | Links a reused exercise to each contributing interview |
 | usage_buckets | Compound workspace/period/resource counter, atomic bounded increment |
 | audit_events | Historical administrative actor/action metadata |
 | billing_events | Processed Stripe event IDs for replay protection |

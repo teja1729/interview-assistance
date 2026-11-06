@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "dataset": "public_web_interview_intelligence",
+    "retrieved_at": "2026-09-26",
+    "geography": "India-first",
+    "time_window": {"from": "2024-09-26", "to": "2026-09-26"},
+    "access_scope": "public search and publicly readable pages only",
+    "companies": ["Meta", "Google", "Sarvam AI", "Swiggy", "Locus.sh"],
+    "roles": ["software_engineer", "ai_engineer", "ml_engineer"],
+    "quality_note": "Claims are source-linked and confidence-scored; processes vary by role, level, team and location."
+  },
+  "companies": [
+    {
+      "name": "Meta",
+      "domain": "meta.com",
+      "sources": [
+        {"type": "aggregated_candidate_reports", "title": "Meta Software Engineer Interview Experience (E4/E5, 2025–2026)", "url": "https://interviewpilot.dev/interview-experiences/meta", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Meta Software Engineer (Product) Interview Experience (2025)", "url": "https://www.tryexponent.com/experiences/meta-facebook-software-engineer-interview-907e36", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Meta Software Engineer Interview Experience - India", "url": "https://www.jointaro.com/interviews/companies/meta/experiences/software-engineer-india-april-9-2025-no-offer-positive-5e398edb/", "quality": "medium"}
+      ],
+      "reports": [
+        {"role": "software_engineer", "level": "E4/E5", "location": "India/global mixed", "summary": "Reported loops commonly contain phone coding, multiple coding rounds, design and behavioral rounds.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "E4/E5", "location": "not specified", "summary": "Candidate reports emphasize test cases, reasoning and dry runs before coding.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "not specified", "location": "India", "summary": "One India-specific report describes coding, technical and managerial rounds.", "confidence": "low"}
+      ],
+      "evidence": [
+        {"category": "round_pattern", "claim": "Multiple coding rounds plus system design and behavioral evaluation", "confidence": "medium"},
+        {"category": "evaluation_signal", "claim": "Speed, correctness, articulation, test cases and trade-offs matter", "confidence": "medium"},
+        {"category": "question_theme", "claim": "Coding reports include graph, tree and array problems", "confidence": "medium"}
+      ]
+    },
+    {
+      "name": "Google",
+      "domain": "google.com",
+      "sources": [
+        {"type": "candidate_experience", "title": "Google Interview Experience for Software Engineer (SDE-2) 2025", "url": "https://www.geeksforgeeks.org/interview-experiences/google-interview-experience-for-software-engineer-sde-2-2025/", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Google Software Engineer, University Graduate, 2026 - India", "url": "https://leetcode.com/discuss/post/7371064/", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Google Software Engineer Interview Experience - India", "url": "https://www.jointaro.com/interviews/companies/google/experiences/software-engineer-india-may-9-2025-accepted-offer-positive-902ef6f7/", "quality": "medium"}
+      ],
+      "reports": [
+        {"role": "software_engineer", "level": "SDE-2", "location": "Bangalore", "summary": "Five-round process: phone screening, three technical onsite rounds and one behavioral round.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "university_graduate", "location": "India", "summary": "Two rounds combined DSA and Googleyness/behavioral discussion.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "not specified", "location": "India", "summary": "Reported topics include arrays, BFS, DP, greedy/hash-map and DFS.", "confidence": "medium"}
+      ],
+      "evidence": [
+        {"category": "round_pattern", "claim": "India SDE-2 evidence shows one phone screen, three technical rounds and one behavioral round", "confidence": "medium"},
+        {"category": "question_theme", "claim": "DSA topics include arrays, graphs, BFS, DFS, DP and greedy techniques", "confidence": "medium"},
+        {"category": "evaluation_signal", "claim": "Candidates are expected to explain their approach before and during coding", "confidence": "medium"}
+      ]
+    },
+    {
+      "name": "Sarvam AI",
+      "domain": "sarvam.ai",
+      "sources": [
+        {"type": "community_aggregation", "title": "AI Engineer Interview Questions: Sarvam AI", "url": "https://github.com/ombharatiya/AI-Engineer-Interview-Questions/blob/main/14-company-interview-questions/sarvam-ai.md", "quality": "low"},
+        {"type": "candidate_experience", "title": "SarvM.ai Interview Questions & Answers", "url": "https://www.glassdoor.com/Interview/SarvM-ai-Interview-Questions-E7826863.htm", "quality": "medium"},
+        {"type": "candidate_experience", "title": "My interview experience with SarvamAI for ML engineer role", "url": "https://www.reddit.com/r/developersIndia/comments/1u4uf70/my_interview_experience_with_sarvamai_for_ml/", "quality": "medium"}
+      ],
+      "reports": [
+        {"role": "ai_engineer", "level": "mixed", "location": "India", "summary": "Public compilation describes practical proof-of-work, technical deep dives, occasional DSA/fundamentals, and founder/CTO or HR conversations.", "confidence": "low"},
+        {"role": "software_engineer", "level": "intern/fullstack mixed", "location": "Bengaluru/India", "summary": "Small public sample includes project assessment, resume/DSA and founder discussion.", "confidence": "medium"},
+        {"role": "ml_engineer", "level": "not specified", "location": "India", "summary": "Candidate reports a proctored VAD build followed by ASR/VAD/LLM and speech-model discussion.", "confidence": "medium"}
+      ],
+      "evidence": [
+        {"category": "company_mindset", "claim": "Sarvam appears proof-of-work oriented rather than purely LeetCode oriented", "confidence": "low"},
+        {"category": "practical_task", "claim": "A candidate reported building a VAD from scratch in a timed practical assessment", "confidence": "medium"},
+        {"category": "round_pattern", "claim": "Project assessment, technical/DSA discussion and founder/HR rounds appear in public reports", "confidence": "medium"}
+      ]
+    },
+    {
+      "name": "Swiggy",
+      "domain": "swiggy.com",
+      "sources": [
+        {"type": "candidate_experience", "title": "Swiggy Associate Software Developer Interview Experience - India", "url": "https://www.jointaro.com/interviews/companies/swiggy/experiences/associate-software-developer-india-november-1-2025-accepted-offer-positive-76790cf7/", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Swiggy Associate Software Development Engineer Interview Experience - Bengaluru", "url": "https://www.jointaro.com/interviews/companies/swiggy/experiences/associate-software-development-engineer-bengaluru-karnataka-november-1-2025-accepted-offer-neutral-ff5fab1a/", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Swiggy Associate Software Engineer Interview Questions", "url": "https://www.glassdoor.co.in/Interview/Swiggy-Associate-Software-Engineer-Interview-Questions-EI_IE952680.0%2C6_KO7%2C34.htm", "quality": "medium"}
+      ],
+      "reports": [
+        {"role": "software_engineer", "level": "associate", "location": "India", "summary": "Technical, hiring-manager and HR rounds; one report included RAG, agentic AI and DSA.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "associate", "location": "Bengaluru", "summary": "Campus process included OA, technical, HM and HR; topics included DSA, OS, concurrency, SQL/NoSQL, JWT, OOP and Java multithreading.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "associate", "location": "Bengaluru/Gurgaon", "summary": "Public entries vary from OA plus three interviews to a longer DSA, LLD, HLD and HM sequence.", "confidence": "medium"}
+      ],
+      "evidence": [
+        {"category": "round_pattern", "claim": "Swiggy processes commonly include OA/DSA and may extend through LLD, HLD, HM and HR", "confidence": "medium"},
+        {"category": "question_theme", "claim": "Reports include OS, concurrency, databases, Java/OOP and system design", "confidence": "medium"},
+        {"category": "ai_theme", "claim": "RAG and agentic AI appeared in an associate-level India report", "confidence": "medium"}
+      ]
+    },
+    {
+      "name": "Locus.sh",
+      "domain": "locus.sh",
+      "sources": [
+        {"type": "candidate_experience", "title": "Locus Interview Experience | SDE 2 | Selected", "url": "https://leetcode.com/discuss/post/7310965/locus-interview-experience-sde-2-selecte-wvcr/", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Locus Interview Experience - SDE 2", "url": "https://www.oahelper.in/interview-experience/MTI1Mw", "quality": "medium"},
+        {"type": "candidate_experience", "title": "Locus Interview Questions & Answers", "url": "https://www.glassdoor.co.in/Interview/Locus-Interview-Questions-E1589628.htm", "quality": "low"}
+      ],
+      "reports": [
+        {"role": "software_engineer", "level": "SDE-2", "location": "India", "summary": "Detailed loop includes OA, HR/culture, HLD and VP engineering discussion.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "SDE-2", "location": "India", "summary": "Design topics include rate limiting, caching, inventory consistency, queues and database choices.", "confidence": "medium"},
+        {"role": "software_engineer", "level": "mixed", "location": "Bengaluru", "summary": "One public result is an older 2023 interview despite a recently updated page, so it is historical context only.", "confidence": "low"}
+      ],
+      "evidence": [
+        {"category": "round_pattern", "claim": "Locus SDE-2 evidence includes OA, HR/culture, system design and VP engineering discussion", "confidence": "medium"},
+        {"category": "question_theme", "claim": "System design discussion covers scale, consistency, caching, rate limiting and queues", "confidence": "medium"},
+        {"category": "data_quality", "claim": "Search-result freshness must be checked against the actual interview date", "confidence": "high"}
+      ]
+    }
+  ]
+}

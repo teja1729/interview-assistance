@@ -3,28 +3,30 @@
 The production UI lives in `frontend/`. `B2B-app/` is the original design reference and
 standalone prototype, not a second API client. Its localStorage identities, simulated speech,
 seeded sessions, random feedback, testimonials and business statistics are not used by this app.
-Candidate and recruiter login use the same teal palette as the public homepage. `SignInPage.module.css`
-scopes login layout to the sign-in wrapper so it cannot affect other routes, including after client-side
-navigation. The signed-in UI and public landing share that application design:
-sidebar navigation, teal accents, rounded cards and the dark voice-interview screen. Recruiter
-features and server-computed progress remain available in that established application shell.
+The public root route renders the B2B-app homepage inside the production frontend. The recruiter
+directory remains integrated with the API at `/recruiter`, and signed-out visitors are sent to
+`/recruiter/login`. Candidate and recruiter login use the B2B homepage's split-panel styling while
+continuing to use production Google/LinkedIn OAuth and server-side sessions. `SignInPage.module.css`
+scopes login layout to the sign-in wrapper so it cannot affect other routes, including after
+client-side navigation. Candidate preparation remains available through its sign-in flow and
+established application shell.
 
 ## Routes and feature mapping
 
-| Experience | Integrated behavior |
-| --- | --- |
-| Candidate sign-in | `/login` (also `/signin`, `/signup`): existing Google OIDC identity and server session |
-| Dashboard | `/dashboard`: owned interviews, real usage, coaching tasks and scores; no seeded history |
-| Practice setup | `/setup`: saved job briefs, company research, language, duration and professional round selection |
-| Live interview | `/interview/[id]`: existing real STT → interviewer → TTS, optional text/camera and device cleanup |
-| Feedback | `/report/[id]`: evidence-grounded reports, nullable scores and server-owned rubric |
-| Progress | `/progress`: all-time completed/scored totals and drill completion; latest 100 completed sessions for the chart |
-| Coaching | `/practice`: existing persistent practice plan, intentionally retains its established URL |
-| Candidate discovery | `/opportunities`: opt-in profile, selected resume and request inbox |
-| Recruiter sign-in | `/recruiter/login`: the same Google client, with a return destination of `/recruiter` |
-| Recruiter directory | `/recruiter`: company onboarding, search by role/headline/location, minimum experience and pagination |
-| Recruiter requests | `/recruiter/requests`: pending/approved/declined/revoked state and an approved resume viewer |
-| Account and billing | Existing settings, resume library, activity, Stripe checkout and server-owned allowances |
+| Experience                    | Integrated behavior                                                                                             |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Candidate sign-in and sign-up | `/login`, `/signin`, `/signup`: existing Google/LinkedIn OAuth identity and server session                      |
+| Dashboard                     | `/dashboard`: owned interviews, real usage, coaching tasks and scores; no seeded history                        |
+| Practice setup                | `/setup`: saved job briefs, company research, duration and professional round selection                          |
+| Live interview                | `/interview/[id]`: existing real STT → interviewer → TTS, optional text/camera and device cleanup               |
+| Feedback                      | `/report/[id]`: evidence-grounded reports, nullable scores and server-owned rubric                              |
+| Progress                      | `/progress`: all-time completed/scored totals and drill completion; latest 100 completed sessions for the chart |
+| Coaching                      | `/practice`: existing persistent practice plan, intentionally retains its established URL                       |
+| Candidate discovery           | `/opportunities`: opt-in profile, selected resume and request inbox                                             |
+| Recruiter sign-in             | `/recruiter/login`: the same Google client, with a return destination of `/`                                    |
+| Recruiter directory           | `/recruiter`: company onboarding, search by role/headline/location, minimum experience and pagination           |
+| Recruiter requests            | `/recruiter/requests`: pending/approved/declined/revoked state and an approved resume viewer                    |
+| Account and billing           | Existing settings, resume library, activity, Stripe checkout and server-owned allowances                        |
 
 A recruiter is an authenticated Google user who has completed a recruiter profile. A person may
 use both candidate and recruiter experiences. This does **not** grant access to private interviews.
@@ -75,7 +77,7 @@ shortlists, ATS integrations and employer vetting are not implemented.
   guaranteed placement. Current reports expose only supported, evidence-grounded metrics.
 - Prototype INR subscription tiers and unlimited promises are not adopted. Existing backend
   allowances and actual configured Stripe checkout remain authoritative.
-- Full streaming audio, human calibration of evaluation, recruiter verification and automated
+- Full streaming audio, automated role-specific benchmark calibration, recruiter verification and automated
   matching remain separate engineering work. This integration does not pretend they exist.
 
 ## Coding-agent entry points

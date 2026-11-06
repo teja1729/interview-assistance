@@ -14,12 +14,18 @@ configuration is operator-owned and has no settings screen or browser mutation e
 
 1. Define a strict Pydantic output in `backend/app/schemas.py`. Set bounds and disallow extra fields.
 2. Write one role prompt in `agents/prompts/<role>.md`. Explicitly treat supplied user text as data.
-3. Register the role in `providers/base.py` (`AGENT_ROLES`) and add a deterministic fixture to tests/fixtures/demo_provider.py.
+3. Register the role in **all** required places, or `execute()` rejects it as unknown or unconfigured:
+   - `providers/base.py`: add the role to `AGENT_ROLES`.
+   - `agents/specs.py`: add `ROLE_PROMPTS[role]`, `POLICIES[role]`, and a `VARIANTS` entry when the
+     role needs a contract-specific prompt file.
+   - `tests/fixtures/demo_provider.py`: add a deterministic branch for every new schema.
+   - `agents/runtime.py` needs no edit; it re-exports the registry.
 4. Invoke it from a domain service with workspace/user scope and a bounded input snapshot.
 5. Validate semantic invariants (e.g., exact evidence quotes) after structural validation.
 6. Assign its default profile in TOML `[agents]`. Preserve interview snapshots for later jobs.
 7. Write tests for malformed output, retries, tenant scope and duplicate delivery. Update the
-   handoff table in AGENT_WORKFLOWS.md. No model is allowed to directly commit business state.
+   handoff table in AGENT_WORKFLOWS.md and the role table in AGENT_RUNTIME.md. No model is allowed
+   to directly commit business state.
 
 ## Add an endpoint or product feature
 

@@ -5,6 +5,8 @@ private stage checkpoints, lease renewal and atomic report/coaching publication.
 assessments and summary artifacts survive coaching failures. `usage.py` owns database-backed
 entitlement counters. `company_research.py` owns candidate-scoped source caches. Existing saved sources
 remain readable; new web research is unavailable. See `docs/COMPANY_RESEARCH.md`.
+`company_intelligence.py` retrieves bounded evidence from the active versioned workbook import, separate
+from candidate-owned cache data. Import and release management live in `scripts/import_company_intelligence.py`.
 `speech.py` validates/handles transient audio independently from reasoning providers.
 `sarvam_speech.py` owns bounded, ordered transcription chunks and natural voice synthesis.
 Read `docs/VOICE.md` before changing audio deadlines, formats or turn-taking behavior.

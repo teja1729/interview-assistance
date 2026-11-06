@@ -44,7 +44,7 @@ npm run test:e2e
 
 Backend tests inject isolated databases and authenticated identities. They test tenant isolation,
 CSRF/origin checks, OIDC subject mapping, follow-up limits, preserved transcripts, duplicate and
-concurrent answers, report failure/recovery, quotas, invitations, Stripe signature verification and
+concurrent answers, report failure/recovery, quotas, retired-route 404s, Stripe signature verification and
 concurrent billing snapshots. Sarvam adapter tests cover structured output, refusal, invalid data,
 authentication errors, timeouts and bounded runtime retries without using live credentials.
 `TEST_DATABASE_URL` optionally runs the suite against a **disposable PostgreSQL database**; the

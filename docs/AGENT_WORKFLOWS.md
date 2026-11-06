@@ -98,6 +98,7 @@ keep their historical 3/3/2/2 rubric and output contracts. No completed reports 
 The evaluation CLI in backend/evaluations uses twenty synthetic cases, with expected score ranges,
 actions, known quote anchors, languages and injection probes. Offline validation spends nothing;
 live runs require --live --accept-cost and preserve model/prompt manifests. See RUN.md. Fixture success
-proves workflow correctness, not judgment accuracy. Human reviewers must calibrate reference cases,
-applicability and weights before claiming validated assessment quality. Do not use private candidate
-transcripts for evaluation without consent and anonymization. See ARCHITECTURE_REVIEW.md for findings.
+is an automated regression guard, not proof of hiring validity. Keep synthetic expectations explicitly
+provisional and use held-out cases, repeat runs and independent configured model profiles to detect
+drift and inconsistency. Do not use private candidate transcripts for evaluation. See
+ARCHITECTURE_REVIEW.md for findings.

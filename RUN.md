@@ -5,6 +5,9 @@ start in the **repository root**. Parenthesized commands change directory only f
 Use a separate terminal for each long-running service. Existing secrets in `backend/.env` are
 preserved by the setup commands below.
 
+This file is the authoritative command reference. `README.md` and `docs/DEVELOPMENT.md` summarize
+the same gates; if they disagree, follow this file and update the others.
+
 ## 1. Fastest start
 
 Requirements: **Python 3.12+, uv, Node.js 22+, npm**. Docker is optional.
@@ -496,7 +499,7 @@ billing or vendor rate limits. **Plans & usage** shows the effective allowance a
 ## Agent judgment evaluations
 
 ```bash
-# Validate the twenty synthetic reference cases offline; makes no model calls.
+# Validate the synthetic regression cases offline; makes no model calls.
 (cd backend && uv run python -m scripts.run_evaluations)
 
 # Run the full suite against the configured real model. Explicit opt-in: billable calls.
@@ -521,10 +524,25 @@ billing or vendor rate limits. **Plans & usage** shows the effective allowance a
 ```
 
 Live evaluation uses a disposable trace database and synthetic answers, never production candidate data.
-Expected ranges and rubric weights are provisional until independently reviewed. Follow the review
-process in backend/evaluations/README.md; passing fixture tests is not a claim of calibrated judgment.
-Results are ignored by Git. Keep the relevant JSON manifests privately when comparing releases.
+Expected ranges and rubric weights are provisional automated regression targets, not calibrated hiring
+standards. Fixture tests and live regressions detect known failures and drift but cannot certify
+judgment validity for every real candidate. Results are ignored by Git. Keep manifests privately when comparing releases.
 See docs/ARCHITECTURE_REVIEW.md for the individual review findings and implementation boundaries.
+
+## Aggregate product metrics
+
+After applying migrations, print a content-free summary from the configured database:
+
+```bash
+# Reads only aggregate fields; output contains no transcript, resume, email or candidate ID.
+(cd backend && uv run python -m scripts.product_metrics --days 30)
+```
+
+The report includes interview starts/completions, users with multiple completed sessions, practice
+task completion, report outcomes and latency, plus agent latency/failures by role, provider and
+prompt version. It is an automated operational baseline; it does not claim real-world hiring validity.
+Report latency is available only for jobs completed after the completion-time migration; repeat
+practice is a directional count rather than a cohort retention rate.
 
 ```bash
 # Validate the complete-report smoke case offline (no inference).
@@ -538,14 +556,14 @@ See docs/ARCHITECTURE_REVIEW.md for the individual review findings and implement
 ## Candidate/recruiter login and recruiter access
 
 The application runs from `frontend/` on port **3000**. Only candidate/recruiter login uses the
-suri.one sign-in design; the rest of the app retains its original interface. The original `B2B-app/` on
+okkra sign-in design; the rest of the app retains its original interface. The original `B2B-app/` on
 port **3100** is a standalone prototype, not the real account or recruiting application.
 
 ```bash
 # From the repository root: apply all migrations, including recruiter profiles and resume consent.
 (cd backend && uv run alembic upgrade head)
 
-# Start the real API, durable report worker and suri.one frontend.
+# Start the real API, durable report worker and okkra frontend.
 ./dev.sh
 
 # Confirm the integrated app's backend is ready (no sign-in required).

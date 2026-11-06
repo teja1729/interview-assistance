@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "dataset": "company_interview_knowledge_base",
+    "retrieved_at": "2026-09-26",
+    "scope": {
+      "geography": "India-first",
+      "time_window": {"from": "2024-09-26", "to": "2026-09-26"},
+      "companies": ["Meta", "Google", "Sarvam AI", "Swiggy", "Locus.sh"],
+      "roles": ["software_engineer", "ai_engineer", "ml_engineer"]
+    },
+    "important_rule": "Observed questions are kept separate from inferred company patterns. Inferences never become facts without repeated, role-matched evidence."
+  },
+  "extraction_method": {
+    "input": "Publicly readable search results and public pages only",
+    "steps": [
+      "Discover company, role, India, round and recent-interview pages.",
+      "Extract each report's role, level, location, date, outcome, rounds and question details.",
+      "Normalize synonymous round names such as DSA/coding and HLD/system design.",
+      "Separate exact or paraphrased observed questions from general topic mentions.",
+      "Group evidence by company, role family, level, location and time period.",
+      "Infer company-specific evaluation signals only from repeated evidence or clearly labeled single reports.",
+      "Assign confidence: high for repeated recent evidence, medium for multiple consistent reports, low for one report or editorial inference.",
+      "Preserve conflicts instead of averaging incompatible interview loops."
+    ],
+    "normalization_rules": {
+      "dsa": ["arrays", "strings", "trees", "graphs", "bfs", "dfs", "dynamic_programming", "greedy", "hash_maps"],
+      "ai": ["ml_fundamentals", "llm", "rag", "agents", "model_evaluation", "speech", "asr", "vad", "multilingual_ai"],
+      "design": ["low_level_design", "machine_coding", "high_level_design", "system_design", "api_design", "scalability", "databases", "caching", "queues"],
+      "process": ["online_assessment", "phone_screen", "technical_round", "behavioral", "hiring_manager", "founder_or_vp", "hr", "team_matching"]
+    }
+  },
+  "source_index": {
+    "meta_interviewpilot": "Meta aggregated candidate reports, 2025-2026",
+    "meta_exponent": "Meta candidate experience, Software Engineer",
+    "meta_india_jointaro": "Meta India candidate experience",
+    "google_gfg": "Google SDE-2 Bangalore candidate experience",
+    "google_leetcode": "Google India university-graduate candidate experience",
+    "google_jointaro": "Google India Software Engineer candidate experience",
+    "sarvam_github": "Community Sarvam AI interview compilation",
+    "sarvam_glassdoor": "Public SarvM.ai/Sarvam interview entries",
+    "sarvam_reddit": "SarvamAI ML engineer candidate report",
+    "swiggy_jointaro_ai": "Swiggy India associate candidate report",
+    "swiggy_jointaro_sde": "Swiggy Bengaluru associate candidate report",
+    "swiggy_glassdoor": "Public Swiggy associate interview entries",
+    "locus_leetcode": "Locus SDE-2 candidate experience",
+    "locus_oahelper": "Structured copy of Locus SDE-2 candidate experience",
+    "locus_glassdoor": "Public Locus interview entries"
+  },
+  "companies": [
+    {
+      "company": "Meta",
+      "knowledge_confidence": "medium",
+      "process": {
+        "commonly_observed_rounds": ["phone_or_technical_screen", "multiple_coding_rounds", "system_or_product_design", "behavioral_or_values", "hiring_committee_or_team_decision"],
+        "india_specificity": "Some India evidence exists, but the strongest public sample mixes India and global reports.",
+        "typical_focus": ["fast problem solving", "correctness", "communication while coding", "test cases", "trade-offs", "design", "cross-functional behavior"]
+      },
+      "observed_questions": [
+        {"question_or_task": "Solve medium-hard coding problems involving graphs, trees or arrays.", "type": "coding", "source_refs": ["meta_interviewpilot"], "confidence": "medium"},
+        {"question_or_task": "Design a distributed social-graph or feed-ranking feature.", "type": "system_design", "source_refs": ["meta_interviewpilot"], "confidence": "medium"},
+        {"question_or_task": "Describe a time you handled cross-functional collaboration or competing priorities.", "type": "behavioral", "source_refs": ["meta_interviewpilot"], "confidence": "medium"},
+        {"question_or_task": "Design a code-review agent; discuss where the LLM belongs, orchestration, memory, tools, validation and inference cost.", "type": "ai_system_design", "source_refs": ["meta_exponent"], "confidence": "low"},
+        {"question_or_task": "Explain how you use AI tools, evaluate AI output and handle reliability or responsibility trade-offs.", "type": "ai_behavioral", "source_refs": ["meta_exponent"], "confidence": "low"}
+      ],
+      "extracted_knowledge": {
+        "mindset": "Meta appears to value engineers who can solve quickly under constraints while clearly communicating reasoning and validating their own work.",
+        "technical_bar": "Coding is likely to be time-constrained and may involve multiple medium-to-hard problems; design becomes more important at higher levels.",
+        "ai_signal": "Some recent reports suggest AI-assisted coding or AI-system-design evaluation, but this is not yet reliable as a universal India process.",
+        "what_to_prepare": ["timed DSA", "graph/tree/array patterns", "test cases and dry runs", "system or product design", "cross-functional behavioral stories", "AI system trade-offs"],
+        "confidence_reasons": ["coding/design/behavioral pattern repeats across several reports", "India-specific round structure is less consistent", "AI-round evidence is recent and sparse"]
+      }
+    },
+    {
+      "company": "Google",
+      "knowledge_confidence": "medium-high",
+      "process": {
+        "commonly_observed_rounds": ["phone_screen", "multiple_technical_coding_rounds", "googleyness_or_behavioral", "system_design_for_senior_roles", "hiring_committee_or_team_matching"],
+        "india_specificity": "Strong Bangalore and India-specific evidence is available.",
+        "typical_focus": ["algorithmic problem solving", "ambiguity handling", "communication", "complexity analysis", "edge cases", "behavioral judgment", "ML domain depth for AI/ML roles"]
+      },
+      "observed_questions": [
+        {"question_or_task": "Given a sorted array and target sum, find all unique pairs that add to the target.", "type": "coding", "topic": "arrays_two_pointers", "source_refs": ["google_gfg"], "confidence": "medium"},
+        {"question_or_task": "Given routers with coordinates and wireless range, determine whether a message can reach a destination through forwarding routers.", "type": "coding", "topic": "graph_reachability_bfs_dfs", "source_refs": ["google_leetcode"], "confidence": "medium"},
+        {"question_or_task": "Given two piles of coins and allowed removal operations, determine the winning player.", "type": "coding", "topic": "game_theory_dynamic_programming", "source_refs": ["google_jointaro"], "confidence": "medium"},
+        {"question_or_task": "Solve questions involving arrays, BFS, DFS, greedy/hash maps and dynamic programming.", "type": "coding_topic_cluster", "source_refs": ["google_jointaro"], "confidence": "medium"},
+        {"question_or_task": "Explain teamwork, communication, handling ambiguity and past project decisions.", "type": "behavioral_googleyness", "source_refs": ["google_leetcode", "google_jointaro"], "confidence": "medium"},
+        {"question_or_task": "Design or explain a recommendation system for an AI/ML role.", "type": "ml_system_design", "source_refs": ["google_leetcode"], "confidence": "low"}
+      ],
+      "extracted_knowledge": {
+        "mindset": "Google appears to evaluate how candidates reason through unfamiliar problems, not just whether they remember a solution.",
+        "technical_bar": "The recurring signal is structured problem decomposition, optimality, edge-case awareness and clear communication while coding.",
+        "ai_signal": "AI/ML roles may add ML-domain or recommendation-system design on top of the normal coding and behavioral bar.",
+        "what_to_prepare": ["graphs and trees", "dynamic programming", "arrays and hash maps", "greedy reasoning", "ambiguous problem clarification", "Googleyness stories", "ML system design for AI/ML roles"],
+        "confidence_reasons": ["multiple India-specific reports agree on coding-heavy loops", "individual question wording is candidate-specific", "senior-role design and AI-round details vary"]
+      }
+    },
+    {
+      "company": "Sarvam AI",
+      "knowledge_confidence": "low-medium",
+      "process": {
+        "commonly_observed_rounds": ["briefing_or_recruiter", "practical_proof_of_work", "technical_deep_dive", "dsa_or_fundamentals_in_some_tracks", "founder_or_cto", "hr"],
+        "india_specificity": "The company is India-first and most reports are India-based, but the public sample is small.",
+        "typical_focus": ["shipping a working artifact", "AI or speech domain depth", "debugging", "practical trade-offs", "communication", "mission and ownership"]
+      },
+      "observed_questions": [
+        {"question_or_task": "Build a voice activity detector from scratch using provided audio files in a timed practical task.", "type": "practical_ai_task", "topic": "speech_vad", "source_refs": ["sarvam_reddit"], "confidence": "medium"},
+        {"question_or_task": "Explain accuracy, code quality and possible improvements to the VAD solution.", "type": "technical_deep_dive", "topic": "speech_evaluation", "source_refs": ["sarvam_reddit"], "confidence": "medium"},
+        {"question_or_task": "Solve two DSA questions involving dynamic programming and greedy techniques.", "type": "coding", "source_refs": ["sarvam_glassdoor"], "confidence": "medium"},
+        {"question_or_task": "Explain divide-and-conquer versus dynamic programming.", "type": "fundamentals", "source_refs": ["sarvam_glassdoor"], "confidence": "medium"},
+        {"question_or_task": "Discuss transformers, fine-tuning, pretraining, AWS and speech-model architecture.", "type": "ai_ml_fundamentals", "topic": "speech_llm_mlops", "source_refs": ["sarvam_reddit"], "confidence": "low"}
+      ],
+      "extracted_knowledge": {
+        "mindset": "Sarvam appears more proof-of-work and builder-oriented than a purely algorithmic interview process.",
+        "technical_bar": "Candidates may be expected to create a working AI or speech artifact, explain implementation choices and improve it under constraints.",
+        "ai_signal": "Speech, multilingual AI, ASR/VAD, model integration and production reliability are especially relevant to the company domain.",
+        "what_to_prepare": ["Python and backend implementation", "speech/ASR/VAD basics", "LLM and ML fundamentals", "practical build tasks", "debugging and evaluation", "DSA fundamentals", "clear explanation of trade-offs"],
+        "confidence_reasons": ["practical-task report is detailed", "overall process has few public reports", "some compilation content is inferred rather than directly candidate-reported"]
+      }
+    },
+    {
+      "company": "Swiggy",
+      "knowledge_confidence": "medium",
+      "process": {
+        "commonly_observed_rounds": ["online_assessment", "dsa_or_live_coding", "project_or_technical", "low_level_or_machine_coding", "high_level_design_for_some_levels", "hiring_manager", "hr"],
+        "india_specificity": "Strong India-specific evidence exists, especially for Bengaluru and campus/associate roles.",
+        "typical_focus": ["production engineering", "practical design", "concurrency", "databases", "delivery/logistics problems", "product thinking", "applied AI"]
+      },
+      "observed_questions": [
+        {"question_or_task": "Discuss previous projects, then solve one DSA question and discuss RAG and agentic AI.", "type": "ai_technical_and_coding", "source_refs": ["swiggy_jointaro_ai"], "confidence": "medium"},
+        {"question_or_task": "Solve valid-parentheses and array problems.", "type": "coding", "topic": "stacks_arrays", "source_refs": ["swiggy_jointaro_sde"], "confidence": "medium"},
+        {"question_or_task": "Explain deadlocks, semaphores, threads and concurrency.", "type": "computer_science", "topic": "operating_systems_concurrency", "source_refs": ["swiggy_jointaro_sde"], "confidence": "medium"},
+        {"question_or_task": "Compare hashing and encryption; explain salting, JWT and SQL versus NoSQL.", "type": "backend_fundamentals", "source_refs": ["swiggy_jointaro_sde"], "confidence": "medium"},
+        {"question_or_task": "Explain OOP and Java multithreading code.", "type": "language_and_concurrency", "source_refs": ["swiggy_jointaro_sde"], "confidence": "medium"},
+        {"question_or_task": "Design a rate limiter.", "type": "low_level_design", "source_refs": ["swiggy_glassdoor"], "confidence": "medium"},
+        {"question_or_task": "Evaluate an ETA model where early and late predictions have different business costs.", "type": "ml_system_design", "topic": "metrics_and_business_loss", "source_refs": ["swiggy_public_ml_guide"], "confidence": "low"},
+        {"question_or_task": "Design a delivery/rider/restaurant ranking or dispatch system.", "type": "ml_system_design", "topic": "ranking_and_logistics", "source_refs": ["swiggy_public_ml_guide"], "confidence": "low"}
+      ],
+      "extracted_knowledge": {
+        "mindset": "Swiggy appears to favor engineers who can translate technical decisions into reliable, high-scale consumer and logistics systems.",
+        "technical_bar": "Beyond DSA, candidates may be tested on implementation-ready LLD/HLD, concurrency, data stores, APIs and operational trade-offs.",
+        "ai_signal": "AI roles appear connected to RAG, agents, ETA prediction, ranking, dispatch and metrics that reflect real delivery costs.",
+        "what_to_prepare": ["DSA", "Java/backend fundamentals", "OS and concurrency", "SQL/NoSQL", "JWT/security basics", "rate limiter and service design", "RAG/agents", "logistics ML metrics"],
+        "confidence_reasons": ["several recent India reports agree on broad process", "exact design questions vary by team", "ML-specific claims have fewer direct candidate reports"]
+      }
+    },
+    {
+      "company": "Locus.sh",
+      "knowledge_confidence": "medium-low",
+      "process": {
+        "commonly_observed_rounds": ["online_assessment", "hybrid_dsa_lld", "system_design", "hr_or_culture", "vp_or_senior_engineering_discussion"],
+        "india_specificity": "Recent SDE-2 reports are India-focused, but the total evidence volume is small.",
+        "typical_focus": ["practical coding", "LLD", "scalable logistics systems", "consistency", "queues", "caching", "project ownership"]
+      },
+      "observed_questions": [
+        {"question_or_task": "Design a bank system through a staged coding/LLD assessment.", "type": "coding_and_lld", "source_refs": ["locus_leetcode", "locus_oahelper"], "confidence": "medium"},
+        {"question_or_task": "Answer design MCQs about scalability, consistency, database choice and API design.", "type": "system_design_case", "source_refs": ["locus_leetcode", "locus_oahelper"], "confidence": "medium"},
+        {"question_or_task": "Design a flash-sale system similar to a large e-commerce sale.", "type": "high_level_design", "source_refs": ["locus_leetcode", "locus_oahelper"], "confidence": "medium"},
+        {"question_or_task": "Discuss rate limiting, cache usage, inventory consistency, queue-based processing and database choices.", "type": "system_design_followups", "source_refs": ["locus_leetcode", "locus_oahelper"], "confidence": "medium"},
+        {"question_or_task": "Deep-dive into past projects and a side project with a VP of Engineering.", "type": "project_deep_dive", "source_refs": ["locus_leetcode", "locus_oahelper"], "confidence": "medium"}
+      ],
+      "extracted_knowledge": {
+        "mindset": "The recent SDE-2 evidence suggests a practical systems-builder mindset focused on production trade-offs and ownership.",
+        "technical_bar": "Candidates may need to move from working code to scalable design, explaining consistency, queues, caching and database decisions.",
+        "ai_signal": "Direct AI-specific evidence is currently insufficient; logistics optimization is the stronger company-specific context.",
+        "what_to_prepare": ["staged coding", "LLD", "HLD", "rate limiting", "caching", "queues", "inventory consistency", "database selection", "project deep dives"],
+        "confidence_reasons": ["two sources describe the same detailed SDE-2 experience", "one Glassdoor result is outside the time window", "AI-role evidence is missing"]
+      }
+    }
+  ],
+  "knowledge_base_generation": {
+    "company_profile": "Derived from repeated process patterns, question clusters, role context and company domain; not copied from a single page.",
+    "question_bank": "Contains only questions or tasks explicitly observed or clearly paraphrased from public reports. Questions inferred from job descriptions are marked low confidence and should not be presented as previously asked.",
+    "round_model": "Round names are normalized, then grouped by company, role, level and India location. Conflicting loops remain separate variants.",
+    "mindset_model": "Mindset is an evidence-backed hypothesis about what the company appears to value, based on repeated evaluation signals and domain-specific tasks.",
+    "personalization_use": {
+      "software_engineer": "Select DSA, backend, LLD/HLD and behavioral questions matching the target level and company variant.",
+      "ai_engineer": "Select ML fundamentals, AI system design, model evaluation, practical AI tasks and relevant software engineering questions.",
+      "follow_ups": "Use the observed evaluation signals to ask about trade-offs, scale, testing, failure modes, metrics and project ownership.",
+      "disclosure": "Show candidates whether an item is official, repeatedly reported, single-report evidence, or an inferred practice scenario."
+    },
+    "confidence_policy": {
+      "high": "Repeated recent evidence from multiple independent role-matched reports.",
+      "medium": "A detailed candidate report or multiple consistent but limited reports.",
+      "low": "Single report, editorial synthesis, inferred question, ambiguous company identity or old evidence."
+    }
+  },
+  "enhancement_log": {
+    "new_official_signals": [
+      {
+        "company": "Meta",
+        "source": "Meta full-loop preparation guide",
+        "facts": [
+          "Meta officially describes a full loop of roughly 4–6 conversations covering coding, design and behavioral evaluation.",
+          "Meta has a separate Machine Learning interview guide covering coding, ML system design and behavioral evaluation."
+        ],
+        "knowledge_effect": "Raises confidence that coding/design/behavioral is a real process structure and separates ML system design from generic SWE design.",
+        "confidence": "high"
+      },
+      {
+        "company": "Google",
+        "source": "Google India job descriptions and Google DeepMind careers material",
+        "facts": [
+          "India engineering roles explicitly emphasize data structures and algorithms, software design, testing, deployment, distributed computing and large-scale systems.",
+          "AI-oriented engineering roles connect software engineering with machine learning, deep learning, research and responsible AI.",
+          "The exact interview process is role-specific; Google DeepMind explicitly describes recruiter, skills and final leadership stages rather than one universal loop."
+        ],
+        "knowledge_effect": "Strengthens the distinction between observed coding questions and role-derived preparation areas such as distributed systems, ML depth and deployment.",
+        "confidence": "high"
+      }
+    ],
+    "newly_added_inference_guards": [
+      "Official job descriptions are used to explain why a topic is relevant, not to claim that the topic was asked in an interview.",
+      "Editorial guides and duplicated reports are retained as leads but cannot independently raise a question to high confidence.",
+      "A company knowledge base must preserve multiple process variants instead of producing one canonical round sequence.",
+      "AI-specific questions are separated from standard SWE questions so an AI Engineer plan does not merely become a generic DSA plan."
+    ],
+    "coverage_gaps": {
+      "Meta": ["More India-specific AI/ML first-hand reports", "Verified recent question wording by level"],
+      "Google": ["More India-specific AI/ML question reports", "Reliable separation of Google SWE, Google Cloud and DeepMind loops"],
+      "Sarvam AI": ["More independent reports", "Official interview guide or role-specific hiring material", "More applied AI and research-engineer questions"],
+      "Swiggy": ["More ML-specific first-hand reports", "Role/level separation between campus, associate and senior hiring"],
+      "Locus.sh": ["More recent reports", "Direct AI/ML role evidence", "Independent confirmation of the SDE-2 loop"]
+    },
+    "next_extraction_pass": [
+      "Search each company with exact role and level combinations such as SDE-1, SDE-2, senior, ML engineer and applied AI engineer.",
+      "Prefer first-hand candidate reports over preparation guides and count independent reports before promoting a pattern.",
+      "Extract follow-up questions and evaluation signals separately from the headline question.",
+      "Track interview date separately from page update date to avoid stale evidence.",
+      "Add contradiction records when two credible reports describe different loops for the same company."
+    ]
+  },
+  "enhanced_knowledge_model": {
+    "source_layers": [
+      {
+        "layer": "official_company_signal",
+        "examples": ["careers pages", "role descriptions", "engineering blogs", "technical papers", "public product documentation"],
+        "can_support": ["domain priorities", "role expectations", "technology and operating context"],
+        "cannot_alone_support": ["exact interview question", "guaranteed round order"]
+      },
+      {
+        "layer": "first_hand_interview_evidence",
+        "examples": ["candidate reports", "public Reddit/LeetCode/GFG reports", "candidate videos or transcripts"],
+        "can_support": ["observed question", "round behavior", "follow-up style", "candidate-reported evaluation signal"],
+        "required_fields": ["interview_date", "role", "level", "location", "round", "question_or_task", "outcome", "source_quality"]
+      },
+      {
+        "layer": "secondary_aggregation",
+        "examples": ["interview guides", "question databases", "coaching sites", "GitHub compilations"],
+        "can_support": ["search leads", "topic frequency hypotheses", "duplicate-question detection"],
+        "promotion_rule": "Never promote to high-confidence evidence without independent first-hand or official support."
+      },
+      {
+        "layer": "community_context",
+        "examples": ["public engineering discussions", "open-source repositories", "conference talks", "technical podcasts"],
+        "can_support": ["domain vocabulary", "architecture context", "likely discussion probes"],
+        "promotion_rule": "Use as context or a question-generation signal, not as proof of interview practice."
+      }
+    ],
+    "evidence_record_schema": {
+      "identity": ["company", "role", "level", "location", "team_or_domain"],
+      "time": ["published_at", "interview_date", "observed_at", "last_verified_at"],
+      "content": ["round", "question_or_task", "follow_ups", "evaluation_signal", "candidate_outcome"],
+      "quality": ["source_layer", "first_hand", "independent_report_group", "confidence", "contradictions", "citation"],
+      "privacy": "Store only public, relevant professional facts; do not retain personal contact details or sensitive personal information."
+    },
+    "recency_policy": {
+      "default_window_months": 24,
+      "weighting": "Recent evidence gets more weight, but older official process material remains useful for stable principles.",
+      "stale_after_months": 24,
+      "stale_handling": "Keep stale records for historical context and reduce their promotion power; do not delete them silently."
+    },
+    "pattern_promotion_rules": [
+      "A repeated question family requires at least two independent reports unless an official source directly confirms the process area.",
+      "A company-wide claim requires evidence across more than one role or an official company-wide statement.",
+      "A role-specific claim must retain role and level; never merge intern, SDE-1, SDE-2, senior and research loops without labels.",
+      "Duplicate wording across aggregators counts as one evidence cluster, not multiple reports.",
+      "If credible sources disagree, preserve both variants and lower confidence rather than averaging them into one loop."
+    ],
+    "new_company_signals": {
+      "Meta": {
+        "official_or_domain_signals": ["large-scale social/product systems", "distributed AI infrastructure", "product impact and experimentation"],
+        "mock_interview_effect": "Add product metrics, ranking/feed trade-offs and scale follow-ups after core coding or design."
+      },
+      "Google": {
+        "official_or_domain_signals": ["large-scale distributed computing", "testing and deployment", "role-specific AI and responsible-AI expectations"],
+        "mock_interview_effect": "Probe correctness, complexity, reliability and operational trade-offs rather than only algorithm recall."
+      },
+      "Sarvam AI": {
+        "official_or_domain_signals": ["foundational models", "speech and multilingual AI", "data curation", "inference and AI infrastructure"],
+        "mock_interview_effect": "Add offline/no-external-API builds, data-quality reasoning, multilingual evaluation and inference-performance trade-offs."
+      },
+      "Swiggy": {
+        "official_or_domain_signals": ["large-scale consumer systems", "delivery/logistics operations", "customer and business metrics"],
+        "mock_interview_effect": "Connect design and ML answers to latency, reliability, cost, ETA/SLA and user impact."
+      },
+      "Locus.sh": {
+        "official_or_domain_signals": ["constraint-heavy route optimization", "dynamic re-routing", "dispatch/control-tower execution", "feedback from delivery outcomes"],
+        "mock_interview_effect": "Test constraint modeling, online re-optimization, degraded-mode behavior and operational feedback loops."
+      }
+    },
+    "contradiction_register_template": {
+      "required_fields": ["claim", "source_a", "source_b", "difference", "possible_explanation", "current_resolution", "next_verification_query"],
+      "default_resolution": "Keep both variants, label the likely role/level/team scope, and avoid presenting either as universal."
+    },
+    "next_high_value_extractions": [
+      "Extract level-specific signals from current job descriptions and map them to rubric dimensions without calling them interview questions.",
+      "Mine follow-up questions and interviewer interventions, not just headline problems.",
+      "Build topic-frequency counts by independent evidence cluster and role level.",
+      "Compare public interview evidence with company engineering/product signals to detect domain-specific probes.",
+      "Run contradiction and stale-source audits before every mock-interview generation."
+    ]
+  }
+}
