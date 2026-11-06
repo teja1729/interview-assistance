@@ -41,12 +41,6 @@ class Settings:
     sarvam_stt_model: str = os.getenv("SARVAM_STT_MODEL", "saaras:v3")
     sarvam_tts_model: str = os.getenv("SARVAM_TTS_MODEL", "bulbul:v3")
     sarvam_tts_voice: str = os.getenv("SARVAM_TTS_VOICE", "ritu")
-    speech_language: str = os.getenv("SPEECH_LANGUAGE", "en-IN")
-    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
-    company_research_enabled: bool = os.getenv("COMPANY_RESEARCH_ENABLED", "true").lower() == "true"
-    transcription_model: str = os.getenv("TRANSCRIPTION_MODEL", "gemini-3.5-flash")
-    tts_model: str = os.getenv("GEMINI_TTS_MODEL", "gemini-3.1-flash-tts-preview")
-    tts_voice: str = os.getenv("GEMINI_TTS_VOICE", "Kore")
     stripe_key: str = os.getenv("STRIPE_SECRET_KEY", "")
     stripe_webhook_secret: str = os.getenv("STRIPE_WEBHOOK_SECRET", "")
     stripe_pro_price: str = os.getenv("STRIPE_PRO_PRICE_ID", "")

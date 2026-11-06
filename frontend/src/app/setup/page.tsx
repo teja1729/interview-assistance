@@ -25,7 +25,6 @@ export default function SetupPage() {
   const [companyUrl, setCompanyUrl] = useState("");
   const [companyBrief, setCompanyBrief] = useState<CompanyBrief | undefined>();
   const [researching, setResearching] = useState(false);
-  const [language, setLanguage] = useState("en-IN");
   const researchVersion = useRef(0);
   const [years, setYears] = useState(2);
   const [resumeId, setResumeId] = useState<string>("");
@@ -206,7 +205,6 @@ export default function SetupPage() {
         duration_minutes: duration,
         persona,
         resume_id: format === "text" ? null : resumeId || null,
-        language,
         company_url: format === "text" ? "" : companyUrl.trim(),
         company_research_id: format === "text" ? null : companyBrief?.id,
       });
@@ -507,33 +505,6 @@ export default function SetupPage() {
             </div>
 
             <div className="max-w-sm">
-              <label className="label" htmlFor="interview-language">
-                Interview language
-              </label>
-              <select
-                id="interview-language"
-                className="input mb-5"
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-              >
-                {Object.entries({
-                  "en-IN": "English",
-                  "hi-IN": "Hindi",
-                  "bn-IN": "Bengali",
-                  "ta-IN": "Tamil",
-                  "te-IN": "Telugu",
-                  "gu-IN": "Gujarati",
-                  "kn-IN": "Kannada",
-                  "ml-IN": "Malayalam",
-                  "mr-IN": "Marathi",
-                  "pa-IN": "Punjabi",
-                  "od-IN": "Odia",
-                }).map(([code, label]) => (
-                  <option key={code} value={code}>
-                    {label}
-                  </option>
-                ))}
-              </select>
               <div>
                 <span className="label">Duration</span>
                 <div className="flex gap-2">

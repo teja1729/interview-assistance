@@ -9,7 +9,7 @@ editing its internals. `docs/DEVELOPMENT.md` has exact setup and verification co
 - `backend/app/services/`: tenant-aware business rules, interview state machine, quotas, durable reports.
 - `backend/app/agents/`: bounded orchestration and versioned prompts; outputs are Pydantic contracts.
 - `backend/app/agents/specs.py` / `context.py`: immutable execution bundles and shared interview briefs.
-- `backend/app/services/company_research.py`: bounded web search, source attribution and private caches.
+- `backend/app/services/company_research.py`: candidate-owned saved source cache; fresh research is currently disabled.
 - `backend/app/providers/`: vendor SDK adapters only. `backend/config/models.toml` selects models.
 - `backend/app/models.py`: relational persistence. `schemas.py`: API/agent validation contracts.
 - `backend/migrations/`: Alembic history. Never replace migrations with `create_all` at startup.

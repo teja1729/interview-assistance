@@ -1,12 +1,10 @@
 """Provider registry: adding an adapter requires no changes to business services."""
 
 from ..config import settings
-from .gemini import GeminiProvider
 from .openai import CompatibleProvider, OpenAIProvider
 from .sarvam import SarvamProvider
 
 PROVIDERS = {
-    "gemini": GeminiProvider(),
     "openai": OpenAIProvider(),
     "compatible": CompatibleProvider(),
     "sarvam": SarvamProvider(),

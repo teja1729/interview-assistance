@@ -67,13 +67,12 @@ Set these **names** in `backend/.env`; use your actual credentials only in that 
 | `LINKEDIN_CLIENT_ID`, `LINKEDIN_CLIENT_SECRET` | LinkedIn OpenID Connect sign-in |
 | `FRONTEND_ORIGIN=http://localhost:3000` | Browser origin and OAuth callback base |
 | `SARVAM_API_KEY` | Enables Sarvam profiles |
-| `GEMINI_API_KEY` | Enables Gemini profiles and optional cloud speech |
 | `OPENAI_API_KEY` | Enables OpenAI Responses profiles |
 | `COMPATIBLE_API_KEY`, `COMPATIBLE_BASE_URL`, `COMPATIBLE_MODEL` | Enables another compatible endpoint |
 | `AI_DEFAULT_PROFILE` | Fallback for roles omitted from TOML `[agents]`; explicit assignments take precedence |
-| `AUDIO_PROVIDER` | `sarvam` (default): voice-to-voice using SARVAM_API_KEY; `gemini`: alternative cloud speech; `browser`: typed input/local voice only |
+| `AUDIO_PROVIDER` | `sarvam` (default): voice-to-voice using SARVAM_API_KEY; `browser`: typed input/local voice only |
 | `SARVAM_STT_MODEL`, `SARVAM_TTS_MODEL` | `saaras:v3` transcription and `bulbul:v3` speech |
-| `SARVAM_TTS_VOICE`, `SPEECH_LANGUAGE` | `ritu` and `en-IN` by default; edit here to change the interviewer voice |
+| `SARVAM_TTS_VOICE` | `ritu` by default; edit here to change the English interviewer voice |
 
 Register these exact **authorized redirect URIs**:
 
@@ -88,9 +87,9 @@ register `https://YOUR_DOMAIN/api/auth/google/callback` and
 The Google consent screen must allow your account. Completing consent requires a browser login.
 
 Model routing is in code only: edit `[agents]` in `backend/config/models.toml`. For example,
-change `evaluator = "sarvam"` to `evaluator = "gemini"` after configuring `GEMINI_API_KEY`.
-The seven keys are `planner`, `interviewer`, `evaluator`, `coach`, `resume`, `assistant`, and `company_research`.
-The research profile requires `search` capability; its default is `gemini_search`.
+change `evaluator = "sarvam"` to `evaluator = "openai"` after configuring `OPENAI_API_KEY`.
+The six keys are `planner`, `interviewer`, `evaluator`, `coach`, `resume`, and `assistant`.
+Company research has no active search provider; existing saved research can still be reused.
 Saved workspace preferences are ignored. New interviews snapshot resolved models, prompts and policies;
 existing interviews keep their snapshot. Preserve legacy profile IDs for sessions created before
 execution snapshots were introduced. Deploy the same TOML to API and worker.
@@ -103,7 +102,7 @@ submits your answer automatically; **Send answer** submits sooner. **Hands-free 
 manual recording controls. No typing is required. See [voice behavior](docs/VOICE.md).
 
 ```bash
-# Start with role assignments from backend/config/models.toml (six reasoning roles use Sarvam; company research uses Gemini Search).
+# Start with role assignments from backend/config/models.toml (six reasoning roles use Sarvam; new company research is unavailable).
 # Requires SARVAM_API_KEY in backend/.env; this makes live, billable provider calls.
 ./dev.sh
 ```
@@ -429,7 +428,7 @@ git status --short
 | Report stays pending on Railway | Confirm the worker service is running with the same PostgreSQL URL as the API, then inspect its Railway logs |
 | Report failed | Check provider credentials/quota in backend and worker logs, then use the report Retry button |
 | 429 quota reached | Check Plans & usage; use a fresh disposable DB for repeated test runs |
-| Sarvam/Gemini/OpenAI unavailable | Set its server key and restart API + worker; assign a configured profile in TOML [agents] |
+| Sarvam/OpenAI unavailable | Set its server key and restart API + worker; assign a configured profile in TOML [agents] |
 | Microphone answer unavailable | Set AUDIO_PROVIDER=sarvam and SARVAM_API_KEY; restart API and reload. Allow microphone access in browser site settings, then Retry microphone |
 | Robotic interviewer voice | Use AUDIO_PROVIDER=sarvam, SARVAM_TTS_MODEL=bulbul:v3, SARVAM_TTS_VOICE=ritu; restart API and refresh. Cloud audio failures show Retry question audio |
 | Old sample response in a saved session | Start a new interview with a live profile; saved sessions retain their original model snapshot |
@@ -439,48 +438,17 @@ Complete setting descriptions: [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Company web research and agent recovery
 
-Company research uses the shared runtime and the seventh role in models.toml.
-Set `GEMINI_API_KEY` and `COMPANY_RESEARCH_ENABLED=true` in `backend/.env`, then assign
-`company_research = "gemini_search"` in TOML. The Google AI project needs search/model
-quota; Google sign-in credentials do not provide that access. No separate search API key is needed.
-
-```bash
-# Edit search credentials/model, then restart the API and worker using section 4.
-${EDITOR:-vi} backend/.env
-
-# Check company source handling and report recovery without any paid API calls.
-(cd backend && uv run pytest tests/test_company_research.py tests/test_agent_workflows.py -q)
-
-# OPTIONAL LIVE CHECK: performs a real, billable Google Search-grounded request.
-# Uses configured credentials; prints status and public source links, never API keys.
-(cd backend && uv run python -m scripts.check_company_research \
-  --company 'Sarvam AI' --role 'Agentic AI Engineer' --url https://www.sarvam.ai)
-
-# Apply the additive checkpoint/search migration before starting updated services.
-(cd backend && uv run alembic upgrade head)
-(cd backend && uv run alembic check)
-
-# Start the durable worker; required for topic evaluation, report summary and coaching.
-(cd backend && uv run python -m app.worker)
-```
-
-In **New interview**, enter a company and optionally its official website/job URL. **Research company**
-previews sourced facts; generating a JD or starting an interview also resolves research automatically.
-Select an interview language to apply it to questions, follow-ups and speech. Research failures are
-visible and the supplied JD remains usable. See `docs/COMPANY_RESEARCH.md` for cache and source rules.
-
-Report failures retain completed private stages. Use **Retry report** on the report page to resume.
-Quota/configuration errors need their stated operator/account fix first. Do not delete agent_jobs
-or checkpoint JSON to retry. Runtime policies are in `backend/app/agents/specs.py`; new sessions save
-model, prompt and policy versions. See `docs/AGENT_RUNTIME.md` before changing these contracts.
+Company web research is currently unavailable because no search provider is configured. Previously
+saved candidate-owned source snapshots remain reusable, and interviews continue using the supplied job
+description. The isolated cache and authorization tests are in `backend/tests/test_company_research.py`.
 
 ## Saved setup and local usage allowances
 
 Generated JDs and title suggestions are saved in the database. **Generate** reuses matching inputs;
 **Regenerate** makes a new paid version. Use the saved-role selector to restore a previous description.
-Company research is retained with citations and its original research date; **Research company** reuses
-it and **Refresh research** explicitly performs a new search. There is no daily expiry for successful
-research. Reading saved output does not spend another AI action, even after reaching the AI allowance.
+Previously saved company research retains its citations and original research date. **Refresh research**
+returns unavailable until a search provider is configured. Reading saved output does not spend another AI
+action, even after reaching the AI allowance.
 
 Starter has 3 interviews and 150 AI actions per month. The error now distinguishes interview, AI and
 per-minute limits. For local development, set these values in backend/.env; production ignores them:
@@ -522,7 +490,7 @@ billing or vendor rate limits. **Plans & usage** shows the effective allowance a
 
 # Target a specific case and use another configured profile without editing product routing.
 (cd backend && uv run python -m scripts.run_evaluations --live --accept-cost \
-  --profile gemini --case-id technical-idempotency-strong --output evaluations/results/focused.json)
+  --profile sarvam --case-id technical-idempotency-strong --output evaluations/results/focused.json)
 
 # Replay the saved prompt/profile/policy bundle. Uses current adapter code and rotated credentials.
 (cd backend && uv run python -m scripts.run_evaluations --live --accept-cost \

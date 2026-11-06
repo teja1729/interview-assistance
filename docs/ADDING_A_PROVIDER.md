@@ -39,15 +39,14 @@ APIs or guarantee account entitlement.
 7. Update CONFIGURATION.md and dependency locks.
 
 The compatible adapter uses Chat Completions JSON mode plus local validation. OpenAI uses the
-Responses API's Pydantic structured-output helper with `store=False`. Gemini receives JSON Schema.
-Native schema enforcement improves reliability but never replaces application-level checks.
+Responses API's Pydantic structured-output helper with `store=False`. Native schema enforcement
+improves reliability but never replaces application-level checks.
 Sarvam uses native V1 JSON Schema output through HTTPX and disables thinking for call latency.
 
 Speech is independent. Changing the reasoning provider must not silently change audio retention,
-transcription or TTS behavior. `services/speech.py` validates WAV and dispatches to Gemini or
+transcription or TTS behavior. `services/speech.py` validates WAV and dispatches to
 `services/sarvam_speech.py`. See `VOICE.md` before changing timeouts, chunking or voice behavior.
 
 Official references used for the initial adapters:
 - https://developers.openai.com/api/docs/guides/structured-outputs
-- https://ai.google.dev/gemini-api/docs/structured-output
 - https://docs.sarvam.ai/api/api-guides-tutorials/chat-completion/overview

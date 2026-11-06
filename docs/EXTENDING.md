@@ -53,11 +53,10 @@ and the final atomic report/task commit; a coach failure must not repeat complet
 
 ## Extend company research
 
-The trusted search boundary is `services/company_research.py`, separate from the live interviewer.
-Keep resume/answer data out of search queries. CompanyBrief facts must refer to actual grounding
-source IDs; never accept model-written URLs without provider source metadata. Cache and research IDs
-must remain candidate-scoped. Render citations through CompanyContext.tsx and isolate Search Suggestions
-HTML in a script-free iframe. See COMPANY_RESEARCH.md and its mocked transport/ownership tests.
+Fresh company web research is currently disabled. `services/company_research.py` retains the
+candidate-owned cache and reports unavailability on cache misses. Any future search integration must
+keep resume/answer data out of queries, validate provider source IDs, and preserve candidate-scoped
+cache access. See COMPANY_RESEARCH.md.
 
 ## Customize interviewer personas
 

@@ -162,9 +162,9 @@ def execute(
                     "This input exceeds the selected model's context budget. Shorten the supplied material.",
                     category="context_limit",
                 )
-            capability = "search" if agent == "company_research" else "structured_output"
+            capability = "structured_output"
             adapter = PROVIDERS[candidate.provider]
-            if capability not in candidate.capabilities or (capability == "search" and not hasattr(adapter, "search")):
+            if capability not in candidate.capabilities:
                 raise ProviderError("The assigned model does not support this capability.", category="configuration")
             semaphore = provider_semaphore(candidate)
             if not semaphore.acquire(timeout=max(0, deadline - time.monotonic())):
@@ -173,11 +173,7 @@ def execute(
                 candidate = replace(
                     candidate, timeout_seconds=min(policy.attempt_timeout, max(0.01, deadline - time.monotonic()))
                 )
-                response = (
-                    adapter.search(candidate, prompt, request, schema)
-                    if capability == "search"
-                    else adapter.generate(candidate, prompt, request, schema)
-                )
+                response = adapter.generate(candidate, prompt, request, schema)
             finally:
                 semaphore.release()
             if time.monotonic() > deadline:

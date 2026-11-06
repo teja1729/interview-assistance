@@ -13,14 +13,14 @@ from app.services import interviews
 
 def test_toml_routes_roles_and_environment_only_fills_omitted_roles(tmp_path, monkeypatch):
     config = tmp_path / "models.toml"
-    config.write_text('[agents]\nplanner = "gemini"\nevaluator = "sarvam"\n')
+    config.write_text('[agents]\nplanner = "sarvam_conversations"\nevaluator = "sarvam"\n')
     monkeypatch.setattr(
         base, "settings", replace(base.settings, models_file=config, demo_login=False, default_profile="openai")
     )
     routing = base.agent_profiles()
-    assert routing["planner"] == "gemini" and routing["evaluator"] == "sarvam"
+    assert routing["planner"] == "sarvam_conversations" and routing["evaluator"] == "sarvam"
     assert routing["assistant"] == "openai" and set(routing) == set(base.AGENT_ROLES)
-    config.write_text('[agents]\nplaner = "gemini"\n')
+    config.write_text('[agents]\nplaner = "sarvam"\n')
     with pytest.raises(ProviderError, match="Unknown AI role"):
         base.agent_profiles()
 

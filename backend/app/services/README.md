@@ -3,8 +3,8 @@
 `interviews.py` owns state, versioning and idempotency. `reports.py` owns persistent job claiming and
 private stage checkpoints, lease renewal and atomic report/coaching publication. Completed topic
 assessments and summary artifacts survive coaching failures. `usage.py` owns database-backed
-entitlement counters. `company_research.py` owns bounded Google Search grounding and candidate-scoped
-source caches; see `docs/COMPANY_RESEARCH.md`. Search never receives resumes or interview answers.
+entitlement counters. `company_research.py` owns candidate-scoped source caches. Existing saved sources
+remain readable; new web research is unavailable. See `docs/COMPANY_RESEARCH.md`.
 `speech.py` validates/handles transient audio independently from reasoning providers.
 `sarvam_speech.py` owns bounded, ordered transcription chunks and natural voice synthesis.
 Read `docs/VOICE.md` before changing audio deadlines, formats or turn-taking behavior.

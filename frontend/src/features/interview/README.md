@@ -18,7 +18,7 @@ Preserve these contracts when extending the feature:
   The speaker and recorder must not overlap. Text entry is an optional fallback.
 - Cloud speech failures pause automatic listening and offer audio retry. Never silently fall back
   to the robotic browser voice. Permission denial must allow a user-triggered retry.
-- Playback carries the interview ID; the server resolves its saved language and enforces ownership.
+- Playback carries the interview ID; the server enforces ownership and synthesizes English speech.
   Company facts and their citations render through `components/CompanyContext.tsx`. Search Suggestions
   use a script-free sandboxed frame; never grant it same-origin access or inject its HTML into the page.
 - Typed answers reach the API verbatim. Voice answers use a WAV recording and server transcription.

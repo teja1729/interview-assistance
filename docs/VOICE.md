@@ -4,8 +4,8 @@ Normal operation uses `AUDIO_PROVIDER=sarvam`, `saaras:v3` for transcription and
 with the `ritu` voice for interviewer speech. Credentials and voice choices are server-owned
 in `backend/.env`; the six reasoning agents remain routed by `backend/config/models.toml`.
 Change `SARVAM_TTS_VOICE` to another supported Bulbul v3 speaker and restart the API to change
-the voice. `SPEECH_LANGUAGE=en-IN` supplies a fallback output language; setup now saves an explicit interview
-language shared by planning, follow-ups and TTS. Input language is detected.
+the voice. All generated questions, follow-ups, reports and speech are in English. Input transcription is
+verbatim and may reflect what the candidate said.
 
 ## Conversation lifecycle
 
@@ -57,6 +57,5 @@ Official transport references:
 - https://docs.sarvam.ai/api-reference/speech-to-text/transcribe
 - https://docs.sarvam.ai/api-reference/text-to-speech/convert
 
-Playback sends the interview ID, and /tts resolves its candidate-owned saved language. English and
-ten Indian language choices follow [Sarvam language codes](https://docs.sarvam.ai/api/api-guides-tutorials/text-to-speech/how-to/set-the-language).
-The browser audio cache includes session/language so retries cannot replay another context.
+Playback sends the interview ID, and /tts checks candidate ownership before generating English speech.
+The browser audio cache includes the session context so retries cannot replay another interview.

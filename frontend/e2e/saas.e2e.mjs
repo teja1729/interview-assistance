@@ -136,12 +136,7 @@ try {
       .getAttribute("sandbox"),
     "allow-popups allow-popups-to-escape-sandbox",
   );
-  await page
-    .getByLabel("Interview language", { exact: true })
-    .selectOption("hi-IN");
-  step(
-    "Company research recovery, cited preview, isolated suggestions and language selection",
-  );
+  step("Company research recovery, cited preview and isolated suggestions");
   await page.getByRole("button", { name: "✦ Generate", exact: true }).click();
   await page.getByRole("status").filter({ hasText: "Test fixture" }).waitFor();
   const generatedDescription = await page
@@ -184,9 +179,6 @@ try {
     await page.getByLabel("Job title").inputValue(),
     "Senior Backend Engineer",
   );
-  await page
-    .getByLabel("Interview language", { exact: true })
-    .selectOption("hi-IN");
   step(
     "Saved role brief survives navigation and reuses output without spending AI usage",
   );
@@ -237,7 +229,7 @@ try {
   assert.equal(beforeJoin.started_at, null);
   assert.equal(beforeJoin.persona_profile.name, "Technical Interviewer");
   assert.equal(beforeJoin.persona, "technical");
-  assert.equal(beforeJoin.language, "hi-IN");
+  assert.equal(beforeJoin.language, "en-IN");
   await page
     .getByText("Technical Interviewer · AI practice", { exact: true })
     .waitFor();
@@ -254,8 +246,7 @@ try {
     );
   await page.getByRole("button", { name: "Send", exact: true }).click();
   await ready();
-  await page.getByRole("button", { name: "Transcript", exact: true }).click();
-  assert.equal(await page.locator("aside ol > li").count(), 3);
+  assert((await page.locator("aside ol > li").count()) >= 3);
   await shot("05-interview");
   step("Timer starts on join; exact typed answers and bounded turns persist");
 

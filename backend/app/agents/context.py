@@ -5,34 +5,16 @@ import re
 from ..personas import interview_persona, public_persona
 from ..schemas import CompanyBrief, InterviewBrief
 
-LANGUAGES = {
-    "en-IN": "English",
-    "hi-IN": "Hindi",
-    "bn-IN": "Bengali",
-    "ta-IN": "Tamil",
-    "te-IN": "Telugu",
-    "gu-IN": "Gujarati",
-    "kn-IN": "Kannada",
-    "ml-IN": "Malayalam",
-    "mr-IN": "Marathi",
-    "pa-IN": "Punjabi",
-    "od-IN": "Odia",
-}
-
 
 def requested_language(body):
-    # Preserve old clients that expressed a supported language in free-text preferences.
-    if "language" in body.model_fields_set:
-        return body.language
-    for code, name in LANGUAGES.items():
-        if re.search(r"\b(?:in|speak|use)\s+" + name + r"\b", body.custom_instructions, re.IGNORECASE):
-            return code
-    return body.language
+    # Language selection is retired; legacy request preferences cannot change output language.
+    return "en-IN"
 
 
 def brief_for(iv):
     stored = iv.plan.get("_brief")
     if stored:
+        stored = {**stored, "language": "en-IN"}  # Normalize legacy interviews without mutating their plan.
         return InterviewBrief.model_validate(stored)
     return InterviewBrief(
         job_title=iv.job_title,
@@ -121,17 +103,7 @@ def live_context(iv, turns, answer, remaining):
     return data
 
 
-# Service-owned closing copy keeps the final spoken turn in the saved interview language.
+# Service-owned English closing copy.
 CLOSINGS = {
-    "en-IN": "Thank you for your answers. This practice interview is complete. Let's review what to work on next.",
-    "hi-IN": "आपके जवाबों के लिए धन्यवाद। यह अभ्यास इंटरव्यू पूरा हो गया है। अब आपकी फीडबैक रिपोर्ट देखते हैं।",
-    "bn-IN": "আপনার উত্তরগুলোর জন্য ধন্যবাদ। অনুশীলনমূলক সাক্ষাৎকার শেষ হয়েছে। এবার আপনার মূল্যায়নের প্রতিবেদন দেখুন।",
-    "ta-IN": "உங்கள் பதில்களுக்கு நன்றி. பயிற்சி நேர்காணல் முடிந்தது. இப்போது உங்கள் மதிப்பீட்டு அறிக்கையைப் பார்க்கலாம்.",
-    "te-IN": "మీ సమాధానాలకు ధన్యవాదాలు. ఈ అభ్యాస ఇంటర్వ్యూ పూర్తయింది. ఇప్పుడు మీ మూల్యాంకన నివేదికను చూద్దాం.",
-    "gu-IN": "તમારા જવાબો માટે આભાર. અભ્યાસ માટેનો ઇન્ટરવ્યૂ પૂર્ણ થયો છે. હવે તમારો પ્રતિસાદ અહેવાલ જોઈએ.",
-    "kn-IN": "ನಿಮ್ಮ ಉತ್ತರಗಳಿಗೆ ಧನ್ಯವಾದಗಳು. ಅಭ್ಯಾಸ ಸಂದರ್ಶನ ಮುಗಿದಿದೆ. ಈಗ ನಿಮ್ಮ ಮೌಲ್ಯಮಾಪನ ವರದಿಯನ್ನು ನೋಡೋಣ.",
-    "ml-IN": "നിങ്ങളുടെ ഉത്തരങ്ങൾക്ക് നന്ദി. പരിശീലന അഭിമുഖം പൂർത്തിയായി. ഇനി നിങ്ങളുടെ വിലയിരുത്തൽ റിപ്പോർട്ട് നോക്കാം.",
-    "mr-IN": "तुमच्या उत्तरांसाठी धन्यवाद. सराव मुलाखत पूर्ण झाली आहे. आता तुमचा अभिप्राय अहवाल पाहूया.",
-    "pa-IN": "ਤੁਹਾਡੇ ਜਵਾਬਾਂ ਲਈ ਧੰਨਵਾਦ। ਅਭਿਆਸ ਇੰਟਰਵਿਊ ਪੂਰੀ ਹੋ ਗਈ ਹੈ। ਹੁਣ ਤੁਹਾਡੀ ਫੀਡਬੈਕ ਰਿਪੋਰਟ ਵੇਖੀਏ।",
-    "od-IN": "ଆପଣଙ୍କ ଉତ୍ତର ପାଇଁ ଧନ୍ୟବାଦ। ଅଭ୍ୟାସ ସାକ୍ଷାତକାର ସମାପ୍ତ ହୋଇଛି। ଏବେ ଆପଣଙ୍କ ମୂଲ୍ୟାଙ୍କନ ରିପୋର୍ଟ ଦେଖିବା।",
+    "en-IN": "Thank you for your answers. This practice interview is complete. Let's review what to work on next."
 }

@@ -14,7 +14,7 @@ AGENT_ARCHITECTURE_REVIEW.md records the previous baseline. This document covers
 | 6. One rubric for all rounds | Real mismatch between roles, but new weights need calibration. | Persona-owned versioned criteria/weights, snapshotted per session. Server applies weights; N/A criteria are excluded with reasons. Weights and thresholds are explicitly provisional. |
 | 7. Sequential topic evaluation | Independent stages can run concurrently. Sixfold speedup is not guaranteed. | Default two concurrent stages, configurable up to four. One coordinator owns quota/checkpoints; successful siblings survive a failure. Provider bounds and summary/coach latency still matter. |
 | 8. Duplicate drills | Worth improving with stable keys before semantic deduplication. | Fixed skill/exercise vocabularies; unfinished goals merge by candidate/account, normalized role, skill and exercise. Source interview edges preserve provenance; completed history remains. Different role titles are not semantically merged. |
-| 9. Search bypasses runtime | Real routing/observability inconsistency. | Seventh company_research role, search capability check, shared deadlines/traces and code-only TOML routing. Gemini implements the sourced search adapter. |
+| 9. Search bypasses runtime | Real routing/observability inconsistency. | Live search has been retired; saved candidate-owned source snapshots remain available. A future search integration must use the shared runtime and source validation. |
 | 10. Schema repair switches model | Real retry-policy problem. | Invalid output retries the same model with safe field/code feedback. Transport, quota and configuration failures may select a configured fallback. Two total calls remain the cap. |
 | 11. Byte token estimates / assumed windows | Real capacity problem; heuristic estimates are still approximate. | Verified per-profile context sizes, Unicode-aware offline estimate with headroom, conservative override option and profile-aware report batching. Compatible limits must be explicitly configured. |
 | 12. Repeated full prompt snapshots | Real duplication. | Prompt bundles stored once by hash and referenced from interviews. Hash integrity checked. Revision 2 inline bundles remain readable; no destructive rewrite of history. |
@@ -27,10 +27,9 @@ AGENT_ARCHITECTURE_REVIEW.md records the previous baseline. This document covers
 ## Additional setup and usage fixes
 
 Generated descriptions/title suggestions are saved privately in setup_artifacts. Matching requests
-load saved outputs before consuming paid quota. Explicit regeneration creates a new revision. Successful
-company research is retained indefinitely, dated and reused until explicit refresh; failure backoff is
-60 seconds and failed refreshes do not destroy earlier successful results. Concurrent first misses can
-still make separate calls. See COMPANY_RESEARCH.md for ownership, matching and historical-data limits.
+load saved outputs before consuming paid quota. Explicit regeneration creates a new revision. Previously
+saved company research remains dated and reusable; new searches are unavailable until a source provider
+is configured. See COMPANY_RESEARCH.md for ownership, matching and historical-data limits.
 
 The local account had reached 3 of 3 Starter interviews, while AI usage was 30 of 150. Those counters
 are separate. Errors now identify the exhausted resource. The approved development override is 100

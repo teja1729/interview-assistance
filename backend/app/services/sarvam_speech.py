@@ -86,7 +86,7 @@ def synthesize(text: str, language: str | None = None) -> bytes:
                 headers={"api-subscription-key": settings.sarvam_api_key},
                 json={
                     "text": text,
-                    "language_code": language or settings.speech_language,
+                    "language_code": "en-IN",
                     "model": settings.sarvam_tts_model,
                     "speaker": settings.sarvam_tts_voice,
                     "pace": 1.0,

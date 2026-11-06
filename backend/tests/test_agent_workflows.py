@@ -172,7 +172,7 @@ def test_non_latin_resume_budget(clients, engine):
     assert result.digest
 
 
-def test_language_preferences_reach_followups_and_owned_speech(clients, monkeypatch):
+def test_interviews_and_owned_speech_are_english_only(clients, monkeypatch):
     client, stranger = clients(), clients("other@example.test")
     generate = PROVIDERS["demo"].generate
     seen = []
@@ -182,9 +182,10 @@ def test_language_preferences_reach_followups_and_owned_speech(clients, monkeypa
         return generate(profile, prompt, payload, schema)
 
     monkeypatch.setattr(PROVIDERS["demo"], "generate", capture)
+    assert client.post("/api/interviews", json={"job_title": "Engineer", "language": "hi-IN"}).status_code == 422
     iv = prepare(client, custom_instructions="Conduct this interview in Hindi. Focus on API testing.")
     payload = next(p for schema, p in seen if schema == "InterviewDecision")
-    assert payload["language"] == "hi-IN" and "API testing" in payload["custom_instructions"]
+    assert payload["language"] == "en-IN" and "API testing" in payload["custom_instructions"]
     from app.services import speech
 
     spoken = []
@@ -193,9 +194,9 @@ def test_language_preferences_reach_followups_and_owned_speech(clients, monkeypa
         client.post("/api/tts", json={"text": "Hello", "interview_id": iv["id"], "language": "en-IN"}).status_code
         == 200
     )
-    assert spoken == ["hi-IN"]
+    assert spoken == ["en-IN"]
     assert stranger.post("/api/tts", json={"text": "Hello", "interview_id": iv["id"]}).status_code == 404
-    assert spoken == ["hi-IN"]
+    assert spoken == ["en-IN"]
 
 
 def test_bounded_history_and_lossless_report_batches(clients, engine):
@@ -301,11 +302,11 @@ def test_successful_repair_and_server_computed_rubric(clients, engine, monkeypat
         assert [r.status for r in runs] == ["failed", "succeeded"]
 
 
-def test_final_spoken_turn_keeps_session_language(clients, engine):
+def test_final_spoken_turn_is_in_english(clients, engine):
     import time
 
     client = clients()
-    iv = prepare(client, language="hi-IN")
+    iv = prepare(client)
     with Session(engine) as session:
         saved = session.get(Interview, iv["id"])
         saved.started_at = time.time() - saved.duration_minutes * 60 + 30
@@ -317,4 +318,4 @@ def test_final_spoken_turn_keeps_session_language(clients, engine):
         json={"text": "मैंने परीक्षण किया।", "version": version, "request_id": "closing-language-regression"},
     )
     assert result.status_code == 200 and result.json()["done"] is True
-    assert "धन्यवाद" in result.json()["reply"]
+    assert "Thank you" in result.json()["reply"]

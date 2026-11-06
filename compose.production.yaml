@@ -7,7 +7,7 @@ services:
     environment: &production
       APP_ENV: production
       AUTH_DEMO_ENABLED: "false"
-      AI_DEFAULT_PROFILE: ${AI_DEFAULT_PROFILE:-gemini}
+      AI_DEFAULT_PROFILE: ${AI_DEFAULT_PROFILE:-sarvam}
       SESSION_SECRET: ${SESSION_SECRET:?Set a random SESSION_SECRET in the root .env}
       FRONTEND_ORIGIN: ${PUBLIC_URL:?Set PUBLIC_URL to your HTTPS origin}
   worker:

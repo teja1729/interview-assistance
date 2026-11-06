@@ -111,7 +111,8 @@ export default function ResumesPage() {
         </button>
         {busy && (
           <p className="text-xs text-muted sm:col-span-3">
-            Gemini is reading the resume and writing a digest. About 10 seconds.
+            AI is reading the resume and writing a digest. This may take a few
+            seconds.
           </p>
         )}
         {error && <p className="text-sm text-red-600 sm:col-span-3">{error}</p>}

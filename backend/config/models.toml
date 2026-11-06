@@ -3,12 +3,11 @@
 # editing these profiles affects new sessions. Legacy sessions retain their historical IDs.
 [agents]
 planner = "sarvam"
-interviewer = "sarvam"
+interviewer = "sarvam_conversations"
 evaluator = "sarvam"
 coach = "sarvam"
 resume = "sarvam"
 assistant = "sarvam"
-company_research = "gemini_search"
 
 [execution]
 report_concurrency = 2
@@ -18,23 +17,6 @@ label = "Demo · deterministic fixtures"
 provider = "demo"
 model = "demo-v1"
 context_tokens = 128000
-
-[profiles.gemini]
-label = "Google Gemini"
-provider = "gemini"
-model = "gemini-3.5-flash"
-api_key_env = "GEMINI_API_KEY"
-context_tokens = 1048576
-capabilities = ["structured_output", "search"]
-
-[profiles.gemini_pro]
-label = "Google Gemini Pro"
-provider = "gemini"
-model = "gemini-3.1-pro-preview"
-api_key_env = "GEMINI_API_KEY"
-fallback = "gemini"
-context_tokens = 1048576
-capabilities = ["structured_output", "search"]
 
 [profiles.openai]
 label = "OpenAI"
@@ -68,11 +50,3 @@ model = "sarvam-105b-conversations"
 api_key_env = "SARVAM_API_KEY"
 fallback = "sarvam"
 context_tokens = 32000
-
-[profiles.gemini_search]
-label = "Google Search research"
-provider = "gemini"
-model = "gemini-2.5-flash"
-api_key_env = "GEMINI_API_KEY"
-context_tokens = 1048576
-capabilities = ["structured_output", "search"]

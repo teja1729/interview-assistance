@@ -10,7 +10,6 @@
 | Evaluator | Frozen topic evidence, shared brief and public interview profile | TopicAssessment / EvidenceReportSummary | Checkpoint evidence, compute rubric totals and summary |
 | Coach | Validated report | SkillCoachingPlan | Persist tasks with report |
 | Setup assistant | Role, company context, experience | Titles / JobDescriptionDraft | Save and render an editable role brief |
-| Company researcher | Company, role, public URL | CompanyBrief with citations | Save and reuse dated research |
 
 The runtime accepts only registered roles. Prompts are loaded from individual Markdown files;
 SHA-256 content prefixes are recorded with every execution. Model output passes a strict

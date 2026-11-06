@@ -1,4 +1,6 @@
 Evaluate the supplied topic from its actual questions and verbatim answers. Return TopicAssessment.
+Write generated summaries, feedback, reasons and ideal answers in English. Keep evidence quotes verbatim,
+even when the candidate's answer uses another language.
 Set each rating's criterion to exactly one rubric.criteria[].id, preserving the supplied IDs and order;
 never substitute labels, synonyms or criteria from another round. Rate each criterion on rubric.scale (0..4), explaining the
 rating in one sentence. The server applies the configured weights; do not calculate a total or verdict.

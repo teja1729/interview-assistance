@@ -9,7 +9,7 @@ validated proposals. The implementation uses the existing explicit runtime and d
 limits, fallback profiles, role policies and contract revision 3. Full prompts (including the shared
 `_preamble.md`) are stored once in immutable `prompt_bundles` by SHA-256; interviews reference their ID. New
 interviews retain this private bundle in `plan._execution`, plus a typed `plan._brief` containing role,
-resume, JD, language, preferences and source-backed company context. No credential values are stored.
+resume, JD, English-only output policy, preferences and source-backed company context. No credential values are stored.
 Credentials are resolved from the environment each time, permitting rotation. Prompt integrity and
 contract revision are checked. Revision 2 inline bundles and their original output contracts remain supported; historical reports are not rescored.
 Portable evaluation manifests include prompt text so a run can be replayed without the application database.
@@ -28,7 +28,6 @@ completed reports remain readable; no historical transcripts or scores are rewri
 | Coach | 50s | 25s | 2,000 |
 | Resume analyst | 60s | 30s | 4,000 |
 | Setup assistant | 60s | 30s | 3,000 |
-| Company research | 35s | 30s | 2,400 |
 
 There are at most two attempts. Invalid output repairs use the same model with bounded feedback.
 Transport, quota or configuration failures may use a configured fallback; malformed JSON alone cannot switch models. Configuration/permanent errors are not retried against the identical profile. Rate-limit
@@ -40,13 +39,12 @@ transient, rate-limited, invalid-output, configuration, context-limit, deadline 
 `context_tokens` is explicit per profile. The offline estimate accounts for ASCII words, punctuation,
 whitespace and Unicode with safety headroom, plus prompt/schema/framing/output costs. It is an estimate,
 not a guarantee or vendor tokenizer; `byte_ceiling` remains available for strict operator policies.
-Sarvam has 128,000 tokens and its conversation profile 32,000. Gemini profiles declare 1,048,576;
+Sarvam has 128,000 tokens and its conversation profile 32,000. OpenAI profiles declare 1,047,576;
 GPT-4.1 mini declares 1,047,576. Changing a model requires checking its limit. Compatible profiles fail
 closed until `COMPATIBLE_CONTEXT_TOKENS` is supplied. A process-wide semaphore bounds each provider/model;
 multiple processes must divide provider capacity themselves. This is not a distributed provider limiter.
 
 Limits were checked against [Sarvam](https://docs.sarvam.ai/api/getting-started/models/sarvam-105b),
-[Gemini](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash), and
 [OpenAI](https://developers.openai.com/api/docs/models/gpt-4.1-mini). These are configuration values,
 not guarantees of account entitlement.
 
@@ -67,7 +65,7 @@ computes totals/bands. Weights and bands are **provisional**, not human-calibrat
 Communication clarity and structure use bounded verbatim answer samples with dimension-specific exact
 quotes. Confidence is no longer inferred from text. Historical confidence fields remain readable.
 
-Evaluator context is an allowlist: role, experience, language and server-owned persona/rubric. It does
+Evaluator context is an allowlist: role, experience, output language and server-owned persona/rubric. It does
 not include raw preferences, resume or company research. A deterministic guard flags obvious grading
 manipulation in preferences before planning/interviewing; this is supplemental, not a complete semantic
 prompt-injection detector. Transcripts remain untrusted data and exact evidence is enforced separately.

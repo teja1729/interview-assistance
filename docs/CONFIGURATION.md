@@ -16,26 +16,23 @@ The backend reads `backend/.env`; actual environment variables override the file
 | AI_MODELS_FILE | config/models.toml | Optional absolute TOML path |
 | INLINE_WORKER | false | Embedded worker for test/simple local runs |
 | GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET | empty | Google web OAuth credentials |
-| GEMINI_API_KEY / OPENAI_API_KEY | empty | Reasoning-provider credentials; GEMINI_API_KEY also enables company web research |
-| COMPANY_RESEARCH_ENABLED | true | Setup research; seventh role and search model selected in models.toml |
+| LINKEDIN_CLIENT_ID / LINKEDIN_CLIENT_SECRET | empty | LinkedIn OIDC credentials; optional alongside Google |
+| OPENAI_API_KEY | empty | Reasoning-provider credentials for OpenAI profiles |
 | LOCAL_USAGE_OVERRIDES | false | Enables operator allowances only when APP_ENV=development |
 | LOCAL_INTERVIEW_LIMIT / LOCAL_AI_CALL_LIMIT | 100 / 5000 | Monthly local allowances when the override is enabled; production ignores them |
 | COMPATIBLE_CONTEXT_TOKENS | 0 | Verified context window required for compatible endpoints |
 | SARVAM_API_KEY / SARVAM_MODEL | empty / sarvam-105b | Sarvam V1 structured chat; separate conversation profile also available |
 | COMPATIBLE_API_KEY / BASE_URL / MODEL | empty | OpenAI-compatible endpoint; use full COMPATIBLE_ prefix for each |
-| AUDIO_PROVIDER | sarvam | Sarvam voice-to-voice; gemini for alternative cloud speech; browser for typed input/local voice |
+| AUDIO_PROVIDER | sarvam | Sarvam voice-to-voice; browser disables cloud speech |
 | SARVAM_STT_MODEL / SARVAM_TTS_MODEL | saaras:v3 / bulbul:v3 | Speech models, independent of reasoning profiles |
-| SARVAM_TTS_VOICE / SPEECH_LANGUAGE | ritu / en-IN | Operator-selected natural voice; default output language, overridden by the saved interview language |
-| TRANSCRIPTION_MODEL | gemini-3.5-flash | Dedicated transcription model |
-| GEMINI_TTS_MODEL / GEMINI_TTS_VOICE | example profile / Kore | Cloud speech model and voice |
+| SARVAM_TTS_VOICE | ritu | Operator-selected natural English voice |
 | STRIPE_SECRET_KEY / STRIPE_WEBHOOK_SECRET | empty | Required together to enable billing |
 | STRIPE_PRO_PRICE_ID | empty | Recurring personal Pro price managed in Stripe |
 | STRIPE_TEAM_PRICE_ID | empty | Legacy subscription reconciliation only; no new team checkout |
 | BACKEND_URL (frontend only) | http://127.0.0.1:8000 | Server-only proxy destination; supplied at build time for containers |
 
 Generate a secret with `python -c 'import secrets; print(secrets.token_urlsafe(48))'` and place it in
-your secret store. Existing prototype GEMINI_* values may remain, but model routing now comes
-from `config/models.toml`; the old GEMINI_INTERVIEW_MODEL / REPORT_MODEL variables are retired.
+your secret store. Model routing comes from `config/models.toml`; legacy model environment overrides are ignored.
 
 ## Google sign-up/sign-in
 
@@ -72,12 +69,11 @@ Set credentials in `backend/.env`, then edit `[agents]` in `backend/config/model
 ```toml
 [agents]
 planner = "sarvam"
-interviewer = "sarvam"
+interviewer = "sarvam_conversations"
 evaluator = "sarvam"
 coach = "sarvam"
 resume = "sarvam"
 assistant = "sarvam"
-company_research = "gemini_search"
 ```
 
 Use the ID of any configured `[profiles.<id>]` entry for each role. There are no browser controls
@@ -99,10 +95,9 @@ mode off also denies previously issued demo-account sessions. Canned provider co
 `tests/fixtures/` and is excluded from production images; failures never become successful sample responses.
 
 Sarvam profiles use V1 JSON Schema output, the subscription-key header and disabled thinking for
-interactive latency. Set `SARVAM_API_KEY`, then assign `sarvam` to roles in `[agents]`.
-Assign `sarvam_conversations` to the interviewer role to use the conversation model;
-it falls back to the flagship profile on failure. Speech settings stay independent. Sarvam-M is
-retired; do not use it in new profiles. Reference:
+interactive latency. Set `SARVAM_API_KEY`; assign `sarvam` to roles that need the flagship model.
+The interviewer uses `sarvam_conversations` by default, with `sarvam` configured as its fallback.
+Speech settings stay independent. Sarvam-M is retired; do not use it in new profiles. Reference:
 https://docs.sarvam.ai/api/api-guides-tutorials/chat-completion/overview
 
 ## Voice conversation
@@ -134,9 +129,8 @@ Reference: https://docs.stripe.com/webhooks
 
 ## Company research
 
-See [COMPANY_RESEARCH.md](COMPANY_RESEARCH.md). Configure GEMINI_API_KEY and access/quota for the
-search model. Search runs only during setup, preserves dated citations, and never receives candidate
-resumes or answers. The app shows unavailable research explicitly and continues with the supplied JD.
+New web research is currently unavailable because no search provider is configured. Previously saved,
+candidate-owned sources remain reusable. Interviews continue with the supplied job description.
 
 ## Usage and saved setup
 

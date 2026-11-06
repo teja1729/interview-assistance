@@ -444,7 +444,6 @@ export const api = {
     duration_minutes: number;
     persona: string;
     resume_id: string | null;
-    language?: string;
     company_url?: string;
     company_research_id?: string | null;
   }) => request<Interview>("/interviews", json(body)),

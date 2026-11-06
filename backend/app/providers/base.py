@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from ..config import settings
 
-AGENT_ROLES = ("planner", "interviewer", "evaluator", "coach", "resume", "assistant", "company_research")
+AGENT_ROLES = ("planner", "interviewer", "evaluator", "coach", "resume", "assistant")
 
 
 class ProviderError(RuntimeError):

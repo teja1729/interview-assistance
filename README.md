@@ -46,7 +46,7 @@ To use real Google accounts or AI, follow [configuration](docs/CONFIGURATION.md)
 - Interview planning, natural Sarvam cloud voice, automatic microphone turns with optional typed fallback, countdown starting at join,
   bounded follow-ups, versioned/idempotent submissions and report recovery after reload.
 - Planner, interviewer, evaluator, coach, resume analyst and setup assistant with strict output contracts.
-- Google Gemini, OpenAI Responses, Sarvam 105B, and OpenAI-compatible provider adapters; per-agent routing in backend configuration.
+- Sarvam 105B, OpenAI Responses, and OpenAI-compatible provider adapters; per-agent routing in backend configuration.
 - Persistent report jobs with retries, lease recovery and atomic report/practice-task writes.
 - Feedback tied to exact answer quotes; server-computed practice scores; actionable practice tasks and progress.
 - Monthly account quotas, shared database rate limits, Stripe Checkout/portal and verified idempotent webhooks.

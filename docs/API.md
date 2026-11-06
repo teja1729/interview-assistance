@@ -78,17 +78,17 @@ AI call quota counters.
 Provider errors are sanitized. Correlate X-Request-ID and trace metadata for diagnosis. Use
 `/api/openapi.json` for exact request validation, and `frontend/src/lib/api.ts` for browser response types.
 
-## Company research, language and report progress
+## Company research, English output and report progress
 
 `POST /company-research` accepts `company`, `job_title`, and optional HTTPS `company_url`. Returns
-`{id, company, status, facts, sources, researched_at, note, search_suggestions}`. `status` is researched
-or unavailable; an unavailable result contains no invented facts. Cache IDs are candidate-owned.
-Facts refer to source IDs. Render source links and sandbox Search Suggestions HTML; do not inject it.
+`{id, company, status, facts, sources, researched_at, note, search_suggestions}`. Saved successful
+candidate-owned results can be reused; cache misses return unavailable without a provider call or
+model quota use. Render saved source links and sandbox any existing Search Suggestions HTML.
 
-`POST /interviews` additionally accepts `company_url`, `company_research_id` and `language` (one of
-`en-IN`, `hi-IN`, `bn-IN`, `ta-IN`, `te-IN`, `gu-IN`, `kn-IN`, `ml-IN`, `mr-IN`, `pa-IN`, `od-IN`).
-Missing explicit language defaults to English or a supported language requested in legacy free-text
-instructions. Research is resolved automatically when a company is supplied. A mismatched cached
+`POST /interviews` additionally accepts `company_url`, `company_research_id` and the legacy `language`
+field, which accepts only `en-IN`. Questions, follow-ups, reports, coaching and speech are English-only;
+language preferences in free-text instructions are ignored. Cached research is resolved when
+available. A mismatched cached
 research ID returns 409; another candidate's ID returns 404. Interview responses expose `language`,
 `company_context` and optional `report_progress: {completed_steps, label, error}`. Private execution
 bundles, shared briefs and job checkpoints are never returned.
@@ -96,10 +96,8 @@ bundles, shared briefs and job checkpoints are never returned.
 `POST /suggest/job-description` accepts the same optional research URL/ID and returns company_context
 alongside the existing description/demo fields. Generated text remains a practice brief.
 
-`POST /tts` accepts text plus optional interview_id. The saved interview language takes precedence,
-and the interview must belong to the signed-in candidate. Without an ID, optional language selects a
-supported language; omitted language uses the configured default. Changing language does not select
-a provider/model. New report question objects add rubric components and answer-attributed evidence_refs;
+`POST /tts` accepts text plus optional interview_id. The interview must belong to the signed-in candidate;
+speech is always English. New report question objects add rubric components and answer-attributed evidence_refs;
 existing reports retain their historical shape.
 
 ## Recruiter discovery and progress

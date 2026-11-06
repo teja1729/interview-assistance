@@ -2,7 +2,7 @@
 
 Read this before moving responsibilities across modules. The product serves individual candidates.
 Each verified Google or LinkedIn identity has a personal account, private interviews and account-level usage/billing.
-The operator assigns models to all seven agent roles in `backend/config/models.toml`.
+The operator assigns models to six agent roles in `backend/config/models.toml`.
 
 The database retains its historical `workspaces`/`memberships` names as internal account containers
 to preserve existing sessions, history and billing references. Workspace creation, switching,
@@ -19,7 +19,7 @@ flowchart LR
   Routes --> Services[domain services]
   Services --> PG[(PostgreSQL)]
   Services --> Runtime[bounded agent runtime]
-  Runtime --> Providers[Gemini / OpenAI / Sarvam / compatible]
+  Runtime --> Providers[OpenAI / Sarvam / compatible]
   Runtime --> PG
   Worker[Railway report worker] --> PG
   Worker --> Runtime
@@ -38,7 +38,7 @@ request rechecks membership, and all candidate resources additionally require ma
 | `services/reports.py` | Durable report + coaching pipeline, atomic publication | Hold write locks across inference |
 | `agents/runtime.py` | Classified bounded retries/fallback, semantic validation, optional traces | Mutate interview state or authorize users |
 | `agents/specs.py` / `context.py` | Immutable execution bundles, shared briefs and bounded context | Store credential values |
-| `services/company_research.py` | Bounded search, sourced facts and private cache | Search candidate transcripts |
+| `services/company_research.py` | Candidate-owned source cache and safe unavailable response | Read another candidate's sources |
 | `agents/prompts/` | Role instructions and shared untrusted-data preamble | Store secrets or enforce access controls |
 | `providers/` | Vendor request/response adaptation | Query tenant data or choose entitlements |
 | `models.py` / migrations | Relational schema and history | Return whole private records to clients |
@@ -88,8 +88,8 @@ process-local locks, an in-memory queue, or a browser remaining connected.
 
 See [AGENT_RUNTIME.md](AGENT_RUNTIME.md) for immutable model/prompt bundles, role budgets, context
 selection, evidence validation and checkpoint recovery. [COMPANY_RESEARCH.md](COMPANY_RESEARCH.md)
-describes setup-time Google Search grounding and citation handling. Neither models nor retrieved
-web text can authorize a write or alter the scoring contract.
+describes cached sources and the current unavailability of fresh web research. Neither models nor
+retrieved web text can authorize a write or alter the scoring contract.
 
 ## Consented recruiter access
 

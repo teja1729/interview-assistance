@@ -37,7 +37,6 @@ ROLE_PROMPTS = {
     "coach": ["skill_coach"],
     "assistant": ["assistant", "job_description"],
     "resume": ["resume"],
-    "company_research": ["company_research"],
 }
 
 
@@ -55,7 +54,6 @@ POLICIES = {
     "coach": Policy(50, 25, 2000),
     "resume": Policy(60, 30, 4000),
     "assistant": Policy(60, 30, 3000),
-    "company_research": Policy(35, 30, 2400),
 }
 
 

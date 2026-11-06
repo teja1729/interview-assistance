@@ -38,14 +38,13 @@ INLINE_WORKER=false
 DATABASE_URL=postgresql+psycopg://${{Postgres.PGUSER}}:${{Postgres.PGPASSWORD}}@${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}
 FRONTEND_ORIGIN=https://YOUR-WEB-DOMAIN
 SESSION_SECRET=<random value of at least 32 characters>
-AI_DEFAULT_PROFILE=gemini
+AI_DEFAULT_PROFILE=sarvam
 GOOGLE_CLIENT_ID=<Google OAuth web client ID>
 GOOGLE_CLIENT_SECRET=<Google OAuth web client secret>
-GEMINI_API_KEY=<model key, if using Gemini>
 ```
 
 `DATABASE_URL` deliberately uses Railway's private Postgres host and the installed `psycopg`
-driver. Configure any other provider, speech, research, or Stripe variables needed by your
+driver. Configure Sarvam, optional OpenAI-compatible, speech, or Stripe variables needed by your
 selected roles; keep `backend/config/models.toml` assignments consistent with those credentials.
 Use Railway's secret variable editor for credentials. Do not set `LOCAL_USAGE_OVERRIDES=true`.
 

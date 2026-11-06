@@ -13,7 +13,7 @@ class Contract(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
 
 
-Language = Literal["en-IN", "hi-IN", "bn-IN", "ta-IN", "te-IN", "gu-IN", "kn-IN", "ml-IN", "mr-IN", "pa-IN", "od-IN"]
+Language = Literal["en-IN"]
 Nonempty = Annotated[str, Field(min_length=1, max_length=1200, pattern=r"\S")]
 
 
