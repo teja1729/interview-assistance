@@ -43,7 +43,7 @@ The XLSX can be converted into a readable manifest plus one JSON file per sheet:
 cd backend
 uv run python scripts/import_company_intelligence.py \
   "/path/to/Suri - Company Interview Intelligence.xlsx" \
-  --convert-json-dir ../research/interview_intelligence/workbook_v3
+  --convert-json-dir ../research/interview_intelligence/workbook_v4
 ```
 
 The JSON manifest is a portable import source. It includes the source workbook hash and a canonical
@@ -53,9 +53,9 @@ After reviewing the report and applying migrations, stage or activate the JSON r
 ```bash
 cd backend
 uv run alembic upgrade head
-uv run python scripts/import_company_intelligence.py ../research/interview_intelligence/workbook_v3/manifest.json --stage
+uv run python scripts/import_company_intelligence.py ../research/interview_intelligence/workbook_v4/manifest.json --stage
 # After operator review, make the staged version available to new interviews:
-uv run python scripts/import_company_intelligence.py ../research/interview_intelligence/workbook_v3/manifest.json --activate
+uv run python scripts/import_company_intelligence.py ../research/interview_intelligence/workbook_v4/manifest.json --activate
 ```
 
 Activation permits provisional records because the pilot methodology allows cautious pattern synthesis.

@@ -1,0 +1,85 @@
+{
+  "sheet": "05 Role Profiles",
+  "columns": [
+    "role_family_id",
+    "role_family",
+    "original_titles_preserved_separately",
+    "core_competencies",
+    "typical_assessment_methods",
+    "notes"
+  ],
+  "records": [
+    {
+      "role_family_id": "RF-AIML",
+      "role_family": "AI / ML Engineering",
+      "original_titles_preserved_separately": "Machine Learning Engineer; AI Engineer; Applied Scientist; AI/ML Engineer; MLE (titles are NOT merged - each experience keeps its original title)",
+      "core_competencies": "ML/DL fundamentals; applied GenAI (RAG, LLMs); coding/DSA; ML system design; MLOps; project depth",
+      "typical_assessment_methods": "Coding rounds; ML breadth/depth rounds; ML system design; project deep dive; behavioral",
+      "notes": "Competency weights must come from the JD and evidence, not a fixed template (user v1 discussion)"
+    },
+    {
+      "role_family_id": "RF-DS",
+      "role_family": "Data Science",
+      "original_titles_preserved_separately": "Data Scientist; Data and Applied Scientist; Senior Data Scientist; Data Science/GenAI; Product Data Scientist",
+      "core_competencies": "Statistics and experimentation; SQL; ML modelling; product/business analytics; metrics and evaluation; communication to stakeholders",
+      "typical_assessment_methods": "Statistics rounds; SQL/Python coding; product case; experiment design; project deep dive; behavioral",
+      "notes": ""
+    },
+    {
+      "role_family_id": "RF-BE",
+      "role_family": "Backend / Server-side Engineering",
+      "original_titles_preserved_separately": "Backend Software Engineer; Software Engineer 2 (Backend); SDE-2 Backend; Senior Software Engineer (Backend)",
+      "core_competencies": "DSA/problem solving; machine coding / LLD (OOP, extensibility); system design incl. caching, databases, microservices; API and concurrency fundamentals",
+      "typical_assessment_methods": "Machine coding rounds; DSA rounds; LLD/HLD design rounds; hiring-manager/project deep dives",
+      "notes": "Competency weights must come from the JD and evidence, not assumed from the role family"
+    },
+    {
+      "role_family_id": "RF-FE",
+      "role_family": "Frontend / Full-stack Engineering",
+      "original_titles_preserved_separately": "SDE-1/SDE-2 Frontend; Frontend Engineer; Staff Frontend Engineer; Full-stack Engineer",
+      "core_competencies": "JavaScript/TypeScript internals; UI building (React etc.); browser/async behaviour; frontend system design; DSA fundamentals",
+      "typical_assessment_methods": "JS coding rounds; UI build/machine coding; frontend system design; DSA rounds; values/HM rounds",
+      "notes": "Competency weights must come from the JD and evidence, not assumed from the role family"
+    },
+    {
+      "role_family_id": "RF-DE",
+      "role_family": "Data Engineering",
+      "original_titles_preserved_separately": "Data Engineer; Senior Data Engineer; Data Engineer II",
+      "core_competencies": "SQL (incl. window functions); Python/PySpark; data pipeline design (batch + streaming); big data stack (Spark, Kafka, warehouse/lakehouse formats); DSA basics",
+      "typical_assessment_methods": "SQL/coding rounds; pipeline/system design; take-home craft demos; DSA rounds at product companies",
+      "notes": "Competency weights must come from the JD and evidence, not assumed from the role family"
+    },
+    {
+      "role_family_id": "RF-SRE",
+      "role_family": "DevOps / Site Reliability Engineering",
+      "original_titles_preserved_separately": "Site Reliability Engineer; DevOps Engineer; Platform Engineer",
+      "core_competencies": "Linux/networking internals; containers & orchestration (Docker, Kubernetes); IaC (Terraform, Ansible); cloud (AWS); troubleshooting; coding/scripting",
+      "typical_assessment_methods": "Ops/knowledge rounds; coding rounds; live troubleshooting scenarios; HM rounds",
+      "notes": "Competency weights must come from the JD and evidence, not assumed from the role family"
+    },
+    {
+      "role_family_id": "RF-QA",
+      "role_family": "QA / Test Automation (SDET)",
+      "original_titles_preserved_separately": "SDET; Senior SDET; QA Automation Engineer; Software QA Engineer",
+      "core_competencies": "Test design (boundary value, negative, integration); automation frameworks (Selenium, Playwright, Cucumber); programming fundamentals (Java/Python); API testing; DSA basics",
+      "typical_assessment_methods": "DSA/coding rounds; hands-on automation assignments; test-design scenarios; managerial/HR rounds",
+      "notes": "Competency weights must come from the JD and evidence, not assumed from the role family"
+    },
+    {
+      "role_family_id": "RF-SEC",
+      "role_family": "Cybersecurity Engineering / Analysis",
+      "original_titles_preserved_separately": "Security Engineer; SOC Analyst; Security Analyst; SDE (security products)",
+      "core_competencies": "Networking & protocol fundamentals; threat modeling; SIEM/log analysis; incident response; MITRE ATT&CK; secure design; coding (for security engineering roles)",
+      "typical_assessment_methods": "Technical fundamentals rounds; scenario/triage exercises; secure design rounds; coding rounds; behavioral rounds",
+      "notes": "Competency weights must come from the JD and evidence, not assumed from the role family"
+    },
+    {
+      "role_family_id": "RF-PM",
+      "role_family": "Product Management",
+      "original_titles_preserved_separately": "Product Manager; Senior Product Manager; New Grad PM; PM (AI track)",
+      "core_competencies": "Product sense; analytical/estimation; execution & prioritization (e.g., RICE); stakeholder influence; technical fluency (incl. AI/LLM concepts for AI PM)",
+      "typical_assessment_methods": "Product sense screens; analytical screens; take-home projects; cross-functional/values rounds",
+      "notes": "Competency weights must come from the JD and evidence, not assumed from the role family"
+    }
+  ]
+}

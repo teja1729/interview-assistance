@@ -1,0 +1,30 @@
+{
+  "format": "suri-company-intelligence",
+  "format_version": 1,
+  "source_workbook": {
+    "name": "Suri - Company Interview Intelligence (pilot v2 - methodology v2, 2026-11-06) (3).xlsx",
+    "sha256": "9bbe04258054625a07d8148faaecf72e434719e8a167b555ff6a078a8ab9a677",
+    "version": "Suri - Company Interview Intelligence (PILOT v2, methodology v2) - data-quality pass 2026-11-06 (v3)"
+  },
+  "content_sha256": "3c85758f73ffba76dd24666122e1effb66f0c1c36e0707d7d588caa342360a67",
+  "validation_summary": {
+    "records": 956,
+    "rejected_input_records": [
+      "11 Evaluation Signals:ES004"
+    ]
+  },
+  "sheets": {
+    "01 Company Profiles": "01_01_company_profiles.json",
+    "02 Company Archetypes": "02_02_company_archetypes.json",
+    "03 Universal Traits": "03_03_universal_traits.json",
+    "04 Archetype-Trait Map": "04_04_archetype_trait_map.json",
+    "05 Role Profiles": "05_05_role_profiles.json",
+    "06 Role-Interview Profiles": "06_06_role_interview_profiles.json",
+    "07 Interview Stages": "07_07_interview_stages.json",
+    "08 Evidence Sources": "08_08_evidence_sources.json",
+    "09 Interview Experiences": "09_09_interview_experiences.json",
+    "10 Questions-Conv Patterns": "10_10_questions_conv_patterns.json",
+    "11 Evaluation Signals": "11_11_evaluation_signals.json",
+    "12 Runtime Configs": "12_12_runtime_configs.json"
+  }
+}

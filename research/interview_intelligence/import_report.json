@@ -1,14 +1,14 @@
 {
-  "workbook": "Suri - Company Interview Intelligence (pilot v2 - methodology v2, 2026-11-06) (2).xlsx",
-  "workbook_sha256": "823719412358b5d920131077687cadb2e73e44538e7cfacb137f20d947514edb",
-  "content_sha256": "270b982726c9c752cce988ff81d6e11337b89eb41cf5f8ddc33eeb2c5d958f56",
+  "workbook": "Suri - Company Interview Intelligence (pilot v2 - methodology v2, 2026-11-06) (3).xlsx",
+  "workbook_sha256": "9bbe04258054625a07d8148faaecf72e434719e8a167b555ff6a078a8ab9a677",
+  "content_sha256": "3c85758f73ffba76dd24666122e1effb66f0c1c36e0707d7d588caa342360a67",
   "workbook_version": "Suri - Company Interview Intelligence (PILOT v2, methodology v2) - data-quality pass 2026-11-06 (v3)",
   "status": "active",
   "error_count": 0,
   "warning_count": 1,
   "sheets": {
     "01 Company Profiles": {
-      "records": 11,
+      "records": 39,
       "record_key": "company_id"
     },
     "02 Company Archetypes": {
@@ -24,60 +24,60 @@
       "record_key": "archetype_id + trait"
     },
     "05 Role Profiles": {
-      "records": 2,
+      "records": 9,
       "record_key": "role_family_id"
     },
     "06 Role-Interview Profiles": {
-      "records": 22,
+      "records": 50,
       "record_key": "profile_id"
     },
     "07 Interview Stages": {
-      "records": 94,
+      "records": 199,
       "record_key": "stage_id"
     },
     "08 Evidence Sources": {
-      "records": 100,
+      "records": 168,
       "record_key": "source_id"
     },
     "09 Interview Experiences": {
-      "records": 69,
+      "records": 109,
       "record_key": "experience_id"
     },
     "10 Questions-Conv Patterns": {
-      "records": 118,
+      "records": 235,
       "record_key": "pattern_id"
     },
     "11 Evaluation Signals": {
-      "records": 38,
+      "records": 59,
       "record_key": "signal_id"
     },
     "12 Runtime Configs": {
-      "records": 5,
+      "records": 33,
       "record_key": "config_id"
     }
   },
-  "total_records": 514,
+  "total_records": 956,
   "publication_counts": {
-    "01 Company Profiles:not_applicable": 11,
+    "01 Company Profiles:not_applicable": 39,
     "02 Company Archetypes:not_applicable": 6,
     "03 Universal Traits:not_applicable": 7,
     "04 Archetype-Trait Map:not_applicable": 42,
-    "05 Role Profiles:not_applicable": 2,
-    "06 Role-Interview Profiles:not_applicable": 22,
-    "07 Interview Stages:not_applicable": 94,
-    "08 Evidence Sources:provisional": 88,
+    "05 Role Profiles:not_applicable": 9,
+    "06 Role-Interview Profiles:not_applicable": 50,
+    "07 Interview Stages:not_applicable": 199,
+    "08 Evidence Sources:provisional": 156,
     "08 Evidence Sources:rejected": 12,
-    "09 Interview Experiences:provisional": 69,
+    "09 Interview Experiences:provisional": 109,
     "10 Questions-Conv Patterns:restricted": 48,
     "10 Questions-Conv Patterns:rejected": 4,
-    "10 Questions-Conv Patterns:provisional": 66,
-    "11 Evaluation Signals:not_applicable": 38,
-    "12 Runtime Configs:not_applicable": 5
+    "10 Questions-Conv Patterns:provisional": 183,
+    "11 Evaluation Signals:not_applicable": 59,
+    "12 Runtime Configs:not_applicable": 33
   },
-  "eligible_runtime_rows": 135,
-  "importable_records": 513,
+  "eligible_runtime_rows": 292,
+  "importable_records": 955,
   "human_approved_records": 0,
-  "cross_sheet_links_checked": 225,
+  "cross_sheet_links_checked": 403,
   "rejected_input_records": [
     "11 Evaluation Signals:ES004"
   ],
@@ -91,5 +91,5 @@
       "reference": "SRC-NVIDIA-HWH"
     }
   ],
-  "import_id": "270b982726c9c752cce988ff81d6e11337b89eb41cf5f8ddc33eeb2c5d958f56"
+  "import_id": "3c85758f73ffba76dd24666122e1effb66f0c1c36e0707d7d588caa342360a67"
 }
