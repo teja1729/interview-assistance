@@ -1,0 +1,29 @@
+{
+  "sheet": "05 Role Profiles",
+  "columns": [
+    "role_family_id",
+    "role_family",
+    "original_titles_preserved_separately",
+    "core_competencies",
+    "typical_assessment_methods",
+    "notes"
+  ],
+  "records": [
+    {
+      "role_family_id": "RF-AIML",
+      "role_family": "AI / ML Engineering",
+      "original_titles_preserved_separately": "Machine Learning Engineer; AI Engineer; Applied Scientist; AI/ML Engineer; MLE (titles are NOT merged - each experience keeps its original title)",
+      "core_competencies": "ML/DL fundamentals; applied GenAI (RAG, LLMs); coding/DSA; ML system design; MLOps; project depth",
+      "typical_assessment_methods": "Coding rounds; ML breadth/depth rounds; ML system design; project deep dive; behavioral",
+      "notes": "Competency weights must come from the JD and evidence, not a fixed template (user v1 discussion)"
+    },
+    {
+      "role_family_id": "RF-DS",
+      "role_family": "Data Science",
+      "original_titles_preserved_separately": "Data Scientist; Data and Applied Scientist; Senior Data Scientist; Data Science/GenAI; Product Data Scientist",
+      "core_competencies": "Statistics and experimentation; SQL; ML modelling; product/business analytics; metrics and evaluation; communication to stakeholders",
+      "typical_assessment_methods": "Statistics rounds; SQL/Python coding; product case; experiment design; project deep dive; behavioral",
+      "notes": ""
+    }
+  ]
+}

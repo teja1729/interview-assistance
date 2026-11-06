@@ -1,0 +1,220 @@
+{
+  "sheet": "04 Archetype-Trait Map",
+  "columns": [
+    "archetype_id",
+    "trait",
+    "relationship"
+  ],
+  "records": [
+    {
+      "archetype_id": "A-START",
+      "trait": "Communication",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-START",
+      "trait": "Problem solving",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-START",
+      "trait": "Ownership",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-START",
+      "trait": "Collaboration",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-START",
+      "trait": "Role expertise",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-START",
+      "trait": "Decision making",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-START",
+      "trait": "Execution",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "trait": "Communication",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "trait": "Problem solving",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "trait": "Ownership",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "trait": "Collaboration",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "trait": "Role expertise",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "trait": "Decision making",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "trait": "Execution",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "trait": "Communication",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "trait": "Problem solving",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "trait": "Ownership",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "trait": "Collaboration",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "trait": "Role expertise",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "trait": "Decision making",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "trait": "Execution",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "trait": "Communication",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "trait": "Problem solving",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "trait": "Ownership",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "trait": "Collaboration",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "trait": "Role expertise",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "trait": "Decision making",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "trait": "Execution",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "trait": "Communication",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "trait": "Problem solving",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "trait": "Ownership",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "trait": "Collaboration",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "trait": "Role expertise",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "trait": "Decision making",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "trait": "Execution",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-RES",
+      "trait": "Communication",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-RES",
+      "trait": "Problem solving",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-RES",
+      "trait": "Ownership",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-RES",
+      "trait": "Collaboration",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-RES",
+      "trait": "Role expertise",
+      "relationship": "emphasized"
+    },
+    {
+      "archetype_id": "A-RES",
+      "trait": "Decision making",
+      "relationship": "baseline (universal)"
+    },
+    {
+      "archetype_id": "A-RES",
+      "trait": "Execution",
+      "relationship": "baseline (universal)"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "sheet": "02 Company Archetypes",
+  "columns": [
+    "archetype_id",
+    "archetype",
+    "definition",
+    "additional_emphasis",
+    "example_companies_in_pilot",
+    "basis",
+    "mapping_confidence",
+    "mapping_evidence",
+    "usage_rule"
+  ],
+  "records": [
+    {
+      "archetype_id": "A-START",
+      "archetype": "Startup",
+      "definition": "Early/high-growth companies; interviews weight autonomy and speed",
+      "additional_emphasis": "Autonomy, ambiguity tolerance, speed of execution",
+      "example_companies_in_pilot": "(none in pilot roster)",
+      "basis": "User methodology v2 table; universal interview-literature pattern - to be evidence-checked per company in expansion",
+      "mapping_confidence": "n/a - no pilot company assigned",
+      "mapping_evidence": "Definition-level only (methodology v2 table); no pilot evidence",
+      "usage_rule": "Archetypes inform emphasis hypotheses ONLY - they do not set interview scores or fixed competency weights (methodology v2 hierarchy: universal > role > company > candidate config)"
+    },
+    {
+      "archetype_id": "A-SERV",
+      "archetype": "Services",
+      "definition": "IT services/consulting delivery organizations",
+      "additional_emphasis": "Client communication, delivery reliability, baseline skill verification",
+      "example_companies_in_pilot": "TCS, Infosys, Accenture",
+      "basis": "User methodology v2 + pilot evidence (baseline-check-then-project pattern at TCS/Infosys)",
+      "mapping_confidence": "medium-high",
+      "mapping_evidence": "Official delivery-model pages + pilot evidence: baseline-check-then-project pattern across TCS/Infosys/Accenture candidate reports",
+      "usage_rule": "Archetypes inform emphasis hypotheses ONLY - they do not set interview scores or fixed competency weights (methodology v2 hierarchy: universal > role > company > candidate config)"
+    },
+    {
+      "archetype_id": "A-MNC",
+      "archetype": "MNC",
+      "definition": "Large multinational product+enterprise organizations with structured hiring",
+      "additional_emphasis": "Cross-team collaboration, structured execution, growth mindset",
+      "example_companies_in_pilot": "Microsoft, Google, Amazon, IBM, Oracle, SAP, NVIDIA",
+      "basis": "User methodology v2 + official hiring pages",
+      "mapping_confidence": "medium",
+      "mapping_evidence": "Official hiring pages show structured multi-stage processes; per-company differences within the archetype remain large",
+      "usage_rule": "Archetypes inform emphasis hypotheses ONLY - they do not set interview scores or fixed competency weights (methodology v2 hierarchy: universal > role > company > candidate config)"
+    },
+    {
+      "archetype_id": "A-PROD",
+      "archetype": "Product",
+      "definition": "Consumer/product companies optimizing user outcomes at scale",
+      "additional_emphasis": "Product thinking, technical trade-offs, metrics-driven decisions",
+      "example_companies_in_pilot": "Amazon, Google, Walmart Global Tech",
+      "basis": "User methodology v2 + pilot DS reports (product-case rounds at Google, metrics emphasis at Amazon)",
+      "mapping_confidence": "medium-low",
+      "mapping_evidence": "Pilot DS reports show product-case rounds (Google DS case; Walmart design); few direct sources",
+      "usage_rule": "Archetypes inform emphasis hypotheses ONLY - they do not set interview scores or fixed competency weights (methodology v2 hierarchy: universal > role > company > candidate config)"
+    },
+    {
+      "archetype_id": "A-CONS",
+      "archetype": "Consulting",
+      "definition": "Advisory and professional-services firms",
+      "additional_emphasis": "Structured thinking, stakeholder influence",
+      "example_companies_in_pilot": "Accenture",
+      "basis": "User methodology v2",
+      "mapping_confidence": "medium-low",
+      "mapping_evidence": "Accenture only; overlaps A-SERV in pilot evidence",
+      "usage_rule": "Archetypes inform emphasis hypotheses ONLY - they do not set interview scores or fixed competency weights (methodology v2 hierarchy: universal > role > company > candidate config)"
+    },
+    {
+      "archetype_id": "A-RES",
+      "archetype": "Research",
+      "definition": "Research-heavy organizations/labs",
+      "additional_emphasis": "Scientific reasoning, experimentation, publication-grade depth",
+      "example_companies_in_pilot": "(Google DeepMind-type; none directly in pilot)",
+      "basis": "User methodology v2",
+      "mapping_confidence": "n/a - no pilot company assigned",
+      "mapping_evidence": "Definition-level only",
+      "usage_rule": "Archetypes inform emphasis hypotheses ONLY - they do not set interview scores or fixed competency weights (methodology v2 hierarchy: universal > role > company > candidate config)"
+    }
+  ]
+}

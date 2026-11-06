@@ -1,6 +1,7 @@
 {
   "workbook": "Suri - Company Interview Intelligence (pilot v2 - methodology v2, 2026-11-06) (2).xlsx",
   "workbook_sha256": "823719412358b5d920131077687cadb2e73e44538e7cfacb137f20d947514edb",
+  "content_sha256": "270b982726c9c752cce988ff81d6e11337b89eb41cf5f8ddc33eeb2c5d958f56",
   "workbook_version": "Suri - Company Interview Intelligence (PILOT v2, methodology v2) - data-quality pass 2026-11-06 (v3)",
   "status": "active",
   "error_count": 0,
@@ -90,5 +91,5 @@
       "reference": "SRC-NVIDIA-HWH"
     }
   ],
-  "import_id": "823719412358b5d920131077687cadb2e73e44538e7cfacb137f20d947514edb"
+  "import_id": "270b982726c9c752cce988ff81d6e11337b89eb41cf5f8ddc33eeb2c5d958f56"
 }

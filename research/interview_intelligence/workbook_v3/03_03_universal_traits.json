@@ -1,0 +1,53 @@
+{
+  "sheet": "03 Universal Traits",
+  "columns": [
+    "trait_id",
+    "trait",
+    "what_it_measures",
+    "typical_evidence_in_interviews"
+  ],
+  "records": [
+    {
+      "trait_id": "U1",
+      "trait": "Communication",
+      "what_it_measures": "Clarity of thought, structure, listening, adapting depth to the listener",
+      "typical_evidence_in_interviews": "Explaining a project to a non-specialist interviewer; structured STAR answers"
+    },
+    {
+      "trait_id": "U2",
+      "trait": "Problem solving",
+      "what_it_measures": "Decomposing ambiguous problems, choosing approaches, handling constraints",
+      "typical_evidence_in_interviews": "Coding/DSA rounds; case questions; clarifying-question behaviour"
+    },
+    {
+      "trait_id": "U3",
+      "trait": "Ownership",
+      "what_it_measures": "Taking responsibility for outcomes end to end",
+      "typical_evidence_in_interviews": "Project deep dives probing personal contribution ('What exactly did YOU do?')"
+    },
+    {
+      "trait_id": "U4",
+      "trait": "Collaboration",
+      "what_it_measures": "Working across teams, handling disagreement and conflict",
+      "typical_evidence_in_interviews": "Behavioral rounds on conflicts, cross-team alignment (e.g. Walmart onsite)"
+    },
+    {
+      "trait_id": "U5",
+      "trait": "Role expertise",
+      "what_it_measures": "Depth in the role's core technical domain",
+      "typical_evidence_in_interviews": "ML theory rounds, statistics rounds, SQL, system design"
+    },
+    {
+      "trait_id": "U6",
+      "trait": "Decision making",
+      "what_it_measures": "Choosing under uncertainty with explicit trade-offs",
+      "typical_evidence_in_interviews": "Design trade-off discussion; A/B vs long-term UX scenario (Google MLE report)"
+    },
+    {
+      "trait_id": "U7",
+      "trait": "Execution",
+      "what_it_measures": "Delivering working solutions; pragmatism; testing and edge cases",
+      "typical_evidence_in_interviews": "Live coding with test cases; deployment and monitoring discussion"
+    }
+  ]
+}

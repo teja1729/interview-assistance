@@ -1,0 +1,137 @@
+{
+  "sheet": "01 Company Profiles",
+  "columns": [
+    "company_id",
+    "company",
+    "business_and_products (official sources only)",
+    "values_mission_culture (official sources only)",
+    "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)",
+    "official_careers_url",
+    "official_about_url",
+    "facts_not_on_official_pages",
+    "last_verified"
+  ],
+  "records": [
+    {
+      "company_id": "CP01",
+      "company": "Microsoft",
+      "business_and_products (official sources only)": "Information technology (per official about page context: software, cloud, AI products incl. Copilot)",
+      "values_mission_culture (official sources only)": "Mission: empower every person and every organization on the planet to achieve more. Four enduring commitments: expand opportunity, earn trust, protect fundamental rights, advance sustainability.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official hiring-tips page: most interviews are 2-4 conversations; varies by team/level (via v3, read 2026-10-22).",
+      "official_careers_url": "https://careers.microsoft.com/v2/global/en/hiring-tips.html",
+      "official_about_url": "https://www.microsoft.com/en-us/about",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP02",
+      "company": "Google",
+      "business_and_products (official sources only)": "Internet/AI products (official about page: Search, Workspace, Gemini models, research)",
+      "values_mission_culture (official sources only)": "Official about page emphasizes AI model leadership (Gemini) and CS research; hiring culture signals ('Googleyness', structured interviews) are on the official careers page.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official how-we-hire: structured process; recruiter screen, technical screens, loop, hiring committee (via v3).",
+      "official_careers_url": "https://www.google.com/about/careers/applications/how-we-hire/",
+      "official_about_url": "https://about.google/",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP03",
+      "company": "Amazon / AWS",
+      "business_and_products (official sources only)": "E-commerce, cloud computing, streaming, devices, advertising, healthcare, AI services (official about page)",
+      "values_mission_culture (official sources only)": "Mission: make customers' lives better and easier every day by relentlessly inventing on their behalf. Leadership Principles officially govern interviews (applied-scientist prep page).",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official: application -> 1-2 technical phone screens (60 min) -> loop of four 55-min interviews -> outcome within 5 business days (applied-scientist prep page, read 2026-11-06).",
+      "official_careers_url": "https://www.amazon.jobs/content/en/how-we-hire/interview-loop",
+      "official_about_url": "https://www.aboutamazon.com/about-us",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP04",
+      "company": "NVIDIA",
+      "business_and_products (official sources only)": "Semiconductors/AI computing (official: 'engineers the most advanced chips, systems, and software for the AI factories of the future')",
+      "values_mission_culture (official sources only)": "Official: pioneered accelerated computing; AI and digital twins transforming industries.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official how-we-hire (read 2026-11-06): phone/video interviews then mandatory in-person onsite; 30-60 min interviews; HackerRank coding possible; unapproved AI tools disqualify.",
+      "official_careers_url": "https://www.nvidia.com/en-us/about-nvidia/careers/how-we-hire/",
+      "official_about_url": "https://www.nvidia.com/en-us/about-nvidia/",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP05",
+      "company": "IBM",
+      "business_and_products (official sources only)": "Software + consulting + infrastructure with AI embedded (official about page)",
+      "values_mission_culture (official sources only)": "'Clients, partners and creators putting technology to work in the real world'; solutions proven inside IBM first.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official application-process page: application -> screening -> assessment for many roles -> interviews (via v3).",
+      "official_careers_url": "https://www.ibm.com/careers/application-process",
+      "official_about_url": "https://www.ibm.com/about",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP06",
+      "company": "SAP",
+      "business_and_products (official sources only)": "Enterprise application software (official about page)",
+      "values_mission_culture (official sources only)": "'Helps the world run better and improves people's lives.'",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official jobs.sap how-we-hire (via v3); campus STAR program observed 2026.",
+      "official_careers_url": "https://jobs.sap.com/en/how-we-hire/",
+      "official_about_url": "https://www.sap.com/about.html",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP07",
+      "company": "Accenture",
+      "business_and_products (official sources only)": "Professional services / technology services (official about page, India)",
+      "values_mission_culture (official sources only)": "360-degree value for all stakeholders; ethics, inclusion, responsible AI.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official journey-to-Accenture page incl. communication assessment (via v3).",
+      "official_careers_url": "https://www.accenture.com/in-en/careers/explore-careers/area-of-interest/journey-to-accenture",
+      "official_about_url": "https://www.accenture.com/in-en/about",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP08",
+      "company": "TCS",
+      "business_and_products (official sources only)": "Technology services (official about page: 'world's largest AI-powered technology services company' ambition; US$30B+ FY26 revenue, 598K+ employees)",
+      "values_mission_culture (official sources only)": "'Building greater futures through innovation and collective knowledge'; Tata Group values tradition.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "No official process detail captured; secondary (GeeksforGeeks) process overview only.",
+      "official_careers_url": "https://www.tcs.com/careers/india/tcs-ai-data-job-openings",
+      "official_about_url": "https://www.tcs.com/about-us",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP09",
+      "company": "Infosys",
+      "business_and_products (official sources only)": "Digital services and consulting (official about page; 59 countries, AI-first core)",
+      "values_mission_culture (official sources only)": "Purpose: amplify human potential and create the next opportunity for people, businesses and communities.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "No official process detail captured; secondary summaries only.",
+      "official_careers_url": "https://www.infosys.com/careers.html",
+      "official_about_url": "https://www.infosys.com/about.html",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).; corrected 2026-11-06: careers URL previously pointed to a FinalRoundAI secondary article (now registered only as SRC020 in Evidence Sources); official URL verified live 2026-11-06",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP10",
+      "company": "Oracle",
+      "business_and_products (official sources only)": "Enterprise software/cloud (official corporate page: autonomous database, AI-powered cloud applications; US$57B FY25 revenue)",
+      "values_mission_culture (official sources only)": "Mission: help people see data in new ways, discover insights, unlock endless possibilities.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official getting-hired page (via v3); recruiter screens then interviews.",
+      "official_careers_url": "https://www.oracle.com/careers/opportunities/getting-hired/",
+      "official_about_url": "https://www.oracle.com/corporate/",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    },
+    {
+      "company_id": "CP11",
+      "company": "Walmart Global Tech",
+      "business_and_products (official sources only)": "Retail technology arm of Walmart (official tech site: people-led, tech-powered omnichannel retailer)",
+      "values_mission_culture (official sources only)": "Culture from the first store - sell more for less; save money, live better.",
+      "hiring_process_context (official, company-wide only; role-specific process lives in tabs 06/07)": "Official tech site has no process detail; team-specific hiring per candidate reports.",
+      "official_careers_url": "https://tech.walmart.com/content/walmart-global-tech/en_us.html",
+      "official_about_url": "https://tech.walmart.com/content/walmart-global-tech/en_us.html",
+      "facts_not_on_official_pages": "Industry classification and full product lists not stated on the official pages fetched - left unknown rather than sourced from Wikipedia (methodology v2).",
+      "last_verified": "2026-11-06"
+    }
+  ]
+}
