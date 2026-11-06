@@ -13,19 +13,21 @@ substitutes for useful feedback.
 
 ## Risks to validate
 
-- A fluent report can still give incorrect technical advice. Review live reports against expert
-  assessments; schema validation proves format, not correctness.
+- A fluent report can still give incorrect advice. Automated synthetic regressions check known
+  cases, quote provenance, evidence anchors and output stability; schema validation alone proves
+  format, not correctness for all real inputs.
 - Job search may be episodic. Measure whether users return to practice after reading a report.
-- Scores can look more precise than they are. Keep practice bands and evidence visible; calibrate
-  scoring against a reviewed sample before making stronger outcome claims.
+- Scores can look more precise than they are. Keep practice bands and evidence visible; keep scores
+  framed as practice feedback rather than hiring predictions.
 - Sequential speech processing can interrupt conversation. Measure transcription, first question,
   answer-to-next-question and report latency separately before choosing a voice roadmap.
-- Hosting, inference and support costs depend on actual usage. Measure spend per completed session
-  before setting paid prices. The repository intentionally leaves Stripe prices operator-configured.
 
 Useful initial measures: first-session completion, second-session return, practice-task completion,
-report retry/error rate, evidence-quote accuracy and latency by provider/prompt version. These are
-proposed validation measures, not claims that the application already collects analytics.
+report retry/error rate, evidence-quote accuracy and latency by provider/prompt version. The
+`scripts.product_metrics` command provides an initial aggregate baseline for starts/completions,
+repeat finished sessions, practice tasks, report outcomes and latency, and agent latency by
+provider/prompt version. It does not measure cohort retention. Automated synthetic regressions
+check evidence provenance and target coverage; these are automated proxies, not real-world outcome claims.
 
 ## Code assessment
 

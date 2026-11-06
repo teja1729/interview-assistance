@@ -1,7 +1,8 @@
 """Offline case validation or deliberately paid, reproducible model judgment regressions.
 
 No private application database or candidate data is read. The disposable trace database is
-owned by this run. Expected scores are provisional until a human reviews the reference cases.
+owned by this run. Expected scores and actions are synthetic regression targets, not calibrated
+hiring standards or empirical claims.
 """
 
 import argparse
@@ -42,8 +43,6 @@ def load_cases(path):
             raise ValueError("Invalid score range or expected action")
         if not case["anchors"] or not all(anchor in case["answer"] for anchor in case["anchors"]):
             raise ValueError("Expected evidence anchors must occur in the identified answer")
-        if case.get("human_reviewed") and not case.get("reviewer"):
-            raise ValueError("Reviewed cases must identify their reviewer")
     return dataset
 
 
@@ -62,7 +61,6 @@ def summarize(rows):
         "mean_score": round(statistics.mean(r["score"] for r in scored), 2) if scored else None,
         "repairs": sum(r.get("repairs", 0) for r in rows),
         "mean_latency_ms": round(statistics.mean(r["latency_ms"] for r in rows)) if rows else None,
-        "human_reviewed_runs": sum(r["human_reviewed"] for r in rows),
     }
 
 
@@ -114,7 +112,7 @@ def run_case(case, bundle, engine, identity, repeat):
         "operation_id": op,
     }
     started = time.monotonic()
-    row = {"id": case["id"], "repeat": repeat, "human_reviewed": bool(case.get("human_reviewed", False))}
+    row = {"id": case["id"], "repeat": repeat}
     row["quote_rejections"] = 0
 
     def check_topic(output):
@@ -224,7 +222,7 @@ def main():
         parser.error("Unknown --case-id; choose an ID in the reference dataset")
     if not args.live:
         print(
-            f"Validated {len(dataset['cases'])} synthetic reference cases offline; no model calls. Human review remains required."
+            f"Validated {len(dataset['cases'])} synthetic regression cases offline; no model calls."
         )
         return
     if not args.accept_cost or not 1 <= args.limit <= 100 or not 1 <= args.repeat <= 10:
@@ -285,7 +283,7 @@ def main():
     lines = [
         "# Live judgment regression",
         "",
-        "Synthetic provisional references; human review is required. Scores are practice feedback.",
+        "Synthetic regression targets; scores are practice feedback and are not hiring predictions.",
         "",
         "| Case | Score | In reference range | Action | Accepted action | Rejected quote attempts | Error |",
         "| --- | --- | --- | --- | --- | --- | --- |",

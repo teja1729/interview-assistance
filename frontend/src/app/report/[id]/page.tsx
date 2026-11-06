@@ -166,6 +166,18 @@ export default function ReportPage() {
         />
       </div>
 
+      <section className="card mb-6 border-accent/30 p-5">
+        <h2 className="mb-2 text-sm font-medium">Your next practice steps</h2>
+        <ol className="list-decimal space-y-1 pl-5 text-sm leading-6">
+          {r.drill_next.map((drill, i) => (
+            <li key={i}>{drill}</li>
+          ))}
+        </ol>
+        <Link href="/practice" className="btn-primary mt-4 inline-flex">
+          Open your focused practice plan
+        </Link>
+      </section>
+
       <section className="card mb-6 p-5">
         <h2 className="mb-3 text-sm font-medium">Communication</h2>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -192,7 +204,7 @@ export default function ReportPage() {
         ))}
       </section>
 
-      <section className="mb-6">
+      <section id="question-feedback" className="mb-6">
         <h2 className="mb-3 text-sm font-medium">Question by question</h2>
         <ol className="space-y-3">
           {r.questions.map((q, i) => (
@@ -264,15 +276,6 @@ export default function ReportPage() {
         </ol>
       </section>
 
-      <section className="card mb-8 p-5">
-        <h2 className="mb-2 text-sm font-medium">Drill next</h2>
-        <ol className="list-decimal space-y-1 pl-5 text-sm">
-          {r.drill_next.map((d, i) => (
-            <li key={i}>{d}</li>
-          ))}
-        </ol>
-      </section>
-
       <details className="mb-8">
         <summary className="cursor-pointer text-sm text-muted">
           Full transcript
@@ -290,9 +293,6 @@ export default function ReportPage() {
       </details>
 
       <div className="flex gap-3">
-        <Link href="/practice" className="btn-primary">
-          Open your practice plan
-        </Link>
         <Link href="/setup" className="btn-ghost">
           Practise again
         </Link>

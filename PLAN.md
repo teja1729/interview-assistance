@@ -11,6 +11,6 @@ Stripe prices, webhook and portal; domain/HTTPS; production database/backups; op
 
 Future scope (not presented as completed): real-time bidirectional voice, coding execution sandbox,
 additional interview modes, email delivery, full account self-deletion, automated retention,
-calibrated role-specific score benchmarks and enterprise identity administration.
+automatically generated role-specific benchmark coverage and enterprise identity administration.
 
 Prioritize validated learning outcomes and reliable voice latency before adding more interview modes.

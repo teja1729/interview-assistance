@@ -1,7 +1,6 @@
 {
   "version": 1,
-  "provenance": "Synthetic cases authored for regression testing; expected judgments require independent human review.",
-  "human_reviewed": false,
+  "provenance": "Synthetic cases authored for automated regression testing; score ranges and actions are provisional test targets, not empirically calibrated judgments.",
   "cases": [
     {"id":"technical-idempotency-strong","persona":"technical","role":"Backend Engineer","language":"en-IN","question":"How did you prevent duplicate payments when clients retried requests?","answer":"I implemented a unique idempotency key per merchant and request. In one database transaction I inserted the payment and recorded the request hash. A retry with the same key returns the existing result; a different payload is rejected. I chose a unique constraint instead of an in-memory lock because requests can reach different workers. For the external gateway I used its idempotency key and reconciled unknown outcomes before retrying. Concurrent-request and crash-recovery tests verified that no duplicate charge was created in those scenarios.","score_range":[70,100],"actions":["advance"],"anchors":["unique constraint","reconciled unknown outcomes"]},
     {"id":"technical-vague","persona":"technical","role":"Backend Engineer","language":"en-IN","question":"How did you prevent duplicate payments when clients retried requests?","answer":"We used best practices and a reliable architecture. It worked really well.","score_range":[0,40],"actions":["follow_up"],"anchors":["best practices"]},

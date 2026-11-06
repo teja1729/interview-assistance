@@ -328,7 +328,7 @@ def process_one(engine=None, job_id=None):
             changed = session.execute(
                 update(AgentJob)
                 .where(AgentJob.id == job.id, AgentJob.lease_token == lease)
-                .values(status="succeeded", error=None, lease_token=None, lease_until=0)
+                .values(status="succeeded", error=None, lease_token=None, lease_until=0, completed_at=time.time())
             )
             if changed.rowcount != 1:
                 session.rollback()
@@ -379,6 +379,7 @@ def process_one(engine=None, job_id=None):
                     lease_until=0,
                     error=str(failure),
                     available_at=time.time() + max(5 * job.attempts, failure.retry_after),
+                    completed_at=time.time() if terminal else None,
                 )
             )
             if changed.rowcount == 1 and terminal:
