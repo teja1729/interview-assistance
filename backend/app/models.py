@@ -235,6 +235,7 @@ class AgentJob(SQLModel, table=True):
     error: str | None = None
     artifacts: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))
     created_at: float = Field(default_factory=time.time)
+    completed_at: float | None = None
 
 
 class PromptBundle(SQLModel, table=True):
@@ -257,6 +258,37 @@ class CompanyResearch(SQLModel, table=True):
     data: dict[str, Any] = Field(sa_column=Column(JSON, nullable=False))
     expires_at: float
     created_at: float = Field(default_factory=time.time)
+
+
+class CompanyIntelligenceImport(SQLModel, table=True):
+    """Versioned global research import; not owned by a candidate account."""
+
+    __tablename__ = "company_intelligence_imports"
+    id: str = Field(primary_key=True)  # SHA-256 of workbook bytes: repeat uploads are idempotent.
+    workbook_name: str
+    workbook_version: str = ""
+    status: str = Field(default="staged", index=True)  # staged, active, superseded
+    report: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))
+    created_at: float = Field(default_factory=time.time)
+    activated_at: float | None = None
+
+
+class CompanyIntelligenceRecord(SQLModel, table=True):
+    """Immutable row snapshot from a workbook sheet, with retrieval metadata."""
+
+    __tablename__ = "company_intelligence_records"
+    __table_args__ = (
+        UniqueConstraint("import_id", "sheet_name", "external_id"),
+        Index("ix_company_intel_lookup", "import_id", "company_key", "role_family", "publication_state"),
+    )
+    id: str = Field(default_factory=uid, primary_key=True)
+    import_id: str = Field(foreign_key="company_intelligence_imports.id", index=True)
+    sheet_name: str = Field(index=True)
+    external_id: str = Field(index=True)
+    company_key: str = Field(default="", index=True)
+    role_family: str = Field(default="", index=True)
+    publication_state: str = Field(default="provisional", index=True)
+    payload: dict[str, Any] = Field(sa_column=Column(JSON, nullable=False))
 
 
 class SetupArtifact(SQLModel, table=True):

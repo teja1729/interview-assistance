@@ -102,7 +102,7 @@ submits your answer automatically; **Send answer** submits sooner. **Hands-free 
 manual recording controls. No typing is required. See [voice behavior](docs/VOICE.md).
 
 ```bash
-# Start with role assignments from backend/config/models.toml (six reasoning roles use Sarvam; new company research is unavailable).
+# Start with role assignments from backend/config/models.toml (six reasoning roles use Sarvam; live company web search is unavailable).
 # Requires SARVAM_API_KEY in backend/.env; this makes live, billable provider calls.
 ./dev.sh
 ```
@@ -438,9 +438,29 @@ Complete setting descriptions: [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Company web research and agent recovery
 
-Company web research is currently unavailable because no search provider is configured. Previously
+Live company web research is currently unavailable because no search provider is configured. Previously
 saved candidate-owned source snapshots remain reusable, and interviews continue using the supplied job
 description. The isolated cache and authorization tests are in `backend/tests/test_company_research.py`.
+
+The Excel-backed company intelligence corpus is a separate, global curated dataset. The importer is
+read-only by default and prints a validation report. Review the report before staging or activating a
+release; activation affects new interviews only. The current pilot has no human-approved rows, so its
+provisional material must remain clearly labelled in practice context.
+
+```bash
+# Validate and save a report; this command does not write to the database.
+(cd backend && uv run python scripts/import_company_intelligence.py \
+  "/path/to/Suri - Company Interview Intelligence.xlsx" \
+  --report ../research/interview_intelligence/import_report.json)
+
+# Apply schema changes, store an inactive immutable version, then activate after review.
+(cd backend && uv run alembic upgrade head)
+(cd backend && uv run python scripts/import_company_intelligence.py "/path/to/workbook.xlsx" --stage)
+(cd backend && uv run python scripts/import_company_intelligence.py "/path/to/workbook.xlsx" --activate)
+```
+
+The active release is filtered by company and role. Rejected/restricted records and records with broken
+source links are excluded. Unknown companies continue with job-description and generic role context.
 
 ## Saved setup and local usage allowances
 

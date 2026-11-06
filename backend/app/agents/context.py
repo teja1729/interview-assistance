@@ -3,7 +3,7 @@
 import re
 
 from ..personas import interview_persona, public_persona
-from ..schemas import CompanyBrief, InterviewBrief
+from ..schemas import CompanyBrief, CompanyIntelligence, InterviewBrief
 
 
 def requested_language(body):
@@ -25,6 +25,7 @@ def brief_for(iv):
         custom_instructions=iv.custom_instructions,
         language="en-IN",
         company_context=CompanyBrief(company=iv.company, status="not_requested"),
+        company_intelligence=CompanyIntelligence(status="not_requested"),
     )
 
 

@@ -23,6 +23,22 @@ export type CompanyBrief = {
   search_suggestions: string;
   cached?: boolean;
 };
+export type CompanyIntelligence = {
+  status: "available" | "no_company_evidence" | "not_requested";
+  company: string;
+  import_id: string | null;
+  role_family: string;
+  role_competencies: string[];
+  evidence: {
+    record_type: string;
+    record_id: string;
+    publication_state: "approved" | "provisional";
+    role_match: string;
+    level_relevance: "matching" | "unknown" | "adjacent";
+    summary: string;
+    source_ids: string[];
+  }[];
+};
 export type SavedRoleBrief = {
   id: string;
   saved_at: number;
@@ -175,6 +191,7 @@ export type Interview = {
   job_title: string;
   company: string;
   company_context: CompanyBrief;
+  company_intelligence: CompanyIntelligence;
   language: string;
   experience_years: number;
   job_description: string;

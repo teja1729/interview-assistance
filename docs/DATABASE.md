@@ -97,3 +97,10 @@ expiry controls reuse; an operator retention task is still needed to physically 
 Resume references in discovery are historical string IDs. The deletion service revokes linked
 requests and withdraws publication before removing the resume, in one transaction. Sharing also
 rechecks resume existence/ownership, visibility and active membership. See `SURI_INTEGRATION.md`.
+
+## Company intelligence import migration
+
+Revision `b23fd18c4e20` adds immutable global company-intelligence import batches and row snapshots.
+These records are curated research, not candidate-owned resources. New interviews copy selected evidence
+and the import ID into `_brief`; activating a later release does not rewrite existing interviews. Retain
+import batches for audit and activate only after reviewing the generated validation report.

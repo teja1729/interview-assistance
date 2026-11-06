@@ -11,3 +11,42 @@ A forced refresh reports unavailable and does not replace a previously successfu
 
 The `CompanyBrief` and API contracts remain for stored data compatibility. No live web search or
 provider call occurs on a cache miss, and unavailable results do not consume model quota.
+
+## Curated interview intelligence
+
+The workbook-backed intelligence corpus is separate from this candidate-owned web-research cache.
+`scripts/import_company_intelligence.py` validates the XLSX package, sheet headers, stable row keys,
+publication states and selected cross-sheet references. Dry-run is the default. `--stage` stores an
+immutable inactive snapshot; `--activate` explicitly makes that snapshot the runtime release. Imports
+are identified by workbook SHA-256, so uploading identical bytes is idempotent and a changed workbook
+creates a new version. A signal with a broken source reference is stored as rejected and excluded from retrieval.
+
+Runtime retrieval filters the active release by company and role, excludes restricted/rejected rows,
+and snapshots a bounded set of provenance-labelled evidence into the interview's private `_brief`.
+The planner and live interviewer may use it to choose practice emphasis. They must not present reported
+questions or provisional patterns as guaranteed employer behavior. Company-role evidence can be absent;
+in that case the runtime receives generic role competencies and continues using the job description.
+Evaluator context deliberately excludes this company intelligence.
+
+To validate a workbook without database writes:
+
+```bash
+cd backend
+uv run python scripts/import_company_intelligence.py \
+  "/path/to/Suri - Company Interview Intelligence.xlsx" \
+  --report ../research/interview_intelligence/import_report.json
+```
+
+After reviewing the report and applying migrations, stage or activate a release explicitly:
+
+```bash
+cd backend
+uv run alembic upgrade head
+uv run python scripts/import_company_intelligence.py "/path/to/workbook.xlsx" --stage
+# After operator review, make the staged version available to new interviews:
+uv run python scripts/import_company_intelligence.py "/path/to/workbook.xlsx" --activate
+```
+
+Activation permits provisional records because the pilot methodology allows cautious pattern synthesis.
+The import report and original row publication state are retained for audit. Review the report before
+activation; workbook content is never treated as executable instructions or prompt templates.

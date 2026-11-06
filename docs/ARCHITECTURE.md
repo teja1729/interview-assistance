@@ -39,6 +39,7 @@ request rechecks membership, and all candidate resources additionally require ma
 | `agents/runtime.py` | Classified bounded retries/fallback, semantic validation, optional traces | Mutate interview state or authorize users |
 | `agents/specs.py` / `context.py` | Immutable execution bundles, shared briefs and bounded context | Store credential values |
 | `services/company_research.py` | Candidate-owned source cache and safe unavailable response | Read another candidate's sources |
+| `services/company_intelligence.py` | Bounded retrieval from active, versioned global workbook imports | Treat provisional evidence as verified company policy |
 | `agents/prompts/` | Role instructions and shared untrusted-data preamble | Store secrets or enforce access controls |
 | `providers/` | Vendor request/response adaptation | Query tenant data or choose entitlements |
 | `models.py` / migrations | Relational schema and history | Return whole private records to clients |

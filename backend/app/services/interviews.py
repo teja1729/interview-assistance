@@ -23,6 +23,7 @@ from ..models import AgentJob, Interview, Operation, Resume, Turn, uid
 from ..personas import interview_persona, persona_definition, public_persona
 from ..providers.base import agent_profiles
 from ..schemas import InterviewBrief, InterviewDecision, Plan, TurnDecision
+from .company_intelligence import retrieve as retrieve_company_intelligence
 from .company_research import research
 from .interview_policy import question_bounds, remaining_topics, update_memory, validate_decision, validate_plan
 from .usage import consume, rate_limit, record_text_turn
@@ -64,6 +65,7 @@ def public(session, iv):
         else None
     )
     data["company_context"] = brief.company_context.model_dump()
+    data["company_intelligence"] = brief.company_intelligence.model_dump()
     job = session.exec(select(AgentJob).where(AgentJob.interview_id == iv.id)).first()
     stage = (job.artifacts or {}).get("active_stage", "") if job else ""
     data["report_progress"] = (
@@ -101,6 +103,7 @@ def create(session: Session, ctx: Context, body):
     _, company_context = research(
         session, ctx, body.company, body.job_title, body.company_url, body.company_research_id
     )
+    company_intelligence = retrieve_company_intelligence(session, body.company, body.job_title, body.experience_years)
     consume(session, ctx.workspace)
     iv = Interview(
         **body.model_dump(exclude={"mode", "language", "company_url", "company_research_id"}),
@@ -121,6 +124,7 @@ def create(session: Session, ctx: Context, body):
         custom_instructions=iv.custom_instructions,
         language=requested_language(body),
         company_context=company_context,
+        company_intelligence=company_intelligence,
     )
     iv.plan = {
         "_mode": body.mode,

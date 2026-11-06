@@ -1,0 +1,94 @@
+{
+  "workbook": "Suri - Company Interview Intelligence (pilot v2 - methodology v2, 2026-11-06) (2).xlsx",
+  "workbook_sha256": "823719412358b5d920131077687cadb2e73e44538e7cfacb137f20d947514edb",
+  "workbook_version": "Suri - Company Interview Intelligence (PILOT v2, methodology v2) - data-quality pass 2026-11-06 (v3)",
+  "status": "active",
+  "error_count": 0,
+  "warning_count": 1,
+  "sheets": {
+    "01 Company Profiles": {
+      "records": 11,
+      "record_key": "company_id"
+    },
+    "02 Company Archetypes": {
+      "records": 6,
+      "record_key": "archetype_id"
+    },
+    "03 Universal Traits": {
+      "records": 7,
+      "record_key": "trait_id"
+    },
+    "04 Archetype-Trait Map": {
+      "records": 42,
+      "record_key": "archetype_id + trait"
+    },
+    "05 Role Profiles": {
+      "records": 2,
+      "record_key": "role_family_id"
+    },
+    "06 Role-Interview Profiles": {
+      "records": 22,
+      "record_key": "profile_id"
+    },
+    "07 Interview Stages": {
+      "records": 94,
+      "record_key": "stage_id"
+    },
+    "08 Evidence Sources": {
+      "records": 100,
+      "record_key": "source_id"
+    },
+    "09 Interview Experiences": {
+      "records": 69,
+      "record_key": "experience_id"
+    },
+    "10 Questions-Conv Patterns": {
+      "records": 118,
+      "record_key": "pattern_id"
+    },
+    "11 Evaluation Signals": {
+      "records": 38,
+      "record_key": "signal_id"
+    },
+    "12 Runtime Configs": {
+      "records": 5,
+      "record_key": "config_id"
+    }
+  },
+  "total_records": 514,
+  "publication_counts": {
+    "01 Company Profiles:not_applicable": 11,
+    "02 Company Archetypes:not_applicable": 6,
+    "03 Universal Traits:not_applicable": 7,
+    "04 Archetype-Trait Map:not_applicable": 42,
+    "05 Role Profiles:not_applicable": 2,
+    "06 Role-Interview Profiles:not_applicable": 22,
+    "07 Interview Stages:not_applicable": 94,
+    "08 Evidence Sources:provisional": 88,
+    "08 Evidence Sources:rejected": 12,
+    "09 Interview Experiences:provisional": 69,
+    "10 Questions-Conv Patterns:restricted": 48,
+    "10 Questions-Conv Patterns:rejected": 4,
+    "10 Questions-Conv Patterns:provisional": 66,
+    "11 Evaluation Signals:not_applicable": 38,
+    "12 Runtime Configs:not_applicable": 5
+  },
+  "eligible_runtime_rows": 135,
+  "importable_records": 513,
+  "human_approved_records": 0,
+  "cross_sheet_links_checked": 225,
+  "rejected_input_records": [
+    "11 Evaluation Signals:ES004"
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "unresolved_signal_source_rejected",
+      "sheet": "11 Evaluation Signals",
+      "row": 5,
+      "column": "source_ref",
+      "reference": "SRC-NVIDIA-HWH"
+    }
+  ],
+  "import_id": "823719412358b5d920131077687cadb2e73e44538e7cfacb137f20d947514edb"
+}

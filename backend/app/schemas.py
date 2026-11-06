@@ -39,6 +39,25 @@ class CompanyBrief(Contract):
     search_suggestions: str = Field(default="", max_length=50000)
 
 
+class CompanyIntelligenceEvidence(Contract):
+    record_type: str = Field(max_length=80)
+    record_id: str = Field(max_length=120)
+    publication_state: Literal["approved", "provisional"]
+    role_match: str = Field(default="unknown", max_length=50)
+    level_relevance: Literal["matching", "unknown", "adjacent"] = "unknown"
+    summary: str = Field(min_length=1, max_length=1200)
+    source_ids: list[str] = Field(default_factory=list, max_length=8)
+
+
+class CompanyIntelligence(Contract):
+    status: Literal["available", "no_company_evidence", "not_requested"]
+    company: str = Field(default="", max_length=150)
+    import_id: str | None = Field(default=None, max_length=64)
+    role_family: str = Field(default="", max_length=100)
+    role_competencies: list[str] = Field(default_factory=list, max_length=20)
+    evidence: list[CompanyIntelligenceEvidence] = Field(default_factory=list, max_length=12)
+
+
 def public_company_url(value):
     if not value:
         return ""
@@ -74,6 +93,9 @@ class InterviewBrief(Contract):
     custom_instructions: str
     language: Language
     company_context: CompanyBrief
+    company_intelligence: CompanyIntelligence = Field(
+        default_factory=lambda: CompanyIntelligence(status="not_requested")
+    )
 
 
 class Question(Contract):

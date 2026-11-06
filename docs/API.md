@@ -90,8 +90,15 @@ field, which accepts only `en-IN`. Questions, follow-ups, reports, coaching and 
 language preferences in free-text instructions are ignored. Cached research is resolved when
 available. A mismatched cached
 research ID returns 409; another candidate's ID returns 404. Interview responses expose `language`,
-`company_context` and optional `report_progress: {completed_steps, label, error}`. Private execution
-bundles, shared briefs and job checkpoints are never returned.
+`company_context`, a bounded `company_intelligence` snapshot, and optional
+`report_progress: {completed_steps, label, error}`. The snapshot includes the active import ID,
+role competencies, provenance labels, and selected evidence summaries. Private execution bundles,
+unselected workbook rows and job checkpoints are never returned.
+
+Workbook import is operator-run through `backend/scripts/import_company_intelligence.py`, not a browser
+upload endpoint. Its default mode validates without database writes. Versioned imports can be staged
+inactive or explicitly activated after review; the import workflow and command are documented in
+`COMPANY_RESEARCH.md`.
 
 `POST /suggest/job-description` accepts the same optional research URL/ID and returns company_context
 alongside the existing description/demo fields. Generated text remains a practice brief.
